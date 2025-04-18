@@ -8,6 +8,7 @@ class VBO:
         self.vbos = {}
         self.vbos['cube'] = CubeVBO(ctx)
         self.vbos['gate'] = GateVBO(ctx)
+        self.vbos['plane'] = PlaneVBO(ctx)
         self.vbos['skybox'] = SkyBoxVBO(ctx)
         self.vbos['advanced_skybox'] = AdvancedSkyBoxVBO(ctx)
 
@@ -31,6 +32,30 @@ class BaseVBO:
 
     def destroy(self):
         self.vbo.release()
+
+
+class PlaneVBO(BaseVBO):
+    def __init__(self, ctx):
+        super().__init__(ctx)
+        self.format = '2f 3f 3f'
+        self.attribs = ['in_texcoord_0', 'in_normal', 'in_position']
+
+    def get_vertex_data(self):
+        positions = [
+            (-1, 0, -1), (1, 0, -1), (1, 0, 1), (-1, 0, 1)
+        ]
+        indices = [(0, 2, 1), (0, 3, 2)] 
+        normals = [(0, 1, 0)] * 6 
+        tex_coords = [(0, 0), (1, 0), (1, 1), (0, 1)]
+
+        def get_data(verts, inds):
+            return np.array([verts[i] for tri in inds for i in tri], dtype='f4')
+
+        pos_data = get_data(positions, indices)
+        norm_data = np.array(normals, dtype='f4')
+        tex_data = get_data(tex_coords, indices)
+
+        return np.hstack([tex_data, norm_data, pos_data])
 
 
 class CubeVBO(BaseVBO):
@@ -129,16 +154,4 @@ class AdvancedSkyBoxVBO(BaseVBO):
         vertices = [(-1, -1, z), (3, -1, z), (-1, 3, z)]
         vertex_data = np.array(vertices, dtype='f4')
         return vertex_data
-
-
-
-
-
-
-
-
-
-
-
-
 

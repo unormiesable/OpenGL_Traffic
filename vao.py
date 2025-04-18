@@ -9,6 +9,17 @@ class VAO:
         self.program = ShaderProgram(ctx)
         self.vaos = {}
 
+        # PLANE VAO
+        self.vaos['plane'] = self.get_vao(
+            program=self.program.programs['default'],
+            vbo=self.vbo.vbos['plane'])
+
+        # PLANE SHADOW VAO
+        self.vaos['shadow_plane'] = self.get_vao(
+            program=self.program.programs['shadow_map'],
+            vbo=self.vbo.vbos['plane'])
+
+        
         # CUBE VAO
         self.vaos['cube'] = self.get_vao(
             program=self.program.programs['default'],

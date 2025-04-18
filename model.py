@@ -79,8 +79,12 @@ class ExtendedBaseModel(BaseModel):
         self.program['light.Is'].write(self.app.light.Is)
 
 
+class Plane(ExtendedBaseModel):
+    def __init__(self, app, vao_name='plane', tex_id='white', pos=(0, 0, 0), rot=(0, 0, 0), scale=(1, 1, 1)):
+        super().__init__(app, vao_name, tex_id, pos, rot, scale)
+
 class Cube(ExtendedBaseModel):
-    def __init__(self, app, vao_name='cube', tex_id='gate', pos=(0, 0, 0), rot=(0, 0, 0), scale=(1, 1, 1)):
+    def __init__(self, app, vao_name='cube', tex_id='white', pos=(0, 0, 0), rot=(0, 0, 0), scale=(1, 1, 1)):
         super().__init__(app, vao_name, tex_id, pos, rot, scale)
 
 
@@ -94,7 +98,7 @@ class MovingCube(Cube):
 
 
 class Gate(ExtendedBaseModel):
-    def __init__(self, app, vao_name='gate', tex_id='gate',
+    def __init__(self, app, vao_name='gate', tex_id='white',
                  pos=(0, -0.5, 0), rot=(0, 0, 0), scale=(1, 1, 1)):
         super().__init__(app, vao_name, tex_id, pos, rot, scale)
 
