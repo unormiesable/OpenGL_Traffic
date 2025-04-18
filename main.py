@@ -11,7 +11,7 @@ from scene_renderer import SceneRenderer
 
 
 class GraphicsEngine:
-    def __init__(self, win_size=(1920, 1080)):
+    def __init__(self, win_size=(1280, 720)):
         
         pg.init()
         pg.display.set_caption("Grafika Komputer - Traffic Light Visualization (Alpha)")
@@ -67,33 +67,3 @@ class GraphicsEngine:
 if __name__ == '__main__':
     app = GraphicsEngine()
     app.run()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
