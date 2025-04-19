@@ -4,12 +4,12 @@ import glm
 
 
 class BaseModel:
-    def __init__(self, app, vao_name, tex_id, pos=(0, 0, 0), rot=(0, 0, 0), scale=(1, 1, 1)):
+    def __init__(self, app, vao_name, tex_id, pos=(0, 0, 0), rot=(0, 0, 0), scale=(1, 1, 1), uni_scale=1):
         self.app = app
         self.pos = pos
         self.vao_name = vao_name
         self.rot = glm.vec3([glm.radians(a) for a in rot])
-        self.scale = scale
+        self.scale = (scale[0] * uni_scale, scale[1] * uni_scale, scale[2] * uni_scale)
         self.m_model = self.get_model_matrix()
         self.tex_id = tex_id
         self.vao = app.mesh.vao.vaos[vao_name]
@@ -34,8 +34,8 @@ class BaseModel:
 
 
 class ExtendedBaseModel(BaseModel):
-    def __init__(self, app, vao_name, tex_id, pos, rot, scale):
-        super().__init__(app, vao_name, tex_id, pos, rot, scale)
+    def __init__(self, app, vao_name, tex_id, pos, rot, scale, uni_scale=1):
+        super().__init__(app, vao_name, tex_id, pos, rot, scale, uni_scale)
         self.on_init()
 
     def update(self):
@@ -82,12 +82,12 @@ class ExtendedBaseModel(BaseModel):
 
 
 class Plane(ExtendedBaseModel):
-    def __init__(self, app, vao_name='plane', tex_id='white', pos=(0, 0, 0), rot=(0, 0, 0), scale=(1, 1, 1)):
-        super().__init__(app, vao_name, tex_id, pos, rot, scale)
+    def __init__(self, app, vao_name='plane', tex_id='white', pos=(0, 0, 0), rot=(0, 0, 0), scale=(1, 1, 1), uni_scale=1):
+        super().__init__(app, vao_name, tex_id, pos, rot, scale, uni_scale)
 
 class Cube(ExtendedBaseModel):
-    def __init__(self, app, vao_name='cube', tex_id='white', pos=(0, 0, 0), rot=(0, 0, 0), scale=(1, 1, 1)):
-        super().__init__(app, vao_name, tex_id, pos, rot, scale)
+    def __init__(self, app, vao_name='cube', tex_id='white', pos=(0, 0, 0), rot=(0, 0, 0), scale=(1, 1, 1), uni_scale=1):
+        super().__init__(app, vao_name, tex_id, pos, rot, scale, uni_scale)
 
 
 class MovingCube(Cube):
@@ -101,17 +101,19 @@ class MovingCube(Cube):
 
 class Gate(ExtendedBaseModel):
     def __init__(self, app, vao_name='gate', tex_id='white',
-                 pos=(0, -0.5, 0), rot=(0, 0, 0), scale=(1, 1, 1)):
-        super().__init__(app, vao_name, tex_id, pos, rot, scale)
+                 pos=(0, -0.5, 0), rot=(0, 0, 0), scale=(1, 1, 1),
+                 uni_scale=1):
+        super().__init__(app, vao_name, tex_id, pos, rot, scale, uni_scale)
 
 class Yellow_Car(ExtendedBaseModel):
     def __init__(self, app, vao_name='yellow_car', tex_id='yellow_car',
-                 pos=(0, -0.5, 0), rot=(0, 0, 0), scale=(1, 1, 1)):
-        super().__init__(app, vao_name, tex_id, pos, rot, scale)
+                 pos=(0, -0.5, 0), rot=(0, 0, 0), scale=(1, 1, 1),
+                 uni_scale=1):
+        super().__init__(app, vao_name, tex_id, pos, rot, scale, uni_scale)
 
 class SkyBox(BaseModel):
     def __init__(self, app, vao_name='skybox', tex_id='skybox',
-                 pos=(0, 0, 0), rot=(0, 0, 0), scale=(1, 1, 1)):
+                 pos=(0, 0, 0), rot=(0, 0, 0), scale=(1, 1, 1), uni_scale=1):
         super().__init__(app, vao_name, tex_id, pos, rot, scale)
         self.on_init()
 
@@ -129,8 +131,8 @@ class SkyBox(BaseModel):
 
 class AdvancedSkyBox(BaseModel):
     def __init__(self, app, vao_name='advanced_skybox', tex_id='skybox',
-                 pos=(0, 0, 0), rot=(0, 0, 0), scale=(1, 1, 1)):
-        super().__init__(app, vao_name, tex_id, pos, rot, scale)
+                 pos=(0, 0, 0), rot=(0, 0, 0), scale=(1, 1, 1), uni_scale=1):
+        super().__init__(app, vao_name, tex_id, pos, rot, scale, uni_scale)
         self.on_init()
 
     def update(self):

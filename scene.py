@@ -19,8 +19,8 @@ class Scene:
         
         # Testing Primitive
         # add(Cube(app, pos=(0, 1, 0), scale=(1, 1, 1)))
-        add(Plane(app, pos=(0, 0, 0), scale=(5, 5, 5)))
-        add(Yellow_Car(app, pos=(0, 0, 0)))
+        add(Plane(app, pos=(0, 0, 0), uni_scale= 5))
+        add(Yellow_Car(app, pos=(0, 0, 0), uni_scale= 0.8))
 
         
         # Testing OBJ File

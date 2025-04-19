@@ -62,11 +62,11 @@ class GraphicsEngine:
                     
                     ## SCROLL ATAS 
                     if event.button == 4:
-                        self.camera.orbit_radius -= 0.5
+                        self.camera.orbit_radius -= 1
                         
                     ## SCROLL BAWAH
                     elif event.button == 5:
-                        self.camera.orbit_radius += 0.5
+                        self.camera.orbit_radius += 1
 
                     # BATAS RADIUS
                     self.camera.orbit_radius = max(1.0, min(self.camera.orbit_radius, 20.0))

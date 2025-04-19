@@ -111,7 +111,7 @@ class Camera:
     def set_default(self):
         self.position = glm.vec3(-4, 3, 4)
         self.orbit_target = glm.vec3(0, 0, 0)
-        self.orbit_radius = 6.0
+        self.orbit_radius = 10
         
         if self.use_orbit:
             self.look_LR = 135
