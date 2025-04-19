@@ -1,0 +1,15 @@
+{
+  "created_at": "2025-04-20T06:00:01.124953",
+  "version": "0.1",
+  "mtllibs": [
+    "yellow_car.mtl"
+  ],
+  "vertex_buffers": [
+    {
+      "material": "Material.001",
+      "vertex_format": "T2F_N3F_V3F",
+      "byte_offset": 0,
+      "byte_length": 201216
+    }
+  ]
+}

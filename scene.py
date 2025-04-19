@@ -18,8 +18,9 @@ class Scene:
         add = self.add_object
         
         # Testing Primitive
-        add(Cube(app, pos=(0, 1, 0), scale=(1, 1, 1)))
+        # add(Cube(app, pos=(0, 1, 0), scale=(1, 1, 1)))
         add(Plane(app, pos=(0, 0, 0), scale=(5, 5, 5)))
+        add(Yellow_Car(app, pos=(0, 0, 0)))
 
         
         # Testing OBJ File

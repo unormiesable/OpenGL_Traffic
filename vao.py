@@ -34,12 +34,21 @@ class VAO:
         self.vaos['gate'] = self.get_vao(
             program=self.program.programs['default'],
             vbo=self.vbo.vbos['gate'])
-        
 
         # GATE SHADOW VAO
         self.vaos['shadow_gate'] = self.get_vao(
             program=self.program.programs['shadow_map'],
             vbo=self.vbo.vbos['gate'])
+        
+        # YELLOW CAR VAO
+        self.vaos['yellow_car'] = self.get_vao(
+            program=self.program.programs['default'],
+            vbo=self.vbo.vbos['yellow_car'])
+
+        # YELLOW CAR SHADOW VAO
+        self.vaos['shadow_yellow_car'] = self.get_vao(
+            program=self.program.programs['shadow_map'],
+            vbo=self.vbo.vbos['yellow_car'])
         
         # SKYBOX VAO
         self.vaos['skybox'] = self.get_vao(
