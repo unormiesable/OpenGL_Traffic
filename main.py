@@ -39,15 +39,40 @@ class GraphicsEngine:
         self.scene = Scene(self)
         self.scene_renderer = SceneRenderer(self)
 
-    # ESC Buat Exit
+    # PENCET PENCET ===================================================================================
     def check_events(self):
         for event in pg.event.get():
+            
+            # ESCAPE -> QUIT
             if event.type == pg.QUIT or (event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE):
                 self.mesh.destroy()
                 self.scene_renderer.destroy()
                 pg.quit()
                 sys.exit()
+            
+            # TAB -> GANTI MODE KAMERA
+            if event.type == pg.KEYDOWN:
+                if event.key == pg.K_TAB:
+                    self.camera.use_orbit = not self.camera.use_orbit
+                    self.camera.set_default();
+                    
+            # SCROLL -> RADIUS ORBIT
+            if event.type == pg.MOUSEBUTTONDOWN:
+                if self.camera.use_orbit:
+                    
+                    ## SCROLL ATAS 
+                    if event.button == 4:
+                        self.camera.orbit_radius -= 0.5
+                        
+                    ## SCROLL BAWAH
+                    elif event.button == 5:
+                        self.camera.orbit_radius += 0.5
 
+                    # BATAS RADIUS
+                    self.camera.orbit_radius = max(1.0, min(self.camera.orbit_radius, 20.0))
+
+
+    # RENDER SCENE DKK
     def render(self):
         self.ctx.clear(color=(0.08, 0.16, 0.18))
         self.scene_renderer.render()

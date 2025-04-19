@@ -14,6 +14,8 @@ class Camera:
     def __init__(self, app, position=(-4, 3, 4), look_LR=-45, look_UD=-25):
         self.app = app
         self.aspect_ratio = app.WIN_SIZE[0] / app.WIN_SIZE[1]
+        
+        # FLY CAMERA
         self.position = glm.vec3(position)
         self.up = glm.vec3(0, 1, 0)
         self.right = glm.vec3(1, 0, 0)
@@ -22,6 +24,12 @@ class Camera:
         self.look_LR = look_LR
         self.look_UD = look_UD
 
+        # ORBIT CAMERA
+        self.use_orbit = False
+        self.orbit_target = glm.vec3(0, 0, 0)
+        self.orbit_radius = 5.0
+
+        
         # VIEW MATRIX
         self.m_view = self.get_view_matrix()
         
@@ -48,10 +56,14 @@ class Camera:
         self.up = glm.normalize(glm.cross(self.right, self.forward))
 
     def update(self):
-        self.move()
-        self.rotate()
-        self.update_camera_vectors()
-        self.m_view = self.get_view_matrix()
+        if self.use_orbit:
+            self.update_orbit()
+        else:
+            self.move()
+            self.rotate()
+            self.update_camera_vectors()
+            self.m_view = self.get_view_matrix()
+
 
     def move(self):
         velocity = Cam_Speed * self.app.delta_time
@@ -75,6 +87,38 @@ class Camera:
             self.position += self.up * velocity
         if keys[pg.K_e]:
             self.position -= self.up * velocity
+
+    def update_orbit(self):
+        rel_x, rel_y = pg.mouse.get_rel()
+        self.look_LR += rel_x * Mouse_Sens
+        self.look_UD -= rel_y * Mouse_Sens
+        self.look_UD = max(-90, min(90, self.look_UD))
+
+        theta = glm.radians(self.look_LR)
+        phi = glm.radians(self.look_UD)
+
+        x = self.orbit_radius * glm.cos(phi) * glm.cos(theta)
+        y = self.orbit_radius * glm.sin(phi)
+        z = self.orbit_radius * glm.cos(phi) * glm.sin(theta)
+
+        self.position = self.orbit_target + glm.vec3(x, y, z)
+        self.forward = glm.normalize(self.orbit_target - self.position)
+        self.right = glm.normalize(glm.cross(self.forward, glm.vec3(0, 1, 0)))
+        self.up = glm.normalize(glm.cross(self.right, self.forward))
+        self.m_view = self.get_view_matrix()
+
+    # RESET CAMERA
+    def set_default(self):
+        self.position = glm.vec3(-4, 3, 4)
+        self.orbit_target = glm.vec3(0, 0, 0)
+        self.orbit_radius = 6.0
+        
+        if self.use_orbit:
+            self.look_LR = 135
+            self.look_UD = 25
+        else:
+            self.look_LR = -45
+            self.look_UD = -25
 
     def get_view_matrix(self):
         return glm.lookAt(self.position, self.position + self.forward, self.up)
