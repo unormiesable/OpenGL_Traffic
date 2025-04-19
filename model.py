@@ -54,6 +54,8 @@ class ExtendedBaseModel(BaseModel):
     def on_init(self):
         self.program['m_view_light'].write(self.app.light.m_view_light)
         self.program['u_resolution'].write(glm.vec2(self.app.WIN_SIZE))
+        
+        self.program['u_enableShadow'] = 1
 
         self.depth_texture = self.app.mesh.texture.textures['depth_texture']
         self.program['shadowMap'] = 1

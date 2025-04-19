@@ -14,7 +14,7 @@ class Texture:
         self.textures['white'] = self.get_texture(path='objects/gate/gate.jpg')
         self.textures['skybox'] = self.get_texture_cube(dir_path='textures/skybox1/', ext='png')
         self.textures['depth_texture'] = self.get_depth_texture()
-
+    
     def get_depth_texture(self):
         shadow_res = 4096
         depth_texture = self.ctx.depth_texture((shadow_res, shadow_res))

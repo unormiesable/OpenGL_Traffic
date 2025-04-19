@@ -19,6 +19,7 @@ uniform sampler2D u_texture_0;
 uniform vec3 camPos;
 uniform sampler2DShadow shadowMap;
 uniform vec2 u_resolution;
+uniform bool u_enableShadow;
 
 
 // PCF SETUP ========================================================
@@ -85,7 +86,7 @@ float getSoftShadowX32() {
 
 float getSoftShadowX64() {
     float shadow;
-    float step_width = 0.6;
+    float step_width = 0.2;
     float extend = step_width * 3.0 + step_width / 2.0;
     for (float y = -extend; y <= extend; y += step_width) {
         for (float x = -extend; x <= extend; x += step_width) {
@@ -133,7 +134,7 @@ vec3 getLight(vec3 color) {
     vec3 specular = spec * light.Is;
 
     // SHADOW (BISA GANTI JENIS SHADOW SESUAI KEBUTUHAN)
-    float shadow = getSoftShadowX64();
+    float shadow = u_enableShadow ? getSoftShadowX64() : 1.0;
 
     return color * (ambient + (diffuse + specular) * shadow);
 }
@@ -149,13 +150,3 @@ void main() {
     color = pow(color, 1 / vec3(gamma));
     fragColor = vec4(color, 1.0);
 }
-
-
-
-
-
-
-
-
-
-
