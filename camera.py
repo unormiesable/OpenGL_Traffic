@@ -11,7 +11,7 @@ Mouse_Sens = 0.04
 
 
 class Camera:
-    def __init__(self, app, position=(-7, 5, 7), look_LR=-45, look_UD=-30):
+    def __init__(self, app, position=(-4, 3, 4), look_LR=-45, look_UD=-25):
         self.app = app
         self.aspect_ratio = app.WIN_SIZE[0] / app.WIN_SIZE[1]
         self.position = glm.vec3(position)

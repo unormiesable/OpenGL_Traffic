@@ -19,7 +19,7 @@ class Scene:
         
         # Testing Primitive
         add(Cube(app, pos=(0, 1, 0), scale=(1, 1, 1)))
-        add(Plane(app, pos=(0, 0, 0), scale=(5, 1, 5)))
+        add(Plane(app, pos=(0, 0, 0), scale=(5, 5, 5)))
 
         
         # Testing OBJ File
