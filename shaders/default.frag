@@ -20,6 +20,7 @@ uniform vec3 camPos;
 uniform sampler2DShadow shadowMap;
 uniform vec2 u_resolution;
 uniform bool u_enableShadow;
+uniform float shadowBlur;
 
 
 // PCF SETUP ========================================================
@@ -86,7 +87,7 @@ float getSoftShadowX32() {
 
 float getSoftShadowX64() {
     float shadow;
-    float step_width = 0.2;
+    float step_width = 0.2 * shadowBlur;
     float extend = step_width * 3.0 + step_width / 2.0;
     for (float y = -extend; y <= extend; y += step_width) {
         for (float x = -extend; x <= extend; x += step_width) {

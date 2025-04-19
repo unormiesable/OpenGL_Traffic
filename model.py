@@ -55,7 +55,8 @@ class ExtendedBaseModel(BaseModel):
         self.program['m_view_light'].write(self.app.light.m_view_light)
         self.program['u_resolution'].write(glm.vec2(self.app.WIN_SIZE))
         
-        self.program['u_enableShadow'] = 1
+        self.program['u_enableShadow'] = True
+        self.program['shadowBlur'] = 3.0
 
         self.depth_texture = self.app.mesh.texture.textures['depth_texture']
         self.program['shadowMap'] = 1
@@ -110,7 +111,7 @@ class Yellow_Car(ExtendedBaseModel):
                  pos=(0, -0.5, 0), rot=(0, 0, 0), scale=(1, 1, 1),
                  uni_scale=1):
         super().__init__(app, vao_name, tex_id, pos, rot, scale, uni_scale)
-
+        
 class SkyBox(BaseModel):
     def __init__(self, app, vao_name='skybox', tex_id='skybox',
                  pos=(0, 0, 0), rot=(0, 0, 0), scale=(1, 1, 1), uni_scale=1):
