@@ -1,7 +1,7 @@
 from vbo import VBO
 from shader_program import ShaderProgram
 
-
+# CLASS VAO (SETUP UNTUK POINTER KE VBO DAN SHADER PROGRAM)
 class VAO:
     def __init__(self, ctx):
         self.ctx = ctx

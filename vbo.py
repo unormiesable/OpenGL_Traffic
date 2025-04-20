@@ -2,7 +2,7 @@ import numpy as np
 import moderngl as mgl
 import pywavefront
 
-
+# CLASS VBO (MENYIMPAN DATA VERTEX, INDEX, DAN ATRIBUT)
 class VBO:
     def __init__(self, ctx):
         self.vbos = {}
@@ -24,7 +24,8 @@ class BaseVBO:
         self.format: str = None
         self.attribs: list = None
 
-    def get_vertex_data(self): ...
+    def get_vertex_data(self):
+        pass
 
     def get_vbo(self):
         vertex_data = self.get_vertex_data()

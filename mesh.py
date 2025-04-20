@@ -1,7 +1,7 @@
 from vao import VAO
 from texture import Texture
 
-
+# MESH DENGAN VAO DAN TEXTURE UNTUK MENAMPILKAN OBJEK
 class Mesh:
     def __init__(self, app):
         self.app = app

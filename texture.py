@@ -2,20 +2,22 @@ import pygame as pg
 import moderngl as mgl
 import glm
 
-
+# TEXTURE YANG AKAN DIGUNAKAN PADA OBJEK
 class Texture:
     def __init__(self, app):
         self.app = app
         self.ctx = app.ctx
         self.textures = {}
-        self.textures[0] = self.get_texture(path='textures/img.png')
-        self.textures[1] = self.get_texture(path='textures/img_1.png')
-        self.textures[2] = self.get_texture(path='textures/img_2.png')
+        
+        # TEXTURE ID (PADA PROJECT INI DINAMAI 'tex_id')
+            
+        self.textures[0] = self.get_texture(path='textures/crate.png')
         self.textures['white'] = self.get_texture(path='objects/gate/gate.jpg')
         self.textures['yellow_car'] = self.get_texture(path='objects/yellow_car/yellow_car.jpg')
-        self.textures['skybox'] = self.get_texture_cube(dir_path='textures/skybox1/', ext='png')
+        self.textures['skybox'] = self.get_texture_cube(dir_path='textures/skybox/', ext='png')
         self.textures['depth_texture'] = self.get_depth_texture()
     
+    # DEPTH TEXTURE UNTUK BAYANGAN (KONTROL SHADOW MAP)
     def get_depth_texture(self):
         shadow_res = 4096
         depth_texture = self.ctx.depth_texture((shadow_res, shadow_res))
@@ -23,6 +25,7 @@ class Texture:
         depth_texture.repeat_y = True
         return depth_texture
 
+    # TEXTURE CUBE (DIGUNAKAN PADA CUBE DAN SKYBOX)
     def get_texture_cube(self, dir_path, ext='png'):
         faces = ['right', 'left', 'top', 'bottom'] + ['front', 'back'][::-1]
 

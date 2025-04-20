@@ -10,6 +10,7 @@ from scene import Scene
 from scene_renderer import SceneRenderer
 
 
+# CLASS GRAPHIC ENGINE (MAIN CLASS)
 class GraphicsEngine:
     def __init__(self, win_size=(1280, 720)):
         
@@ -39,7 +40,7 @@ class GraphicsEngine:
         self.scene = Scene(self)
         self.scene_renderer = SceneRenderer(self)
 
-    # PENCET PENCET ===================================================================================
+    # HANDLER INPUT USER ===================================================================================
     def check_events(self):
         for event in pg.event.get():
             
@@ -72,10 +73,10 @@ class GraphicsEngine:
                     self.camera.orbit_radius = max(1.0, min(self.camera.orbit_radius, 20.0))
 
 
-    # RENDER SCENE DKK
+    # RENDER SCENE -> SCENE RENDERER
     def render(self):
-        self.ctx.clear(color=(0.08, 0.16, 0.18))
-        self.scene_renderer.render(lighting = 1)
+        self.ctx.clear(color=(0.1, 0.1, 0.1))
+        self.scene_renderer.render(lighting = 1, skybox = 0)
         pg.display.flip()
 
     def get_time(self):

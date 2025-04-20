@@ -9,13 +9,13 @@ FAR = 100
 Cam_Speed = 0.005
 Mouse_Sens = 0.04
 
-
+# CLASS KAMERA
 class Camera:
     def __init__(self, app, position=(-4, 3, 4), look_LR=-45, look_UD=-25):
         self.app = app
         self.aspect_ratio = app.WIN_SIZE[0] / app.WIN_SIZE[1]
         
-        # FLY CAMERA
+        # KAMERA MODE FLY (WASD)
         self.position = glm.vec3(position)
         self.up = glm.vec3(0, 1, 0)
         self.right = glm.vec3(1, 0, 0)
@@ -24,19 +24,18 @@ class Camera:
         self.look_LR = look_LR
         self.look_UD = look_UD
 
-        # ORBIT CAMERA
+        # KAMERA MODE ORBIT
         self.use_orbit = False
         self.orbit_target = glm.vec3(0, 0, 0)
         self.orbit_radius = 5.0
 
-        
         # VIEW MATRIX
         self.m_view = self.get_view_matrix()
         
         # PROJECTION MATRIX
         self.m_proj = self.get_projection_matrix()
 
-    ## CAMERA CONTROLS ========================================================
+    # KONTROL KAMERA ========================================================
 
     def rotate(self):
         rel_x, rel_y = pg.mouse.get_rel()
@@ -125,3 +124,4 @@ class Camera:
 
     def get_projection_matrix(self):
         return glm.perspective(glm.radians(FOV), self.aspect_ratio, NEAR, FAR)
+

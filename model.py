@@ -2,7 +2,7 @@ import moderngl as mgl
 import numpy as np
 import glm
 
-
+# BASE MODEL
 class BaseModel:
     def __init__(self, app, vao_name, tex_id, pos=(0, 0, 0), rot=(0, 0, 0), scale=(1, 1, 1), uni_scale=1):
         self.app = app
@@ -32,7 +32,7 @@ class BaseModel:
         self.update()
         self.vao.render()
 
-
+# EXTENDED BASE MODEL (MODEL DIDASARI BASE MODEL DENGAN PARAMETER TAMBAHAN)
 class ExtendedBaseModel(BaseModel):
     def __init__(self, app, vao_name, tex_id, pos, rot, scale, uni_scale=1):
         super().__init__(app, vao_name, tex_id, pos, rot, scale, uni_scale)
@@ -81,37 +81,31 @@ class ExtendedBaseModel(BaseModel):
         self.program['light.Id'].write(self.app.light.Id)
         self.program['light.Is'].write(self.app.light.Is)
 
-
+# MODEL PLANE
 class Plane(ExtendedBaseModel):
     def __init__(self, app, vao_name='plane', tex_id='white', pos=(0, 0, 0), rot=(0, 0, 0), scale=(1, 1, 1), uni_scale=1):
         super().__init__(app, vao_name, tex_id, pos, rot, scale, uni_scale)
 
+# MODEL KUBUS
 class Cube(ExtendedBaseModel):
     def __init__(self, app, vao_name='cube', tex_id='white', pos=(0, 0, 0), rot=(0, 0, 0), scale=(1, 1, 1), uni_scale=1):
         super().__init__(app, vao_name, tex_id, pos, rot, scale, uni_scale)
 
-
-class MovingCube(Cube):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
-    def update(self):
-        self.m_model = self.get_model_matrix()
-        super().update()
-
-
+# MODEL GATE (DENGAN FILE OBJ : HANYA UNTUK PROTOTYPE)
 class Gate(ExtendedBaseModel):
     def __init__(self, app, vao_name='gate', tex_id='white',
                  pos=(0, -0.5, 0), rot=(0, 0, 0), scale=(1, 1, 1),
                  uni_scale=1):
         super().__init__(app, vao_name, tex_id, pos, rot, scale, uni_scale)
 
+# MODEL YELLOW CAR (DENGAN FILE OBJ : HANYA UNTUK PROTOTYPE) 
 class Yellow_Car(ExtendedBaseModel):
     def __init__(self, app, vao_name='yellow_car', tex_id='yellow_car',
                  pos=(0, -0.5, 0), rot=(0, 0, 0), scale=(1, 1, 1),
                  uni_scale=1):
         super().__init__(app, vao_name, tex_id, pos, rot, scale, uni_scale)
         
+# SKYBOX DENGAN METODE LAMA
 class SkyBox(BaseModel):
     def __init__(self, app, vao_name='skybox', tex_id='skybox',
                  pos=(0, 0, 0), rot=(0, 0, 0), scale=(1, 1, 1), uni_scale=1):

@@ -1,3 +1,4 @@
+# LOGIKA RENDERING YANG DIGUNAKAN
 class SceneRenderer:
     def __init__(self, app):
         self.app = app
@@ -14,19 +15,21 @@ class SceneRenderer:
         for obj in self.scene.objects:
             obj.render_shadow()
 
-    def main_render(self):
+    def main_render(self, skybox=False):
         self.app.ctx.screen.use()
         for obj in self.scene.objects:
             obj.render()
-        # self.scene.skybox.render()
+        
+        if skybox:
+            self.scene.skybox.render()
 
-    def render(self, lighting=True):
+    def render(self, lighting=True, skybox=False):
         self.lighting = lighting
         
         if self.lighting:
             self.render_shadow()
         
-        self.main_render()
+        self.main_render(skybox=skybox)
 
     def destroy(self):
         self.depth_fbo.release()
