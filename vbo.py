@@ -7,6 +7,7 @@ class VBO:
     def __init__(self, ctx):
         self.vbos = {}
         self.vbos['cube'] = CubeVBO(ctx)
+        self.vbos['color_cube'] = ColorCubeVBO(ctx)
         self.vbos['gate'] = GateVBO(ctx)
         self.vbos['yellow_car'] = Yellow_CarVBO(ctx)
         self.vbos['plane'] = PlaneVBO(ctx)
@@ -103,6 +104,45 @@ class CubeVBO(BaseVBO):
         vertex_data = np.hstack([normals, vertex_data])
         vertex_data = np.hstack([tex_coord_data, vertex_data])
         return vertex_data
+
+
+class ColorCubeVBO(BaseVBO):
+    def __init__(self, ctx):
+        super().__init__(ctx)
+        self.format = '3f 3f'  # normal, position
+        self.attribs = ['in_normal', 'in_position']
+
+    @staticmethod
+    def get_data(vertices, indices):
+        data = [vertices[ind] for triangle in indices for ind in triangle]
+        return np.array(data, dtype='f4')
+
+    def get_vertex_data(self):
+        vertices = [(-1, -1, 1), ( 1, -1,  1), (1,  1,  1), (-1, 1,  1),
+                    (-1, 1, -1), (-1, -1, -1), (1, -1, -1), ( 1, 1, -1)]
+
+        indices = [(0, 2, 3), (0, 1, 2),
+                   (1, 7, 2), (1, 6, 7),
+                   (6, 5, 4), (4, 7, 6),
+                   (3, 4, 5), (3, 5, 0),
+                   (3, 7, 4), (3, 2, 7),
+                   (0, 6, 1), (0, 5, 6)]
+
+        vertex_data = self.get_data(vertices, indices)
+
+        normals = [( 0, 0, 1)] * 6 +  \
+                  [( 1, 0, 0)] * 6 +  \
+                  [( 0, 0,-1)] * 6 +  \
+                  [(-1, 0, 0)] * 6 +  \
+                  [( 0, 1, 0)] * 6 +  \
+                  [( 0,-1, 0)] * 6
+
+        normals = np.array(normals, dtype='f4')
+
+        vertex_data = vertex_data.reshape(-1, 3)
+        vertex_data = np.hstack([normals, vertex_data])
+        return vertex_data
+
 
     
 class GateVBO(BaseVBO):

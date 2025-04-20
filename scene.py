@@ -18,8 +18,9 @@ class Scene:
         add = self.add_object
         
         # TEST DENGAN PRIMITIVE OBJECT
-        add(Cube(app, pos=(0, 1, 0), scale=(1, 1, 1)))
+        # add(Cube(app, pos=(0, 1, 0), scale=(1, 1, 1)))
         add(Plane(app, pos=(0, 0, 0), uni_scale= 5))
+        add(ColorCube(app, pos=(0, 1, 0), color=(1.0, 0.1, 0.1)))
 
         
         # TEST DENGAN FILE OBJ (PROTOTYPING)

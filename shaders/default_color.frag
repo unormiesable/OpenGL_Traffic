@@ -1,4 +1,4 @@
-// INI SHADER DEFAULT JIKA OBJEK MENGGUNAKAN TEXTURE
+// INI SHADER DEFAULT JIKA OBJEK TIDAK MENGGUNAKAN TEXTURE
 
 #version 330 core
 
@@ -17,18 +17,17 @@ struct Light {
 };
 
 uniform Light light;
-uniform sampler2D u_texture_0;
 uniform vec3 camPos;
 uniform sampler2DShadow shadowMap;
 uniform vec2 u_resolution;
 uniform bool u_enableShadow;
 uniform float shadowBlur;
-
+uniform vec3 u_color;
 
 // PCF SETUP ========================================================
 float pcfLookup(vec2 offset) {
     float size = 1.0 / u_resolution.x;
-    return (textureProj(shadowMap, shadowCoord + vec4(offset * size, 0.0, 0.0)));
+    return textureProj(shadowMap, shadowCoord + vec4(offset * size, 0.0, 0.0));
 }
 
 float getPCFShadow() {
@@ -40,10 +39,7 @@ float getPCFShadow() {
     return shadow / 16.0;
 }
 
-
-
 // SOFT SHADOW SETUP =================================================
-
 float lookup(float ox, float oy) {
     vec2 pixelOffset = 1 / u_resolution;
     return textureProj(shadowMap, shadowCoord + vec4(ox * pixelOffset.x * shadowCoord.w,
@@ -60,7 +56,6 @@ float getSoftShadowX4() {
     shadow += lookup( 0.5 * step_width + offset.x, -0.5 * step_width - offset.y);
     return shadow / 4.0;
 }
-
 
 float getSoftShadowX16() {
     float shadow;
@@ -86,7 +81,6 @@ float getSoftShadowX32() {
     return shadow / 32.0;
 }
 
-
 float getSoftShadowX64() {
     float shadow;
     float step_width = 0.2 * shadowBlur;
@@ -111,14 +105,11 @@ float getSoftShadowX128() {
     return shadow / 128;
 }
 
-
 float getShadow() {
-    float shadow = textureProj(shadowMap, shadowCoord);
-    return shadow;
+    return textureProj(shadowMap, shadowCoord);
 }
 
-// IMPLEMENTASI FUNCTION DI ATAS ===============================
-
+// LIGHTING ===========================================================
 vec3 getLight(vec3 color) {
     vec3 Normal = normalize(normal);
 
@@ -136,20 +127,19 @@ vec3 getLight(vec3 color) {
     float spec = pow(max(dot(viewDir, reflectDir), 0), 32);
     vec3 specular = spec * light.Is;
 
-    // SHADOW (BISA GANTI JENIS SHADOW SESUAI KEBUTUHAN)
+    // SHADOW
     float shadow = u_enableShadow ? getSoftShadowX64() : 1.0;
 
     return color * (ambient + (diffuse + specular) * shadow);
 }
 
-
+// MAIN ===============================================================
 void main() {
     float gamma = 2.2;
-    vec3 color = texture(u_texture_0, uv_0).rgb;
-    color = pow(color, vec3(gamma));
+    vec3 color = pow(u_color, vec3(gamma));
 
     color = getLight(color);
 
-    color = pow(color, 1 / vec3(gamma));
+    color = pow(color, 1.0 / vec3(gamma)); 
     fragColor = vec4(color, 1.0);
 }

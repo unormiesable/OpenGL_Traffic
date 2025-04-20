@@ -29,7 +29,21 @@ class VAO:
         self.vaos['shadow_cube'] = self.get_vao(
             program=self.program.programs['shadow_map'],
             vbo = self.vbo.vbos['cube'])
+        
+        
+        # MASIH TESTING =====================================
+        # COLOR CUBE VAO
+        self.vaos['color_cube'] = self.get_vao(
+            program=self.program.programs['default_color'],
+            vbo = self.vbo.vbos['color_cube'])
 
+        # COLOR CUBE SHADOW VAO
+        self.vaos['shadow_color_cube'] = self.get_vao(
+            program=self.program.programs['shadow_map'],
+            vbo = self.vbo.vbos['color_cube'])
+        
+        
+        
         # GATE VAO
         self.vaos['gate'] = self.get_vao(
             program=self.program.programs['default'],
