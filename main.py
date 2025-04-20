@@ -70,7 +70,7 @@ class GraphicsEngine:
                         self.camera.orbit_radius += 1
 
                     # BATAS RADIUS
-                    self.camera.orbit_radius = max(1.0, min(self.camera.orbit_radius, 20.0))
+                    self.camera.orbit_radius = max(1.0, min(self.camera.orbit_radius, 50.0))
 
 
     # RENDER SCENE -> SCENE RENDERER

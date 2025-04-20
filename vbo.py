@@ -243,3 +243,16 @@ class ColorCubeVBO(BaseVBO):
         vertex_data = vertex_data.reshape(-1, 3)
         vertex_data = np.hstack([normals, vertex_data])
         return vertex_data
+
+class ColorCylinderVBO(BaseVBO):
+    def __init__(self, app):
+        super().__init__(app)
+        self.format = '2f 3f 3f'
+        self.attribs = ['in_texcoord_0', 'in_normal', 'in_position']
+
+    def get_vertex_data(self):
+        objs = pywavefront.Wavefront('objects/cylinder/cylinder.obj', cache=True, parse=True)
+        obj = objs.materials.popitem()[1]
+        vertex_data = obj.vertices
+        vertex_data = np.array(vertex_data, dtype='f4')
+        return vertex_data

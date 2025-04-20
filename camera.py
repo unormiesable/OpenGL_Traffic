@@ -11,7 +11,7 @@ Mouse_Sens = 0.04
 
 # CLASS KAMERA
 class Camera:
-    def __init__(self, app, position=(-4, 3, 4), look_LR=-45, look_UD=-25):
+    def __init__(self, app, position=(-6, 4.5, 6), look_LR=-45, look_UD=-25):
         self.app = app
         self.aspect_ratio = app.WIN_SIZE[0] / app.WIN_SIZE[1]
         
@@ -27,7 +27,7 @@ class Camera:
         # KAMERA MODE ORBIT
         self.use_orbit = False
         self.orbit_target = glm.vec3(0, 0, 0)
-        self.orbit_radius = 5.0
+        self.orbit_radius = 10.0
 
         # VIEW MATRIX
         self.m_view = self.get_view_matrix()
@@ -108,7 +108,7 @@ class Camera:
 
     # RESET CAMERA
     def set_default(self):
-        self.position = glm.vec3(-4, 3, 4)
+        self.position = glm.vec3(-6, 4.5, 6)
         self.orbit_target = glm.vec3(0, 0, 0)
         self.orbit_radius = 10
         
