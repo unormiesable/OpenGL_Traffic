@@ -169,6 +169,12 @@ class ColorPlane(ExtendedBaseModelColor):
     def __init__(self, app, vao_name='color_plane', pos=(0, 0, 0), rot=(0, 0, 0), scale=(1, 1, 1), uni_scale=1, color=(1.0, 0.1, 0.1)):
         super().__init__(app, vao_name, pos, rot, scale, uni_scale, color)
 
+# MODEL CYLINDER COLOR
+class ColorCylinder(ExtendedBaseModelColor):
+    def __init__(self, app, vao_name='color_cylinder', pos=(0, 0, 0), rot=(0, 0, 0), scale=(1, 1, 1), uni_scale=1, color=(1.0, 0.1, 0.1)):
+        super().__init__(app, vao_name, pos, rot, scale, uni_scale, color)
+
+
 # MODEL PLANE
 class Plane(ExtendedBaseModel):
     def __init__(self, app, vao_name='plane', tex_id='white', pos=(0, 0, 0), rot=(0, 0, 0), scale=(1, 1, 1), uni_scale=1):

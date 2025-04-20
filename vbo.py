@@ -6,12 +6,21 @@ import pywavefront
 class VBO:
     def __init__(self, ctx):
         self.vbos = {}
+        
+        # OBJEK DENGAN TEXTURE
         self.vbos['cube'] = CubeVBO(ctx)
+        self.vbos['plane'] = PlaneVBO(ctx)
+        
+        # OBJEK TANPA TEXTURE
         self.vbos['color_cube'] = ColorCubeVBO(ctx)
         self.vbos['color_plane'] = ColorPlaneVBO(ctx)
+        self.vbos['color_cylinder'] = ColorCylinderVBO(ctx)
+        
+        # OBJEK DENGAN OBJ FILE
         self.vbos['gate'] = GateVBO(ctx)
         self.vbos['yellow_car'] = Yellow_CarVBO(ctx)
-        self.vbos['plane'] = PlaneVBO(ctx)
+        
+        # SKYBOX (TIDAK DIGUNAKAN UNTUK SAAT INI)
         self.vbos['skybox'] = SkyBoxVBO(ctx)
         self.vbos['advanced_skybox'] = AdvancedSkyBoxVBO(ctx)
 
@@ -62,30 +71,6 @@ class PlaneVBO(BaseVBO):
         return np.hstack([tex_data, norm_data, pos_data])
 
 
-class ColorPlaneVBO(BaseVBO):
-    def __init__(self, ctx):
-        super().__init__(ctx)
-        self.format = '3f 3f'
-        self.attribs = ['in_normal', 'in_position']
-
-    def get_vertex_data(self):
-        positions = [
-            (-1, 0, -1), (1, 0, -1), (1, 0, 1), (-1, 0, 1)
-        ]
-        
-        indices = [(0, 2, 1), (0, 3, 2)]
-        normals = [(0, 1, 0)] * 6
-
-        def get_data(verts, inds):
-            return np.array([verts[i] for tri in inds for i in tri], dtype='f4')
-
-        pos_data = get_data(positions, indices)
-        norm_data = np.array(normals, dtype='f4')
-
-        return np.hstack([norm_data, pos_data])
-
-
-
 class CubeVBO(BaseVBO):
     def __init__(self, ctx):
         super().__init__(ctx)
@@ -129,46 +114,7 @@ class CubeVBO(BaseVBO):
         vertex_data = np.hstack([normals, vertex_data])
         vertex_data = np.hstack([tex_coord_data, vertex_data])
         return vertex_data
-
-
-class ColorCubeVBO(BaseVBO):
-    def __init__(self, ctx):
-        super().__init__(ctx)
-        self.format = '3f 3f'  # normal, position
-        self.attribs = ['in_normal', 'in_position']
-
-    @staticmethod
-    def get_data(vertices, indices):
-        data = [vertices[ind] for triangle in indices for ind in triangle]
-        return np.array(data, dtype='f4')
-
-    def get_vertex_data(self):
-        vertices = [(-1, -1, 1), ( 1, -1,  1), (1,  1,  1), (-1, 1,  1),
-                    (-1, 1, -1), (-1, -1, -1), (1, -1, -1), ( 1, 1, -1)]
-
-        indices = [(0, 2, 3), (0, 1, 2),
-                   (1, 7, 2), (1, 6, 7),
-                   (6, 5, 4), (4, 7, 6),
-                   (3, 4, 5), (3, 5, 0),
-                   (3, 7, 4), (3, 2, 7),
-                   (0, 6, 1), (0, 5, 6)]
-
-        vertex_data = self.get_data(vertices, indices)
-
-        normals = [( 0, 0, 1)] * 6 +  \
-                  [( 1, 0, 0)] * 6 +  \
-                  [( 0, 0,-1)] * 6 +  \
-                  [(-1, 0, 0)] * 6 +  \
-                  [( 0, 1, 0)] * 6 +  \
-                  [( 0,-1, 0)] * 6
-
-        normals = np.array(normals, dtype='f4')
-
-        vertex_data = vertex_data.reshape(-1, 3)
-        vertex_data = np.hstack([normals, vertex_data])
-        return vertex_data
-
-
+    
     
 class GateVBO(BaseVBO):
     def __init__(self, app):
@@ -235,3 +181,65 @@ class AdvancedSkyBoxVBO(BaseVBO):
         vertex_data = np.array(vertices, dtype='f4')
         return vertex_data
 
+
+# COLOR CLASS (NO TEXTURE OBJECT)
+
+class ColorPlaneVBO(BaseVBO):
+    def __init__(self, ctx):
+        super().__init__(ctx)
+        self.format = '3f 3f'
+        self.attribs = ['in_normal', 'in_position']
+
+    def get_vertex_data(self):
+        positions = [
+            (-1, 0, -1), (1, 0, -1), (1, 0, 1), (-1, 0, 1)
+        ]
+        
+        indices = [(0, 2, 1), (0, 3, 2)]
+        normals = [(0, 1, 0)] * 6
+
+        def get_data(verts, inds):
+            return np.array([verts[i] for tri in inds for i in tri], dtype='f4')
+
+        pos_data = get_data(positions, indices)
+        norm_data = np.array(normals, dtype='f4')
+
+        return np.hstack([norm_data, pos_data])
+
+
+class ColorCubeVBO(BaseVBO):
+    def __init__(self, ctx):
+        super().__init__(ctx)
+        self.format = '3f 3f'
+        self.attribs = ['in_normal', 'in_position']
+
+    @staticmethod
+    def get_data(vertices, indices):
+        data = [vertices[ind] for triangle in indices for ind in triangle]
+        return np.array(data, dtype='f4')
+
+    def get_vertex_data(self):
+        vertices = [(-1, -1, 1), ( 1, -1,  1), (1,  1,  1), (-1, 1,  1),
+                    (-1, 1, -1), (-1, -1, -1), (1, -1, -1), ( 1, 1, -1)]
+
+        indices = [(0, 2, 3), (0, 1, 2),
+                   (1, 7, 2), (1, 6, 7),
+                   (6, 5, 4), (4, 7, 6),
+                   (3, 4, 5), (3, 5, 0),
+                   (3, 7, 4), (3, 2, 7),
+                   (0, 6, 1), (0, 5, 6)]
+
+        vertex_data = self.get_data(vertices, indices)
+
+        normals = [( 0, 0, 1)] * 6 +  \
+                  [( 1, 0, 0)] * 6 +  \
+                  [( 0, 0,-1)] * 6 +  \
+                  [(-1, 0, 0)] * 6 +  \
+                  [( 0, 1, 0)] * 6 +  \
+                  [( 0,-1, 0)] * 6
+
+        normals = np.array(normals, dtype='f4')
+
+        vertex_data = vertex_data.reshape(-1, 3)
+        vertex_data = np.hstack([normals, vertex_data])
+        return vertex_data

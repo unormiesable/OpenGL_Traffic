@@ -10,7 +10,7 @@ class VAO:
         self.vaos = {}
 
 
-        # OBJEK TANPA TEXTURE
+        # OBJEK TANPA TEXTURE ========================================================================
         # COLOR CUBE VAO
         self.vaos['color_cube'] = self.get_vao(
             program=self.program.programs['default_color'],
@@ -31,8 +31,18 @@ class VAO:
             program=self.program.programs['shadow_map'],
             vbo = self.vbo.vbos['color_plane'])
         
+        # COLOR CYLINDER VAO
+        self.vaos['color_cylinder'] = self.get_vao(
+            program=self.program.programs['default_color'],
+            vbo = self.vbo.vbos['color_cylinder'])
+
+        # COLOR CYLINDER SHADOW VAO
+        self.vaos['shadow_color_cylinder'] = self.get_vao(
+            program=self.program.programs['shadow_map'],
+            vbo = self.vbo.vbos['color_cylinder'])
         
-        # OBJEK DENGAN TEXTURE
+        
+        # OBJEK DENGAN TEXTURE ========================================================================
         # PLANE VAO
         self.vaos['plane'] = self.get_vao(
             program=self.program.programs['default'],
