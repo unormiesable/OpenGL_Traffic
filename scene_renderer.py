@@ -20,8 +20,12 @@ class SceneRenderer:
             obj.render()
         # self.scene.skybox.render()
 
-    def render(self):
-        self.render_shadow()
+    def render(self, lighting=True):
+        self.lighting = lighting
+        
+        if self.lighting:
+            self.render_shadow()
+        
         self.main_render()
 
     def destroy(self):
