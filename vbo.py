@@ -8,6 +8,7 @@ class VBO:
         self.vbos = {}
         self.vbos['cube'] = CubeVBO(ctx)
         self.vbos['color_cube'] = ColorCubeVBO(ctx)
+        self.vbos['color_plane'] = ColorPlaneVBO(ctx)
         self.vbos['gate'] = GateVBO(ctx)
         self.vbos['yellow_car'] = Yellow_CarVBO(ctx)
         self.vbos['plane'] = PlaneVBO(ctx)
@@ -59,6 +60,30 @@ class PlaneVBO(BaseVBO):
         tex_data = get_data(tex_coords, indices)
 
         return np.hstack([tex_data, norm_data, pos_data])
+
+
+class ColorPlaneVBO(BaseVBO):
+    def __init__(self, ctx):
+        super().__init__(ctx)
+        self.format = '3f 3f'
+        self.attribs = ['in_normal', 'in_position']
+
+    def get_vertex_data(self):
+        positions = [
+            (-1, 0, -1), (1, 0, -1), (1, 0, 1), (-1, 0, 1)
+        ]
+        
+        indices = [(0, 2, 1), (0, 3, 2)]
+        normals = [(0, 1, 0)] * 6
+
+        def get_data(verts, inds):
+            return np.array([verts[i] for tri in inds for i in tri], dtype='f4')
+
+        pos_data = get_data(positions, indices)
+        norm_data = np.array(normals, dtype='f4')
+
+        return np.hstack([norm_data, pos_data])
+
 
 
 class CubeVBO(BaseVBO):

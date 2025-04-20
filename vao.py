@@ -9,6 +9,30 @@ class VAO:
         self.program = ShaderProgram(ctx)
         self.vaos = {}
 
+
+        # OBJEK TANPA TEXTURE
+        # COLOR CUBE VAO
+        self.vaos['color_cube'] = self.get_vao(
+            program=self.program.programs['default_color'],
+            vbo = self.vbo.vbos['color_cube'])
+
+        # COLOR CUBE SHADOW VAO
+        self.vaos['shadow_color_cube'] = self.get_vao(
+            program=self.program.programs['shadow_map'],
+            vbo = self.vbo.vbos['color_cube'])
+        
+        # COLOR PLANE VAO
+        self.vaos['color_plane'] = self.get_vao(
+            program=self.program.programs['default_color'],
+            vbo = self.vbo.vbos['color_plane'])
+
+        # COLOR PLANE SHADOW VAO
+        self.vaos['shadow_color_plane'] = self.get_vao(
+            program=self.program.programs['shadow_map'],
+            vbo = self.vbo.vbos['color_plane'])
+        
+        
+        # OBJEK DENGAN TEXTURE
         # PLANE VAO
         self.vaos['plane'] = self.get_vao(
             program=self.program.programs['default'],
@@ -29,20 +53,6 @@ class VAO:
         self.vaos['shadow_cube'] = self.get_vao(
             program=self.program.programs['shadow_map'],
             vbo = self.vbo.vbos['cube'])
-        
-        
-        # MASIH TESTING =====================================
-        # COLOR CUBE VAO
-        self.vaos['color_cube'] = self.get_vao(
-            program=self.program.programs['default_color'],
-            vbo = self.vbo.vbos['color_cube'])
-
-        # COLOR CUBE SHADOW VAO
-        self.vaos['shadow_color_cube'] = self.get_vao(
-            program=self.program.programs['shadow_map'],
-            vbo = self.vbo.vbos['color_cube'])
-        
-        
         
         # GATE VAO
         self.vaos['gate'] = self.get_vao(

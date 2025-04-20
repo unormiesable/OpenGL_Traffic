@@ -18,9 +18,14 @@ class Scene:
         add = self.add_object
         
         # TEST DENGAN PRIMITIVE OBJECT
+        
+        # TEXTURED
         # add(Cube(app, pos=(0, 1, 0), scale=(1, 1, 1)))
-        add(Plane(app, pos=(0, 0, 0), uni_scale= 5))
-        add(ColorCube(app, pos=(0, 1, 0), color=(1.0, 0.1, 0.1)))
+        # add(Plane(app, pos=(0, 0, 0), uni_scale= 5))
+        
+        # NO TEXTURED
+        add(ColorPlane(app, pos=(0, 0, 0), color=(1.0, 1.0, 0.5), uni_scale= 5))
+        add(ColorCube(app, pos=(0, 1, 0), color=(1.0, 0.0, 0.0)))
 
         
         # TEST DENGAN FILE OBJ (PROTOTYPING)
