@@ -34,11 +34,12 @@ class GraphicsEngine:
         self.time = 0
         self.delta_time = 0
         
-        self.light = Light(position=(5, 10, 5), color=(1, 1, 1),intensity=1.2, shadow_blur=2.0)
+        self.light = Light(position=(5, 10, 5), color=(1, 1, 1),intensity=2.2, shadow_blur=3.0)
         self.camera = Camera(self)
         self.mesh = Mesh(self)
         self.scene = Scene(self)
         self.scene_renderer = SceneRenderer(self)
+        self.background_color = (0.25, 0.35, 0.5)
 
     # HANDLER INPUT USER ===================================================================================
     def check_events(self):
@@ -75,7 +76,7 @@ class GraphicsEngine:
 
     # RENDER SCENE -> SCENE RENDERER
     def render(self):
-        self.ctx.clear(color=(0.1, 0.1, 0.1))
+        self.ctx.clear(color=(self.background_color))
         self.scene_renderer.render(lighting = 1, skybox = 0)
         pg.display.flip()
 
