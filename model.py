@@ -338,19 +338,19 @@ class Fixed_Car:
         self.glassms = ColorCube(app, pos=(self.roof.pos[0] - 0.03, 2.65, 0.0), color=win_color, scale=(1.15, 1, self.roof.scale[2] + 0.25), rot=(0, 0, 0), uni_scale=0.85)
         
         # BAN KIRI
-        self.ban_kiri_depan = ColorCylinder(app, pos=(-2, 0.9, 1.8), color=(0.2, 0.2, 0.2), rot=(90, 0, 0), scale=(1, 0.4, 1), uni_scale=0.9)
+        self.ban_kiri_depan = ColorCylinder(app, pos=(-2, 0.9, 1.8), color=(0.2, 0.2, 0.2), rot=(90, 0, 0), scale=(1, 0.35, 1), uni_scale=0.9)
         self.ban_kiri_belakang = ColorCylinder(app, pos=(2, 1, 1.8), color=(0.2, 0.2, 0.2), rot=(90, 0, 0), scale=(1, 0.4, 1))
         
         # VELG KIRI
-        self.velg_kiri_depan = ColorCylinder(app, pos=(-2, 0.9, 2.05), color=(0.8, 0.8, 0.8), rot=(90, 0, 0), scale=(1, 0.5, 1), uni_scale=0.35)
+        self.velg_kiri_depan = ColorCylinder(app, pos=(-2, 0.9, 2.05), color=(0.8, 0.8, 0.8), rot=(90, 0, 0), scale=(1, 0.37, 1), uni_scale=0.35)
         self.velg_kiri_belakang = ColorCylinder(app, pos=(2, 1, 2.05), color=(0.8, 0.8, 0.8), rot=(90, 0, 0), scale=(1, 0.5, 1), uni_scale=0.4)
 
         # BAN KANAN
-        self.ban_kanan_depan = ColorCylinder(app, pos=(-2, 0.9, -1.8), color=(0.2, 0.2, 0.2), rot=(90, 0, 0), scale=(1, 0.4, 1), uni_scale=0.9)
+        self.ban_kanan_depan = ColorCylinder(app, pos=(-2, 0.9, -1.8), color=(0.2, 0.2, 0.2), rot=(90, 0, 0), scale=(1, 0.35, 1), uni_scale=0.9)
         self.ban_kanan_belakang = ColorCylinder(app, pos=(2, 1, -1.8), color=(0.2, 0.2, 0.2), rot=(90, 0, 0), scale=(1, 0.4, 1))
         
         # VELG KANAN
-        self.velg_kanan_depan = ColorCylinder(app, pos=(-2, 0.9, -2.05), color=(0.8, 0.8, 0.8), rot=(90, 0, 0), scale=(1, 0.5, 1), uni_scale=0.35)
+        self.velg_kanan_depan = ColorCylinder(app, pos=(-2, 0.9, -2.05), color=(0.8, 0.8, 0.8), rot=(90, 0, 0), scale=(1, 0.37, 1), uni_scale=0.35)
         self.velg_kanan_belakang = ColorCylinder(app, pos=(2, 1, -2.05), color=(0.8, 0.8, 0.8), rot=(90, 0, 0), scale=(1, 0.5, 1), uni_scale=0.4)
         
         # HEADLIGHT
