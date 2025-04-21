@@ -303,7 +303,7 @@ class Cube_Plane:
 # MODEL MOBIL 
 class Fixed_Car:
     def __init__(self, app, pos=(0, 0, 0), rot=(0, 0, 0),
-                 scale=(1, 1, 1), uni_scale=1, color=(1.0, 1.0, 1.0), win_color=(0.5, 0.5, 0.8)):
+                 scale=(1, 1, 1), uni_scale=1, color=(1.0, 1.0, 1.0), win_color=(0.5, 0.5, 0.8), head_size=0.25, sec_color=(1.0, 1.0, 1.0)):
 
         self.app = app
         self.pos = glm.vec3(pos)
@@ -311,6 +311,8 @@ class Fixed_Car:
         self.scale = glm.vec3(scale) * uni_scale
         self.color = glm.vec3(color)
         self.uni_scale = uni_scale
+        self.head_size = head_size
+        self.sec_color = sec_color
 
         self.win_color = win_color
         
@@ -321,6 +323,10 @@ class Fixed_Car:
         self.windf = ColorCube(app, pos=(self.roof.pos[0] - 1.0, 2.18, 0.0), color=color, scale=(1, 1, 1.4), rot=(0, 0, 45))
         self.windb = ColorCube(app, pos=(self.roof.pos[0] + 0.65, 2.24, 0.0), color=color, scale=(1, 1, 1.4), rot=(0, 0, 30))
         
+        # BUMPER
+        self.bumper = ColorCube(app, pos=(0.0, 0.74, 0.0), color=sec_color, scale=(3.1, 0.25, 1.6))
+        
+        # WIND MISC
         self.winmid = ColorCube(app, pos=(0.5, 2.6, 0.0), color=color, scale=(0.1, 1, self.roof.scale[2] + 0.005))
         
         # WINDOWS
@@ -339,13 +345,24 @@ class Fixed_Car:
         self.velg_kiri_depan = ColorCylinder(app, pos=(-2, 0.9, 2.05), color=(0.8, 0.8, 0.8), rot=(90, 0, 0), scale=(1, 0.5, 1), uni_scale=0.35)
         self.velg_kiri_belakang = ColorCylinder(app, pos=(2, 1, 2.05), color=(0.8, 0.8, 0.8), rot=(90, 0, 0), scale=(1, 0.5, 1), uni_scale=0.4)
 
-        #BAN KANAN
+        # BAN KANAN
         self.ban_kanan_depan = ColorCylinder(app, pos=(-2, 0.9, -1.8), color=(0.2, 0.2, 0.2), rot=(90, 0, 0), scale=(1, 0.4, 1), uni_scale=0.9)
         self.ban_kanan_belakang = ColorCylinder(app, pos=(2, 1, -1.8), color=(0.2, 0.2, 0.2), rot=(90, 0, 0), scale=(1, 0.4, 1))
         
-        #VELG KANAN
+        # VELG KANAN
         self.velg_kanan_depan = ColorCylinder(app, pos=(-2, 0.9, -2.05), color=(0.8, 0.8, 0.8), rot=(90, 0, 0), scale=(1, 0.5, 1), uni_scale=0.35)
         self.velg_kanan_belakang = ColorCylinder(app, pos=(2, 1, -2.05), color=(0.8, 0.8, 0.8), rot=(90, 0, 0), scale=(1, 0.5, 1), uni_scale=0.4)
+        
+        # HEADLIGHT
+        self.headlightl = ColorCylinder(app, rot=(0, 0, 90), scale=(self.head_size, 0.1, self.head_size), pos=(-3, 1.9, 1))
+        self.headlightr = ColorCylinder(app, rot=(0, 0, 90), scale=(self.head_size, 0.1, self.head_size), pos=(-3, 1.9, -1))
+        
+        self.headlightl_out = ColorCylinder(app, color=(0.2, 0.2, 0.2), rot=(0, 0, 90), scale=(self.head_size + 0.1, 0.1, self.head_size + 0.1), pos=(-2.95, 1.9, 1))
+        self.headlightr_out = ColorCylinder(app, color=(0.2, 0.2, 0.2), rot=(0, 0, 90), scale=(self.head_size + 0.1, 0.1, self.head_size + 0.1), pos=(-2.95, 1.9, -1))
+        
+        #BACKLIGHT
+        self.backlightl = ColorCube(app, pos=(3, 2, 1), scale=(0.05, 0.15, 0.3), color=(0.8, 0.2, 0.2))
+        self.backlightr = ColorCube(app, pos=(3, 2, -1), scale=(0.05, 0.15, 0.3), color=(0.8, 0.2, 0.2))
         
         self.update_model_matrices()
 
@@ -375,6 +392,8 @@ class Fixed_Car:
         self.windf.m_model = self.get_model_matrix(self.windf)
         self.windb.m_model = self.get_model_matrix(self.windb)
         
+        self.bumper.m_model = self.get_model_matrix(self.bumper)
+        
         self.winmid.m_model = self.get_model_matrix(self.winmid)
         
         self.glassf.m_model = self.get_model_matrix(self.glassf)
@@ -392,6 +411,14 @@ class Fixed_Car:
         self.velg_kiri_belakang.m_model = self.get_model_matrix(self.velg_kiri_belakang)
         self.velg_kanan_depan.m_model = self.get_model_matrix(self.velg_kanan_depan)
         self.velg_kanan_belakang.m_model = self.get_model_matrix(self.velg_kanan_belakang)
+        
+        self.headlightl.m_model = self.get_model_matrix(self.headlightl)
+        self.headlightr.m_model = self.get_model_matrix(self.headlightr)
+        self.headlightl_out.m_model = self.get_model_matrix(self.headlightl_out)
+        self.headlightr_out.m_model = self.get_model_matrix(self.headlightr_out)
+        
+        self.backlightl.m_model = self.get_model_matrix(self.backlightl)
+        self.backlightr.m_model = self.get_model_matrix(self.backlightr)
 
     def update(self):
         self.update_model_matrices()
@@ -401,6 +428,8 @@ class Fixed_Car:
         self.roof.render()
         self.windf.render()
         self.windb.render()
+        
+        self.bumper.render()
         
         self.winmid.render()
         
@@ -419,12 +448,22 @@ class Fixed_Car:
         self.velg_kiri_belakang.render()
         self.velg_kanan_depan.render()
         self.velg_kanan_belakang.render()
+        
+        self.headlightl.render()
+        self.headlightr.render()
+        self.headlightl_out.render()
+        self.headlightr_out.render()
+        
+        self.backlightl.render()
+        self.backlightr.render()
 
     def render_shadow(self):
         self.body.render_shadow()
         self.roof.render_shadow()
         self.windf.render_shadow()
         self.windb.render_shadow()
+        
+        self.bumper.render_shadow()
         
         self.winmid.render_shadow()
         
@@ -443,3 +482,11 @@ class Fixed_Car:
         self.velg_kiri_belakang.render_shadow()
         self.velg_kanan_depan.render_shadow()
         self.velg_kanan_belakang.render_shadow()
+        
+        self.headlightl.render_shadow()
+        self.headlightr.render_shadow()
+        self.headlightl_out.render_shadow()
+        self.headlightr_out.render_shadow()
+        
+        self.backlightl.render_shadow()
+        self.backlightr.render_shadow()

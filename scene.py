@@ -49,5 +49,5 @@ class Scene:
         
         for i in range(3):
             add(Fixed_Car(app, pos=(-10 + (i * 10), 0, random.randint(-7, 7)),
-                          color=(random.uniform(0.0, 1.0), random.uniform(0.0, 1.0), random.uniform(0.0, 1.0))
-                          ))
+                          color=(random.uniform(0.0, 1.0), random.uniform(0.0, 1.0), random.uniform(0.0, 1.0)),
+                          sec_color=(random.uniform(0.0, 1.0), random.uniform(0.0, 1.0), random.uniform(0.0, 1.0))))
