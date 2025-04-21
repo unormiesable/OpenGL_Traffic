@@ -6,7 +6,7 @@ FOV = 50
 NEAR = 0.1
 FAR = 100
 
-Cam_Speed = 0.005
+Cam_Speed = 0.02
 Mouse_Sens = 0.04
 
 # CLASS KAMERA
@@ -70,9 +70,9 @@ class Camera:
         
         # SHIFT == RUN (Faster Aaah Movement)
         if keys[pg.K_LSHIFT] or keys[pg.K_RSHIFT]:
-            velocity = 0.01 * self.app.delta_time
+            velocity = 0.05 * self.app.delta_time
         else:
-            velocity = 0.005 * self.app.delta_time
+            velocity = 0.02 * self.app.delta_time
         
         if keys[pg.K_w]:
             self.position += self.forward * velocity

@@ -23,6 +23,7 @@ uniform vec2 u_resolution;
 uniform bool u_enableShadow;
 uniform float shadowBlur;
 uniform vec3 u_color;
+uniform float new_shade;
 
 // PCF SETUP ========================================================
 float pcfLookup(vec2 offset) {
@@ -60,7 +61,7 @@ float getSoftShadowX4() {
 float getSoftShadowX16() {
     float shadow;
     float step_width = 1.0;
-    float extend = step_width * 1.5;
+    float extend = step_width * 1.5 * shadowBlur;
     for (float y = -extend; y <= extend; y += step_width) {
         for (float x = -extend; x <= extend; x += step_width) {
             shadow += lookup(x, y);
@@ -72,7 +73,7 @@ float getSoftShadowX16() {
 float getSoftShadowX32() {
     float shadow;
     float step_width = 1.0;
-    float extend = step_width * 1.5;
+    float extend = step_width * 1.5 * shadowBlur;
     for (float y = -extend; y <= extend; y += step_width) {
         for (float x = -extend; x <= extend; x += step_width) {
             shadow += lookup(x, y);
@@ -95,7 +96,7 @@ float getSoftShadowX64() {
 
 float getSoftShadowX128() {
     float shadow;
-    float step_width = 0.4;
+    float step_width = 0.4 * shadowBlur;
     float extend = step_width * 3.0 + step_width / 2.0;
     for (float y = -extend; y <= extend; y += step_width) {
         for (float x = -extend; x <= extend; x += step_width) {
@@ -130,7 +131,8 @@ vec3 getLight(vec3 color) {
     // SHADOW
     float shadow = u_enableShadow ? getSoftShadowX64() : 1.0;
 
-    return color * (ambient + (diffuse + specular) * shadow);
+    // return color * (ambient + (diffuse + specular) * shadow);
+    return color * (ambient +((diffuse + (shadow * new_shade)) + specular) * shadow);
 }
 
 // MAIN ===============================================================

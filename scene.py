@@ -39,11 +39,15 @@ class Scene:
     
         # GARIS JALAN
         for i in range(8):
-            add(ColorCube(self.app, pos=(-16 + (i * 5), 0, 0), scale=(1, 0.1, 0.1)))
+            add(ColorCube(self.app, pos=(-16 + (i * 5), 0, 0), scale=(1, 0.05, 0.05)))
     
         # MOBIL MOBIL (TESTING CLASS MOBIL (MASIH PERLU DIPERBAIKI))
-        for i in range(5):
-            car_position = (-16 + (i * 8) + random.uniform(0.0, 2.0), 0, random.randint(-7, 7))
-            car_color = (random.uniform(0.0, 1.0), random.uniform(0.0, 1.0), random.uniform(0.0, 1.0))
-            Car(self.app, self.add_object, position=car_position, color=car_color)
-    
+        # for i in range(5):
+        #     car_position = (-16 + (i * 8) + random.uniform(0.0, 2.0), 0, random.randint(-7, 7))
+        #     car_color = (random.uniform(0.0, 1.0), random.uniform(0.0, 1.0), random.uniform(0.0, 1.0))
+        #     Car(self.app, add ,position=car_position, color=car_color)
+        
+        for i in range(3):
+            add(Fixed_Car(app, pos=(-10 + (i * 10), 0, random.randint(-7, 7)),
+                          color=(random.uniform(0.0, 1.0), random.uniform(0.0, 1.0), random.uniform(0.0, 1.0))
+                          ))

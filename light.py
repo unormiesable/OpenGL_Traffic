@@ -7,6 +7,7 @@ class Light:
         self.color = glm.vec3(color)
         
         self.direction = glm.vec3(0, 0, 0)
+        self.shadow_blur = shadow_blur
         self.multiplier = intensity
         
         # INTENSITAS CAHAYA

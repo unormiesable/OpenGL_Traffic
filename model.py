@@ -61,6 +61,8 @@ class ExtendedBaseModelColor(BaseModelColor):
         self.depth_texture = self.app.mesh.texture.textures['depth_texture']
         self.program['shadowMap'] = 1
         self.depth_texture.use(location=1)
+        
+        self.program['new_shade'] = 1.0
 
         self.shadow_vao = self.app.mesh.vao.vaos['shadow_' + self.vao_name]
         self.shadow_program = self.shadow_vao.program
@@ -238,42 +240,206 @@ class AdvancedSkyBox(BaseModel):
         self.texture.use(location=0)
 
 
-## CLASS MOBIL (MASIH PERLU DIPERBAIKI)
-class Car:
-    def __init__(self, app, add_func, position=(0.0, 0.0, 0.0), color=(1.0, 1.0, 1.0)):
+# CLASS OBJEK GABUNGAN =============================================================================
+
+# TES KUBUS DAN PLANE
+class Cube_Plane:
+    def __init__(self, app, pos=(0, 0, 0), rot=(0, 0, 0),
+                 scale=(1, 1, 1), uni_scale=1, color=(1.0, 1.0, 1.0)):
+
         self.app = app
-        self.position = position
-        self.color = color
-        self.add = add_func
-        self.create_car()
+        self.pos = glm.vec3(pos)
+        self.rot = glm.vec3([glm.radians(a) for a in rot])
+        self.scale = glm.vec3(scale) * uni_scale
+        self.color = glm.vec3(color)
 
-    def create_car(self):
-        px, py, pz = self.position
-        add = self.add
+        # BUAT OBJEK DARI PRIMITIF
+        self.plane = ColorPlane(app, pos=(0, 0, 0), color=color, scale=(5, 5, 5))
+        self.cube = ColorCube(app, pos=(0, 1, 0), color=color, scale=(1, 1, 1))
 
+        self.update_model_matrices()
+
+    def get_model_matrix(self, part):
+        m_model = glm.mat4()
+
+        # TRANSFORMASI PARENT
+        m_model = glm.translate(m_model, self.pos)
+        m_model = glm.rotate(m_model, self.rot.z, glm.vec3(0, 0, 1))
+        m_model = glm.rotate(m_model, self.rot.y, glm.vec3(0, 1, 0))
+        m_model = glm.rotate(m_model, self.rot.x, glm.vec3(1, 0, 0))
+        m_model = glm.scale(m_model, self.scale)
+
+        # TRANSFORMASI LOKAL
+        m_model = glm.translate(m_model, glm.vec3(part.pos))
+        m_model = glm.rotate(m_model, part.rot.z, glm.vec3(0, 0, 1))
+        m_model = glm.rotate(m_model, part.rot.y, glm.vec3(0, 1, 0))
+        m_model = glm.rotate(m_model, part.rot.x, glm.vec3(1, 0, 0))
+        m_model = glm.scale(m_model, glm.vec3(part.scale))
+
+        return m_model
+
+    def update_model_matrices(self):
+        self.plane.m_model = self.get_model_matrix(self.plane)
+        self.cube.m_model = self.get_model_matrix(self.cube)
+
+    def update(self):
+        self.update_model_matrices()
+
+        self.plane.color = self.color
+        self.cube.color = self.color
+
+        self.plane.update()
+        self.cube.update()
+
+    def render(self):
+        self.plane.render()
+        self.cube.render()
+
+    def render_shadow(self):
+        self.plane.render_shadow()
+        self.cube.render_shadow()
+        
+
+# MODEL MOBIL 
+class Fixed_Car:
+    def __init__(self, app, pos=(0, 0, 0), rot=(0, 0, 0),
+                 scale=(1, 1, 1), uni_scale=1, color=(1.0, 1.0, 1.0), win_color=(0.5, 0.5, 0.8)):
+
+        self.app = app
+        self.pos = glm.vec3(pos)
+        self.rot = glm.vec3([glm.radians(a) for a in rot])
+        self.scale = glm.vec3(scale) * uni_scale
+        self.color = glm.vec3(color)
+        self.uni_scale = uni_scale
+
+        self.win_color = win_color
+        
+        # BUAT OBJEK DARI PRIMITIF
+        # BODY
+        self.body = ColorCube(app, pos=(0.0, 1.5, 0.0), color=color, scale=(3, 1, 1.5))
+        self.roof = ColorCube(app, pos=(0.5, 2.6, 0.0), color=color, scale=(1, 1, 1.4))
+        self.windf = ColorCube(app, pos=(self.roof.pos[0] - 1.0, 2.18, 0.0), color=color, scale=(1, 1, 1.4), rot=(0, 0, 45))
+        self.windb = ColorCube(app, pos=(self.roof.pos[0] + 0.65, 2.24, 0.0), color=color, scale=(1, 1, 1.4), rot=(0, 0, 30))
+        
+        self.winmid = ColorCube(app, pos=(0.5, 2.6, 0.0), color=color, scale=(0.1, 1, self.roof.scale[2] + 0.005))
+        
+        # WINDOWS
+        self.glassf = ColorCube(app, pos=(self.roof.pos[0] - 1.1, 2.3, 0.0), color=win_color, scale=(1, 1, self.roof.scale[2]), rot=(0, 0, 45), uni_scale=0.85)
+        self.glassb = ColorCube(app, pos=(self.roof.pos[0] + 0.8, 2.3, 0.0), color=win_color, scale=(1, 1, self.roof.scale[2]), rot=(0, 0, 30), uni_scale=0.85)
+        
+        self.glassfs = ColorCube(app, pos=(self.roof.pos[0] - 1.0, 2.3, 0.0), color=win_color, scale=(1, 1, self.roof.scale[2] + 0.25), rot=(0, 0, 45), uni_scale=0.85)
+        self.glassbs = ColorCube(app, pos=(self.roof.pos[0] + 0.65, 2.33, 0.0), color=win_color, scale=(1, 1, self.roof.scale[2] + 0.25), rot=(0, 0, 30), uni_scale=0.85)
+        self.glassms = ColorCube(app, pos=(self.roof.pos[0] - 0.03, 2.65, 0.0), color=win_color, scale=(1.15, 1, self.roof.scale[2] + 0.25), rot=(0, 0, 0), uni_scale=0.85)
+        
         # BAN KIRI
-        add(ColorCylinder(self.app, pos=(-2.0 + px, 1 + py, 1.8 + pz), color=(0.2, 0.2, 0.2), scale=(1, 0.3, 1), rot=(90, 0, 0)))
-        add(ColorCylinder(self.app, pos=(-2.0 + px, 1 + py, 2.0 + pz), color=(1.0, 1.0, 1.0), scale=(1, 0.3, 1), rot=(90, 0, 0), uni_scale=0.5))
-        add(ColorCylinder(self.app, pos=(2.2 + px, 1 + py, 1.8 + pz), color=(0.2, 0.2, 0.2), scale=(1, 0.3, 1), rot=(90, 0, 0)))
-        add(ColorCylinder(self.app, pos=(2.2 + px, 1 + py, 2.0 + pz), color=(1.0, 1.0, 1.0), scale=(1, 0.3, 1), rot=(90, 0, 0), uni_scale=0.5))
+        self.ban_kiri_depan = ColorCylinder(app, pos=(-2, 0.9, 1.8), color=(0.2, 0.2, 0.2), rot=(90, 0, 0), scale=(1, 0.4, 1), uni_scale=0.9)
+        self.ban_kiri_belakang = ColorCylinder(app, pos=(2, 1, 1.8), color=(0.2, 0.2, 0.2), rot=(90, 0, 0), scale=(1, 0.4, 1))
+        
+        # VELG KIRI
+        self.velg_kiri_depan = ColorCylinder(app, pos=(-2, 0.9, 2.05), color=(0.8, 0.8, 0.8), rot=(90, 0, 0), scale=(1, 0.5, 1), uni_scale=0.35)
+        self.velg_kiri_belakang = ColorCylinder(app, pos=(2, 1, 2.05), color=(0.8, 0.8, 0.8), rot=(90, 0, 0), scale=(1, 0.5, 1), uni_scale=0.4)
 
-        # BAN KANAN
-        add(ColorCylinder(self.app, pos=(-2.0 + px, 1 + py, -1.8 + pz), color=(0.2, 0.2, 0.2), scale=(1, 0.3, 1), rot=(90, 0, 0)))
-        add(ColorCylinder(self.app, pos=(-2.0 + px, 1 + py, -2.0 + pz), color=(1.0, 1.0, 1.0), scale=(1, 0.3, 1), rot=(90, 0, 0), uni_scale=0.5))
-        add(ColorCylinder(self.app, pos=(2.2 + px, 1 + py, -1.8 + pz), color=(0.2, 0.2, 0.2), scale=(1, 0.3, 1), rot=(90, 0, 0)))
-        add(ColorCylinder(self.app, pos=(2.2 + px, 1 + py, -2.0 + pz), color=(1.0, 1.0, 1.0), scale=(1, 0.3, 1), rot=(90, 0, 0), uni_scale=0.5))
+        #BAN KANAN
+        self.ban_kanan_depan = ColorCylinder(app, pos=(-2, 0.9, -1.8), color=(0.2, 0.2, 0.2), rot=(90, 0, 0), scale=(1, 0.4, 1), uni_scale=0.9)
+        self.ban_kanan_belakang = ColorCylinder(app, pos=(2, 1, -1.8), color=(0.2, 0.2, 0.2), rot=(90, 0, 0), scale=(1, 0.4, 1))
+        
+        #VELG KANAN
+        self.velg_kanan_depan = ColorCylinder(app, pos=(-2, 0.9, -2.05), color=(0.8, 0.8, 0.8), rot=(90, 0, 0), scale=(1, 0.5, 1), uni_scale=0.35)
+        self.velg_kanan_belakang = ColorCylinder(app, pos=(2, 1, -2.05), color=(0.8, 0.8, 0.8), rot=(90, 0, 0), scale=(1, 0.5, 1), uni_scale=0.4)
+        
+        self.update_model_matrices()
 
-        # BODY MOBIL
-        add(ColorCube(self.app, pos=(0.2 + px, 2 + py, 0 + pz), color=self.color, scale=(3.4, 1, 1.6)))
-        add(ColorCube(self.app, pos=(1 + px, 3 + py, 0 + pz), color=self.color, scale=(0.7, 0.7, 1.5), rot=(0, 0, 45)))
-        add(ColorCube(self.app, pos=(-1 + px, 3 + py, 0 + pz), color=self.color, scale=(0.7, 0.7, 1.5), rot=(0, 0, 60)))
-        add(ColorCube(self.app, pos=(-0.12 + px, 3.3 + py, 0 + pz), color=self.color, scale=(1.12, 0.7, 1.5), rot=(0, 0, 0)))
+    def get_model_matrix(self, part):
+        m_model = glm.mat4()
 
-        # WINDOW
-        glass = (0.8, 0.8, 1.0)
-        add(ColorCube(self.app, pos=(1.02 + px, 3 + py, 0 + pz), color=glass, scale=(0.7, 0.63, 1.3), rot=(0, 0, 45)))
-        add(ColorCube(self.app, pos=(0.98 + px, 3 + py, 0 + pz), color=glass, scale=(0.7, 0.63, 1.52), rot=(0, 0, 45)))
-        add(ColorCube(self.app, pos=(-1.02 + px, 3 + py, 0 + pz), color=glass, scale=(0.7, 0.70, 1.3), rot=(0, 0, 60)))
-        add(ColorCube(self.app, pos=(-0.98 + px, 3 + py, 0 + pz), color=glass, scale=(0.7, 0.70, 1.52), rot=(0, 0, 60)))
-        add(ColorCube(self.app, pos=(-0.12 + px, 3.3 + py, 0 + pz), color=glass, scale=(1.12, 0.64, 1.52), rot=(0, 0, 0)))
-        add(ColorCube(self.app, pos=(-0.12 + px, 3.3 + py, 0 + pz), color=self.color, scale=(0.1, 0.64, 1.525), rot=(0, 0, 0)))
+        # TRANSFORMASI PARENT
+        m_model = glm.translate(m_model, self.pos)
+        m_model = glm.rotate(m_model, self.rot.z, glm.vec3(0, 0, 1))
+        m_model = glm.rotate(m_model, self.rot.y, glm.vec3(0, 1, 0))
+        m_model = glm.rotate(m_model, self.rot.x, glm.vec3(1, 0, 0))
+        m_model = glm.scale(m_model, self.scale * self.uni_scale)
+
+        # TRANSFORMASI LOKAL
+        m_model = glm.translate(m_model, glm.vec3(part.pos))
+        m_model = glm.rotate(m_model, part.rot.z, glm.vec3(0, 0, 1))
+        m_model = glm.rotate(m_model, part.rot.y, glm.vec3(0, 1, 0))
+        m_model = glm.rotate(m_model, part.rot.x, glm.vec3(1, 0, 0))
+        m_model = glm.scale(m_model, glm.vec3(part.scale))
+
+        return m_model
+
+    # UPDATE MATRIX OBJEK (UPDATE TRANSFORMASI KESELURUHAN -> UNTUK TIAP PRIMITIF)
+    def update_model_matrices(self):
+        self.body.m_model = self.get_model_matrix(self.body)
+        self.roof.m_model = self.get_model_matrix(self.roof)
+        self.windf.m_model = self.get_model_matrix(self.windf)
+        self.windb.m_model = self.get_model_matrix(self.windb)
+        
+        self.winmid.m_model = self.get_model_matrix(self.winmid)
+        
+        self.glassf.m_model = self.get_model_matrix(self.glassf)
+        self.glassb.m_model = self.get_model_matrix(self.glassb)
+        self.glassfs.m_model = self.get_model_matrix(self.glassfs)
+        self.glassbs.m_model = self.get_model_matrix(self.glassbs)
+        self.glassms.m_model = self.get_model_matrix(self.glassms)
+        
+        self.ban_kiri_depan.m_model = self.get_model_matrix(self.ban_kiri_depan)
+        self.ban_kiri_belakang.m_model = self.get_model_matrix(self.ban_kiri_belakang)
+        self.ban_kanan_depan.m_model = self.get_model_matrix(self.ban_kanan_depan)
+        self.ban_kanan_belakang.m_model = self.get_model_matrix(self.ban_kanan_belakang)
+        
+        self.velg_kiri_depan.m_model = self.get_model_matrix(self.velg_kiri_depan)
+        self.velg_kiri_belakang.m_model = self.get_model_matrix(self.velg_kiri_belakang)
+        self.velg_kanan_depan.m_model = self.get_model_matrix(self.velg_kanan_depan)
+        self.velg_kanan_belakang.m_model = self.get_model_matrix(self.velg_kanan_belakang)
+
+    def update(self):
+        self.update_model_matrices()
+
+    def render(self):
+        self.body.render()
+        self.roof.render()
+        self.windf.render()
+        self.windb.render()
+        
+        self.winmid.render()
+        
+        self.glassf.render()
+        self.glassb.render()
+        self.glassfs.render()
+        self.glassbs.render()
+        self.glassms.render()
+        
+        self.ban_kiri_depan.render()
+        self.ban_kiri_belakang.render()
+        self.ban_kanan_depan.render()
+        self.ban_kanan_belakang.render()
+        
+        self.velg_kiri_depan.render()
+        self.velg_kiri_belakang.render()
+        self.velg_kanan_depan.render()
+        self.velg_kanan_belakang.render()
+
+    def render_shadow(self):
+        self.body.render_shadow()
+        self.roof.render_shadow()
+        self.windf.render_shadow()
+        self.windb.render_shadow()
+        
+        self.winmid.render_shadow()
+        
+        self.glassf.render_shadow()
+        self.glassb.render_shadow()
+        self.glassfs.render_shadow()
+        self.glassbs.render_shadow()
+        self.glassms.render_shadow()
+        
+        self.ban_kiri_depan.render_shadow()
+        self.ban_kiri_belakang.render_shadow()
+        self.ban_kanan_depan.render_shadow()
+        self.ban_kanan_belakang.render_shadow()
+        
+        self.velg_kiri_depan.render_shadow()
+        self.velg_kiri_belakang.render_shadow()
+        self.velg_kanan_depan.render_shadow()
+        self.velg_kanan_belakang.render_shadow()
