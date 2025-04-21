@@ -29,7 +29,6 @@ class Scene:
         # add(ColorCube(app, pos=(0, 2, 0), color=(1.0, 0.0, 0.0), scale=(1, 2, 1)))
         # add(ColorCylinder(app, pos=(0, 1, 0), color=(0.2, 0.2, 0.2), scale=(1, 1, 1), rot=(90, 0, 0)))
         
-        
         # TEST DENGAN FILE OBJ (PROTOTYPING)
         # add(Gate(app, pos=(0, 0, 0)))
         # add(Yellow_Car(app, pos=(0, 0, 0), uni_scale= 0.8))
@@ -37,53 +36,14 @@ class Scene:
         # TESTING LOOP RANDOM COLOR
         # for i in range(10):
         #     add(ColorCube(app, pos=((i+1)-5, (i+1)/5, 0), color=(random.uniform(0.0, 1.0), random.uniform(0.0, 1.0), random.uniform(0.0, 1.0)), scale=(0.5, (i+1)/5, 1)))
-
-        
-        # TESTING BUAT MOBIL DARI PRIMITIF
-        
-        class Car:
-            def __init__(self, app, position=(0.0, 0.0, 0.0), color=(1.0, 1.0, 1.0)):
-                self.app = app
-                self.position = position
-                self.color = color
-                self.create_car()
-
-            def create_car(self):
-                
-                # BAN KIRI
-                add(ColorCylinder(self.app, pos=(-2.0 + self.position[0], 1 + self.position[1], 1.8 + self.position[2]), color=(0.2, 0.2, 0.2), scale=(1, 0.3, 1), rot=(90, 0, 0)))
-                add(ColorCylinder(self.app, pos=(-2.0 + self.position[0], 1 + self.position[1], 2.0 + self.position[2]), color=(1.0, 1.0, 1.0), scale=(1, 0.3, 1), rot=(90, 0, 0), uni_scale= 0.5))
-                add(ColorCylinder(self.app, pos=(2.2 + self.position[0], 1 + self.position[1], 1.8 + self.position[2]), color=(0.2, 0.2, 0.2), scale=(1, 0.3, 1), rot=(90, 0, 0)))
-                add(ColorCylinder(self.app, pos=(2.2 + self.position[0], 1 + self.position[1], 2.0 + self.position[2]), color=(1.0, 1.0, 1.0), scale=(1, 0.3, 1), rot=(90, 0, 0), uni_scale= 0.5))
-                
-                # BAN KANAN
-                add(ColorCylinder(self.app, pos=(-2.0 + self.position[0], 1 + self.position[1], -1.8 + self.position[2]), color=(0.2, 0.2, 0.2), scale=(1, 0.3, 1), rot=(90, 0, 0)))
-                add(ColorCylinder(self.app, pos=(-2.0 + self.position[0], 1 + self.position[1], -2.0 + self.position[2]), color=(1.0, 1.0, 1.0), scale=(1, 0.3, 1), rot=(90, 0, 0), uni_scale= 0.5))
-                add(ColorCylinder(self.app, pos=(2.2 + self.position[0], 1 + self.position[1], -1.8 + self.position[2]), color=(0.2, 0.2, 0.2), scale=(1, 0.3, 1), rot=(90, 0, 0)))
-                add(ColorCylinder(self.app, pos=(2.2 + self.position[0], 1 + self.position[1], -2.0 + self.position[2]), color=(1.0, 1.0, 1.0), scale=(1, 0.3, 1), rot=(90, 0, 0), uni_scale= 0.5))
-                
-                # BASE
-                add(ColorCube(self.app, pos=(0.2 + self.position[0], 2 + self.position[1], 0 + self.position[2]), color=self.color, scale=(3.4, 1, 1.6)))
-                add(ColorCube(self.app, pos=(1 + self.position[0], 3 + self.position[1], 0 + self.position[2]), color=self.color, scale=(0.7, 0.7, 1.5), rot=(0, 0, 45)))
-                add(ColorCube(self.app, pos=(-1 + self.position[0], 3 + self.position[1], 0 + self.position[2]), color=self.color, scale=(0.7, 0.7, 1.5), rot=(0, 0, 60)))
-                add(ColorCube(self.app, pos=(-0.12 + self.position[0], 3.3 + self.position[1], 0 + self.position[2]), color=self.color, scale=(1.12, 0.7, 1.5), rot=(0, 0, 0)))
-                
-                # WINDOW
-                add(ColorCube(self.app, pos=(1.02 + self.position[0], 3 + self.position[1], 0 + self.position[2]), color=(0.8, 0.8, 1.0), scale=(0.7, 0.63, 1.3), rot=(0, 0, 45)))
-                add(ColorCube(self.app, pos=(0.98 + self.position[0], 3 + self.position[1], 0 + self.position[2]), color=(0.8, 0.8, 1.0), scale=(0.7, 0.63, 1.52), rot=(0, 0, 45)))
-                add(ColorCube(self.app, pos=(-1.02 + self.position[0], 3 + self.position[1], 0 + self.position[2]), color=(0.8, 0.8, 1.0), scale=(0.7, 0.70, 1.3), rot=(0, 0, 60)))
-                add(ColorCube(self.app, pos=(-0.98 + self.position[0], 3 + self.position[1], 0 + self.position[2]), color=(0.8, 0.8, 1.0), scale=(0.7, 0.70, 1.52), rot=(0, 0, 60)))
-                add(ColorCube(self.app, pos=(-0.12 + self.position[0], 3.3 + self.position[1], 0 + self.position[2]), color=(0.8, 0.8, 1.0), scale=(1.12, 0.64, 1.52), rot=(0, 0, 0)))
-                add(ColorCube(self.app, pos=(-0.12 + self.position[0], 3.3 + self.position[1], 0 + self.position[2]), color=self.color, scale=(0.1, 0.64, 1.525), rot=(0, 0, 0)))
-                
-                
-        # MOBIL MOBIL
-        for i in range(5):
-            car_position = (-16 + (i * 8) + random.uniform(0.0, 2.0), 0, random.randint(-7, 7))
-            car_color = (random.uniform(0.0, 1.0), random.uniform(0.0, 1.0), random.uniform(0.0, 1.0))
-            Car(self.app, position=car_position, color=car_color)
-
+    
         # GARIS JALAN
         for i in range(8):
             add(ColorCube(self.app, pos=(-16 + (i * 5), 0, 0), scale=(1, 0.1, 0.1)))
+    
+        # MOBIL MOBIL (TESTING CLASS MOBIL (MASIH PERLU DIPERBAIKI))
+        for i in range(5):
+            car_position = (-16 + (i * 8) + random.uniform(0.0, 2.0), 0, random.randint(-7, 7))
+            car_color = (random.uniform(0.0, 1.0), random.uniform(0.0, 1.0), random.uniform(0.0, 1.0))
+            Car(self.app, self.add_object, position=car_position, color=car_color)
     

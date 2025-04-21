@@ -207,7 +207,11 @@ class SkyBox(BaseModel):
         self.on_init()
 
     def update(self):
-        self.program['m_view'].write(glm.mat4(glm.mat3(self.camera.m_view)))
+        self.m_model = glm.translate(glm.mat4(), self.camera.position)
+        self.program['m_model'].write(self.m_model)
+        self.program['m_view'].write(glm.mat4(glm.mat3(self.camera.m_view)))  # Remove translation
+        self.program['m_proj'].write(self.camera.m_proj)
+        
 
     def on_init(self):
         self.texture = self.app.mesh.texture.textures[self.tex_id]
@@ -232,3 +236,44 @@ class AdvancedSkyBox(BaseModel):
         self.texture = self.app.mesh.texture.textures[self.tex_id]
         self.program['u_texture_skybox'] = 0
         self.texture.use(location=0)
+
+
+## CLASS MOBIL (MASIH PERLU DIPERBAIKI)
+class Car:
+    def __init__(self, app, add_func, position=(0.0, 0.0, 0.0), color=(1.0, 1.0, 1.0)):
+        self.app = app
+        self.position = position
+        self.color = color
+        self.add = add_func
+        self.create_car()
+
+    def create_car(self):
+        px, py, pz = self.position
+        add = self.add
+
+        # BAN KIRI
+        add(ColorCylinder(self.app, pos=(-2.0 + px, 1 + py, 1.8 + pz), color=(0.2, 0.2, 0.2), scale=(1, 0.3, 1), rot=(90, 0, 0)))
+        add(ColorCylinder(self.app, pos=(-2.0 + px, 1 + py, 2.0 + pz), color=(1.0, 1.0, 1.0), scale=(1, 0.3, 1), rot=(90, 0, 0), uni_scale=0.5))
+        add(ColorCylinder(self.app, pos=(2.2 + px, 1 + py, 1.8 + pz), color=(0.2, 0.2, 0.2), scale=(1, 0.3, 1), rot=(90, 0, 0)))
+        add(ColorCylinder(self.app, pos=(2.2 + px, 1 + py, 2.0 + pz), color=(1.0, 1.0, 1.0), scale=(1, 0.3, 1), rot=(90, 0, 0), uni_scale=0.5))
+
+        # BAN KANAN
+        add(ColorCylinder(self.app, pos=(-2.0 + px, 1 + py, -1.8 + pz), color=(0.2, 0.2, 0.2), scale=(1, 0.3, 1), rot=(90, 0, 0)))
+        add(ColorCylinder(self.app, pos=(-2.0 + px, 1 + py, -2.0 + pz), color=(1.0, 1.0, 1.0), scale=(1, 0.3, 1), rot=(90, 0, 0), uni_scale=0.5))
+        add(ColorCylinder(self.app, pos=(2.2 + px, 1 + py, -1.8 + pz), color=(0.2, 0.2, 0.2), scale=(1, 0.3, 1), rot=(90, 0, 0)))
+        add(ColorCylinder(self.app, pos=(2.2 + px, 1 + py, -2.0 + pz), color=(1.0, 1.0, 1.0), scale=(1, 0.3, 1), rot=(90, 0, 0), uni_scale=0.5))
+
+        # BODY MOBIL
+        add(ColorCube(self.app, pos=(0.2 + px, 2 + py, 0 + pz), color=self.color, scale=(3.4, 1, 1.6)))
+        add(ColorCube(self.app, pos=(1 + px, 3 + py, 0 + pz), color=self.color, scale=(0.7, 0.7, 1.5), rot=(0, 0, 45)))
+        add(ColorCube(self.app, pos=(-1 + px, 3 + py, 0 + pz), color=self.color, scale=(0.7, 0.7, 1.5), rot=(0, 0, 60)))
+        add(ColorCube(self.app, pos=(-0.12 + px, 3.3 + py, 0 + pz), color=self.color, scale=(1.12, 0.7, 1.5), rot=(0, 0, 0)))
+
+        # WINDOW
+        glass = (0.8, 0.8, 1.0)
+        add(ColorCube(self.app, pos=(1.02 + px, 3 + py, 0 + pz), color=glass, scale=(0.7, 0.63, 1.3), rot=(0, 0, 45)))
+        add(ColorCube(self.app, pos=(0.98 + px, 3 + py, 0 + pz), color=glass, scale=(0.7, 0.63, 1.52), rot=(0, 0, 45)))
+        add(ColorCube(self.app, pos=(-1.02 + px, 3 + py, 0 + pz), color=glass, scale=(0.7, 0.70, 1.3), rot=(0, 0, 60)))
+        add(ColorCube(self.app, pos=(-0.98 + px, 3 + py, 0 + pz), color=glass, scale=(0.7, 0.70, 1.52), rot=(0, 0, 60)))
+        add(ColorCube(self.app, pos=(-0.12 + px, 3.3 + py, 0 + pz), color=glass, scale=(1.12, 0.64, 1.52), rot=(0, 0, 0)))
+        add(ColorCube(self.app, pos=(-0.12 + px, 3.3 + py, 0 + pz), color=self.color, scale=(0.1, 0.64, 1.525), rot=(0, 0, 0)))
