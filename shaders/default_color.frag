@@ -24,6 +24,7 @@ uniform bool u_enableShadow;
 uniform float shadowBlur;
 uniform vec3 u_color;
 uniform float new_shade;
+uniform float ao;
 
 // PCF SETUP ========================================================
 float pcfLookup(vec2 offset) {
@@ -84,7 +85,7 @@ float getSoftShadowX32() {
 
 float getSoftShadowX64() {
     float shadow;
-    float step_width = 0.2 * shadowBlur;
+    float step_width = 0.1 * shadowBlur;
     float extend = step_width * 3.0 + step_width / 2.0;
     for (float y = -extend; y <= extend; y += step_width) {
         for (float x = -extend; x <= extend; x += step_width) {
@@ -96,7 +97,7 @@ float getSoftShadowX64() {
 
 float getSoftShadowX128() {
     float shadow;
-    float step_width = 0.4 * shadowBlur;
+    float step_width = 0.1 * shadowBlur;
     float extend = step_width * 3.0 + step_width / 2.0;
     for (float y = -extend; y <= extend; y += step_width) {
         for (float x = -extend; x <= extend; x += step_width) {
@@ -104,6 +105,20 @@ float getSoftShadowX128() {
         }
     }
     return shadow / 128;
+}
+
+// SETUP AO (TAPI MASIH SHADOW BASED)
+float getFakeAo() {
+    float shadow;
+    float step_width = 2.0 * shadowBlur; 
+    float extend = step_width * 3;
+    
+    for (float y = -extend; y <= extend; y += step_width) {
+        for (float x = -extend; x <= extend; x += step_width) {
+            shadow += lookup(x, y);
+        }
+    }
+    return shadow / 128.0;
 }
 
 float getShadow() {
@@ -129,10 +144,13 @@ vec3 getLight(vec3 color) {
     vec3 specular = spec * light.Is;
 
     // SHADOW
-    float shadow = u_enableShadow ? getSoftShadowX64() : 1.0;
+    float shadow = u_enableShadow ? getSoftShadowX128() : 1.0;
+    
+    // NGIDE FAKE AO
+    float ao = getFakeAo();
 
-    // return color * (ambient + (diffuse + specular) * shadow);
-    return color * (ambient +((diffuse + (shadow * new_shade)) + specular) * shadow);
+    // FINAL
+    return color * (ambient +((diffuse + (shadow * new_shade)) + specular) * (shadow+(ao*2)));
 }
 
 // MAIN ===============================================================

@@ -34,7 +34,7 @@ class GraphicsEngine:
         self.time = 0
         self.delta_time = 0
         
-        self.light = Light(position=(5, 10, 5), color=(1, 1, 1),intensity=2.2, shadow_blur=3.0)
+        self.light = Light(position=(10, 10, 10), color=(1, 1, 1),intensity=2.2, shadow_blur=3.0)
         self.camera = Camera(self)
         self.mesh = Mesh(self)
         self.scene = Scene(self)
