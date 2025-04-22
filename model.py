@@ -63,6 +63,9 @@ class ExtendedBaseModelColor(BaseModelColor):
         self.depth_texture.use(location=1)
         
         self.program['new_shade'] = 1.0
+        
+        # TESTING AO (FAKE AO)
+        self.program['ao_factor'] = 3.0
 
         self.shadow_vao = self.app.mesh.vao.vaos['shadow_' + self.vao_name]
         self.shadow_program = self.shadow_vao.program

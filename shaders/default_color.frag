@@ -24,7 +24,7 @@ uniform bool u_enableShadow;
 uniform float shadowBlur;
 uniform vec3 u_color;
 uniform float new_shade;
-uniform float ao;
+uniform float ao_factor;
 
 // PCF SETUP ========================================================
 float pcfLookup(vec2 offset) {
@@ -147,10 +147,10 @@ vec3 getLight(vec3 color) {
     float shadow = u_enableShadow ? getSoftShadowX128() : 1.0;
     
     // NGIDE FAKE AO
-    float ao = getFakeAo();
+    float ao = getFakeAo() * ao_factor;
 
     // FINAL
-    return color * (ambient +((diffuse + (shadow * new_shade)) + specular) * (shadow+(ao*2)));
+    return color * (ambient +((diffuse + (shadow * new_shade)) + specular) * (shadow+(ao)));
 }
 
 // MAIN ===============================================================
