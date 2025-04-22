@@ -9,7 +9,6 @@ class VAO:
         self.program = ShaderProgram(ctx)
         self.vaos = {}
 
-
         # OBJEK TANPA TEXTURE ========================================================================
         # COLOR CUBE VAO
         self.vaos['color_cube'] = self.get_vao(
