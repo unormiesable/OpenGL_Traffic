@@ -72,12 +72,12 @@ class GraphicsEngine:
 
                     # BATAS RADIUS
                     self.camera.orbit_radius = max(1.0, min(self.camera.orbit_radius, 50.0))
-
-
+                
+                
     # RENDER SCENE -> SCENE RENDERER
     def render(self):
         self.ctx.clear(color=(self.background_color))
-        self.scene_renderer.render(lighting = 1, skybox = 0)
+        self.scene_renderer.render(lighting = self.lighting, skybox = 0)
         pg.display.flip()
 
     def get_time(self):
