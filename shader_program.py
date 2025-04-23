@@ -4,7 +4,10 @@ class ShaderProgram:
         self.ctx = ctx
         self.programs = {}
         self.programs['default'] = self.get_program('default')
+        
         self.programs['default_color'] = self.get_program('default_color')
+        self.programs['rough_color'] = self.get_program('rough_color')
+        
         self.programs['skybox'] = self.get_program('skybox')
         self.programs['skybox_next'] = self.get_program('skybox_next')
         self.programs['shadow_map'] = self.get_program('shadow_map')
