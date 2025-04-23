@@ -6,7 +6,7 @@ class ShaderProgram:
         self.programs['default'] = self.get_program('default')
         self.programs['default_color'] = self.get_program('default_color')
         self.programs['skybox'] = self.get_program('skybox')
-        self.programs['advanced_skybox'] = self.get_program('advanced_skybox')
+        self.programs['skybox_next'] = self.get_program('skybox_next')
         self.programs['shadow_map'] = self.get_program('shadow_map')
 
     # SETUP BUAT BACA SHADER (.frag, .vert)

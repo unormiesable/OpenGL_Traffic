@@ -89,9 +89,9 @@ class VAO:
             vbo=self.vbo.vbos['skybox'])
 
         # ADV SKYBOX VAO
-        self.vaos['advanced_skybox'] = self.get_vao(
-            program=self.program.programs['advanced_skybox'],
-            vbo=self.vbo.vbos['advanced_skybox'])
+        self.vaos['skybox_next'] = self.get_vao(
+            program=self.program.programs['skybox_next'],
+            vbo=self.vbo.vbos['skybox_next'])
 
 
     def get_vao(self, program, vbo):

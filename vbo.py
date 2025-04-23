@@ -22,7 +22,7 @@ class VBO:
         
         # SKYBOX (TIDAK DIGUNAKAN UNTUK SAAT INI)
         self.vbos['skybox'] = SkyBoxVBO(ctx)
-        self.vbos['advanced_skybox'] = AdvancedSkyBoxVBO(ctx)
+        self.vbos['skybox_next'] = AdvancedSkyBoxVBO(ctx)
 
     def destroy(self):
         [vbo.destroy() for vbo in self.vbos.values()]
