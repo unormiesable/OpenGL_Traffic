@@ -510,3 +510,70 @@ class Fixed_Car:
         
         self.backlightl.render_shadow()
         self.backlightr.render_shadow()
+    
+      
+# MODEL POHON
+class Tree:
+    def __init__(self, app, pos=(0, 0, 0), rot=(0, 0, 0),
+                 scale=(1, 1, 1), uni_scale=1, batang_color=(1.0, 1.0, 1.0), daun_color=(1.0, 1.0, 1.0), color=(1.0, 1.0, 1.0), uni_scale_batang=1, uni_scale_daun=1):
+
+        self.app = app
+        self.pos = glm.vec3(pos)
+        self.rot = glm.vec3([glm.radians(a) for a in rot])
+        self.scale = glm.vec3(scale) * uni_scale
+        self.color = glm.vec3(color)
+
+        # BUAT OBJEK DARI PRIMITIF
+        self.batang = ColorCylinder(app, pos=(0, 1, 0), color=batang_color, scale=(0.3, 1, 0.3), uni_scale=uni_scale_batang)
+        
+        self.daun_bawah = ColorCone(app, pos=(0, 3, 0), color=daun_color, scale=(1.2, 1, 1.2), uni_scale=uni_scale_daun)
+        self.daun_tengah = ColorCone(app, pos=(0, 4, 0), color=daun_color, scale=(1.1, 1, 1.1), uni_scale=uni_scale_daun)
+
+        self.update_model_matrices()
+
+    def get_model_matrix(self, part):
+        m_model = glm.mat4()
+
+        # TRANSFORMASI PARENT
+        m_model = glm.translate(m_model, self.pos)
+        m_model = glm.rotate(m_model, self.rot.z, glm.vec3(0, 0, 1))
+        m_model = glm.rotate(m_model, self.rot.y, glm.vec3(0, 1, 0))
+        m_model = glm.rotate(m_model, self.rot.x, glm.vec3(1, 0, 0))
+        m_model = glm.scale(m_model, self.scale)
+
+        # TRANSFORMASI LOKAL
+        m_model = glm.translate(m_model, glm.vec3(part.pos))
+        m_model = glm.rotate(m_model, part.rot.z, glm.vec3(0, 0, 1))
+        m_model = glm.rotate(m_model, part.rot.y, glm.vec3(0, 1, 0))
+        m_model = glm.rotate(m_model, part.rot.x, glm.vec3(1, 0, 0))
+        m_model = glm.scale(m_model, glm.vec3(part.scale))
+
+        return m_model
+
+    def update_model_matrices(self):
+        self.batang.m_model = self.get_model_matrix(self.batang)
+        self.daun_bawah.m_model = self.get_model_matrix(self.daun_bawah)
+        self.daun_tengah.m_model = self.get_model_matrix(self.daun_tengah)
+
+    def update(self):
+        self.update_model_matrices()
+
+        self.batang.color = self.color
+        self.daun_bawah.color = self.color
+        self.daun_tengah.color = self.color
+
+        self.batang.update()
+        self.daun_bawah.update()
+        self.daun_tengah.update()
+
+    def render(self):
+        self.batang.render()
+        
+        self.daun_bawah.render()
+        self.daun_tengah.render()
+
+    def render_shadow(self):
+        self.batang.render_shadow()
+        
+        self.daun_bawah.render_shadow()
+        self.daun_tengah.render_shadow()

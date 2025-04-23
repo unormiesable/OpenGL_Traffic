@@ -277,7 +277,7 @@ class ColorConeVBO(BaseVBO):
         base_indices = [(((i + 1) % segments) + 1, i + 1, 0) for i in range(segments)]
 
         apex_index = len(vertices) - 1
-        side_indices = [(i + 1, ((i + 1) % segments) + 1, apex_index) for i in range(segments)]
+        side_indices = [(apex_index, ((i + 1) % segments) + 1, i + 1) for i in range(segments)]
 
         indices = base_indices + side_indices
         vertex_data = self.get_data(vertices, indices)
