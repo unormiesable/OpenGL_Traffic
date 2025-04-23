@@ -306,7 +306,7 @@ class Cube_Plane:
 # MODEL MOBIL 
 class Fixed_Car:
     def __init__(self, app, pos=(0, 0, 0), rot=(0, 0, 0),
-                 scale=(1, 1, 1), uni_scale=1, color=(1.0, 1.0, 1.0), win_color=(0.5, 0.5, 0.8), head_size=0.25, sec_color=(1.0, 1.0, 1.0)):
+                 scale=(1, 1, 1), uni_scale=1, color=(1.0, 1.0, 1.0), win_color=(0.6, 0.6, 0.8), head_size=0.25, sec_color=(1.0, 1.0, 1.0)):
 
         self.app = app
         self.pos = glm.vec3(pos)
@@ -357,8 +357,8 @@ class Fixed_Car:
         self.velg_kanan_belakang = ColorCylinder(app, pos=(2, 1, -2.05), color=(0.8, 0.8, 0.8), rot=(90, 0, 0), scale=(1, 0.5, 1), uni_scale=0.4)
         
         # HEADLIGHT
-        self.headlightl = ColorCylinder(app, rot=(0, 0, 90), scale=(self.head_size, 0.1, self.head_size), pos=(-3, 1.9, 1))
-        self.headlightr = ColorCylinder(app, rot=(0, 0, 90), scale=(self.head_size, 0.1, self.head_size), pos=(-3, 1.9, -1))
+        self.headlightl = ColorCylinder(app, rot=(0, 0, 90), scale=(self.head_size, 0.1, self.head_size), pos=(-3, 1.9, 1), color=win_color)
+        self.headlightr = ColorCylinder(app, rot=(0, 0, 90), scale=(self.head_size, 0.1, self.head_size), pos=(-3, 1.9, -1), color=win_color)
         
         self.headlightl_out = ColorCylinder(app, color=(0.2, 0.2, 0.2), rot=(0, 0, 90), scale=(self.head_size + 0.1, 0.1, self.head_size + 0.1), pos=(-2.95, 1.9, 1))
         self.headlightr_out = ColorCylinder(app, color=(0.2, 0.2, 0.2), rot=(0, 0, 90), scale=(self.head_size + 0.1, 0.1, self.head_size + 0.1), pos=(-2.95, 1.9, -1))
@@ -368,6 +368,7 @@ class Fixed_Car:
         self.backlightr = ColorCube(app, pos=(3, 2, -1), scale=(0.05, 0.15, 0.3), color=(0.8, 0.2, 0.2))
         
         self.update_model_matrices()
+        
 
     def get_model_matrix(self, part):
         m_model = glm.mat4()
@@ -424,6 +425,19 @@ class Fixed_Car:
         self.backlightr.m_model = self.get_model_matrix(self.backlightr)
 
     def update(self):
+        self.update_model_matrices()
+
+    def update_car_color(self, new_prime_color, new_sec_color):
+        self.color = glm.vec3(new_prime_color)
+        self.new_sec_color = glm.vec3(new_sec_color)
+        
+        self.body.color = self.color
+        self.roof.color = self.color
+        self.windf.color = self.color
+        self.windb.color = self.color
+        self.bumper.color = self.new_sec_color
+        self.winmid.color = self.color
+        
         self.update_model_matrices()
 
     def render(self):

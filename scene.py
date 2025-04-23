@@ -7,9 +7,14 @@ class Scene:
     def __init__(self, app):
         self.app = app
         self.objects = []
+        
+        # LIST MOBIL
+        self.cars = []
+        
         self.load()
-        # skybox
         self.skybox = SkyBox(app)
+        
+
 
     def add_object(self, obj):
         self.objects.append(obj)
@@ -47,7 +52,38 @@ class Scene:
         #     car_color = (random.uniform(0.0, 1.0), random.uniform(0.0, 1.0), random.uniform(0.0, 1.0))
         #     Car(self.app, add ,position=car_position, color=car_color)
         
-        for i in range(3):
-            add(Fixed_Car(app, pos=(-10 + (i * 10), 0, random.randint(-7, 7)),
-                          color=(random.uniform(0.0, 1.0), random.uniform(0.0, 1.0), random.uniform(0.0, 1.0)),
-                          sec_color=(random.uniform(0.0, 1.0), random.uniform(0.0, 1.0), random.uniform(0.0, 1.0))))
+        # for i in range(3):
+        #     add(Fixed_Car(app, pos=(-10 + (i * 10), 0, random.randint(-7, 7)),
+        #                   color=(random.uniform(0.0, 1.0), random.uniform(0.0, 1.0), random.uniform(0.0, 1.0)),
+        #                   sec_color=(random.uniform(0.0, 1.0), random.uniform(0.0, 1.0), random.uniform(0.0, 1.0))))
+        
+        # TAMBAHIN MOBIL RANDOM SEGALANYA
+        for i in range(4):
+            car = Fixed_Car(app, pos=(-10 + (i * 10), 0, random.uniform(-8.0, 8.0)),
+                            color=(random.uniform(0.0, 1.0), random.uniform(0.0, 1.0), random.uniform(0.0, 1.0)),
+                            sec_color=(random.uniform(0.0, 1.0), random.uniform(0.0, 1.0), random.uniform(0.0, 1.0)),
+                            uni_scale=0.7)
+            car.speed = random.uniform(10.0, 30.0)
+            add(car)
+            self.cars.append(car)
+
+    
+    # SISTEM ANIMASI (MASIH BETA)
+    def update(self):
+        
+        # ANIMASI MOBIL MOBIL
+        for car in self.cars:
+            car.pos[0] -= car.speed * self.app.delta_time / 1000.0
+            if car.pos[0] < -16:
+                car.pos[0] = 16
+                car.pos[2] = random.randint(-7, 7)
+                car.update_car_color(new_prime_color=(random.uniform(0.0, 1.0), random.uniform(0.0, 1.0), random.uniform(0.0, 1.0)),
+                                     new_sec_color=(random.uniform(0.0, 1.0), random.uniform(0.0, 1.0), random.uniform(0.0, 1.0)))
+            
+            # ANIMASI BAN TIAP MOBIL
+            car.ban_kiri_depan.rot[2] = self.app.time * -6
+            car.ban_kiri_belakang.rot[2] = self.app.time * -6
+            car.ban_kanan_depan.rot[2] = self.app.time * -6
+            car.ban_kanan_belakang.rot[2] = self.app.time * -6
+            
+            car.update()

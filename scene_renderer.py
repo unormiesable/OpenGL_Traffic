@@ -30,6 +30,7 @@ class SceneRenderer:
             self.render_shadow()
         
         self.main_render(skybox=skybox)
+        self.scene.update()
 
     def destroy(self):
         self.depth_fbo.release()
