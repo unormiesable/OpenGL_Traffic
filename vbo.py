@@ -274,7 +274,7 @@ class ColorConeVBO(BaseVBO):
             vertices.append((x, -height / 2, z))
         vertices.append(apex)
 
-        base_indices = [(((i + 1) % segments) + 1, i + 1, 0) for i in range(segments)]
+        base_indices = [(0, i + 1, ((i + 1) % segments) + 1) for i in range(segments)]
 
         apex_index = len(vertices) - 1
         side_indices = [(apex_index, ((i + 1) % segments) + 1, i + 1) for i in range(segments)]

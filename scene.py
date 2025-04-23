@@ -72,7 +72,7 @@ class Scene:
         #     self.cars.append(car)
         
         # TEST ADD POHON
-        add(Tree(app, pos=(0, 0, 0)))
+        add(Tree(app, pos=(0, 0, 0), uni_scale=1.3))
         
     
     # SISTEM ANIMASI (MASIH BETA)

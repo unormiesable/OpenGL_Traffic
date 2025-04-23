@@ -515,7 +515,7 @@ class Fixed_Car:
 # MODEL POHON
 class Tree:
     def __init__(self, app, pos=(0, 0, 0), rot=(0, 0, 0),
-                 scale=(1, 1, 1), uni_scale=1, batang_color=(1.0, 1.0, 1.0), daun_color=(1.0, 1.0, 1.0), color=(1.0, 1.0, 1.0), uni_scale_batang=1, uni_scale_daun=1):
+                 scale=(1, 1, 1), uni_scale=1, batang_color=(0.3, 0.2, 0.1), daun_color=(0.3, 0.4, 0.1), color=(1, 1, 1), uni_scale_batang=1, uni_scale_daun=1):
 
         self.app = app
         self.pos = glm.vec3(pos)
@@ -524,10 +524,11 @@ class Tree:
         self.color = glm.vec3(color)
 
         # BUAT OBJEK DARI PRIMITIF
-        self.batang = ColorCylinder(app, pos=(0, 1, 0), color=batang_color, scale=(0.3, 1, 0.3), uni_scale=uni_scale_batang)
+        self.batang = ColorCylinder(app, pos=(0, 1, 0), color=batang_color, scale=(0.2, 1, 0.2), uni_scale=uni_scale_batang)
         
-        self.daun_bawah = ColorCone(app, pos=(0, 3, 0), color=daun_color, scale=(1.2, 1, 1.2), uni_scale=uni_scale_daun)
-        self.daun_tengah = ColorCone(app, pos=(0, 4, 0), color=daun_color, scale=(1.1, 1, 1.1), uni_scale=uni_scale_daun)
+        self.daun_bawah = ColorCone(app, pos=(0, 3, 0), color=daun_color, scale=(1.2, 1, 1.2), uni_scale=uni_scale_daun, rot=(5, 0, 2))
+        self.daun_tengah = ColorCone(app, pos=(0, 4.2, 0), color=daun_color, scale=(1.1, 1, 1.1), uni_scale=uni_scale_daun, rot=(2, 0, 5))
+        self.daun_atas = ColorCone(app, pos=(0, 5.3, 0), color=daun_color, scale=(0.95, 0.9, 0.95), uni_scale=uni_scale_daun, rot=(4, 0, 3))
 
         self.update_model_matrices()
 
@@ -552,28 +553,36 @@ class Tree:
 
     def update_model_matrices(self):
         self.batang.m_model = self.get_model_matrix(self.batang)
+        
         self.daun_bawah.m_model = self.get_model_matrix(self.daun_bawah)
         self.daun_tengah.m_model = self.get_model_matrix(self.daun_tengah)
+        self.daun_atas.m_model = self.get_model_matrix(self.daun_atas)
 
     def update(self):
         self.update_model_matrices()
 
         self.batang.color = self.color
+        
         self.daun_bawah.color = self.color
         self.daun_tengah.color = self.color
+        self.daun_atas.color = self.color
 
         self.batang.update()
+        
         self.daun_bawah.update()
         self.daun_tengah.update()
+        self.daun_atas.update()
 
     def render(self):
         self.batang.render()
         
         self.daun_bawah.render()
         self.daun_tengah.render()
+        self.daun_atas.render()
 
     def render_shadow(self):
         self.batang.render_shadow()
         
         self.daun_bawah.render_shadow()
         self.daun_tengah.render_shadow()
+        self.daun_atas.render_shadow()
