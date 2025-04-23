@@ -45,6 +45,10 @@ class Scene:
         # GARIS JALAN
         for i in range(8):
             add(ColorCube(self.app, pos=(-16 + (i * 5), 0, 0), scale=(1, 0.05, 0.05)))
+            
+        # TROTOAR
+        add(ColorCube(self.app, pos=(0, 0, 12), scale=(20, 0.1, 2), color=(0.5, 0.5, 0.5)))
+        add(ColorCube(self.app, pos=(0, 0, -12), scale=(20, 0.1, 2), color=(0.5, 0.5, 0.5)))
     
         # MOBIL MOBIL (TESTING CLASS MOBIL (MASIH PERLU DIPERBAIKI))
         # for i in range(5):
@@ -63,10 +67,10 @@ class Scene:
                             color=(random.uniform(0.0, 1.0), random.uniform(0.0, 1.0), random.uniform(0.0, 1.0)),
                             sec_color=(random.uniform(0.0, 1.0), random.uniform(0.0, 1.0), random.uniform(0.0, 1.0)),
                             uni_scale=0.7)
-            car.speed = random.uniform(10.0, 30.0)
+            car.speed = random.uniform(20.0, 19.0)
             add(car)
             self.cars.append(car)
-
+        
     
     # SISTEM ANIMASI (MASIH BETA)
     def update(self):
@@ -81,9 +85,9 @@ class Scene:
                                      new_sec_color=(random.uniform(0.0, 1.0), random.uniform(0.0, 1.0), random.uniform(0.0, 1.0)))
             
             # ANIMASI BAN TIAP MOBIL
-            car.ban_kiri_depan.rot[2] = self.app.time * -6
-            car.ban_kiri_belakang.rot[2] = self.app.time * -6
-            car.ban_kanan_depan.rot[2] = self.app.time * -6
-            car.ban_kanan_belakang.rot[2] = self.app.time * -6
+            car.ban_kiri_depan.rot[2] = self.app.time * 3
+            car.ban_kiri_belakang.rot[2] = self.app.time * 3
+            car.ban_kanan_depan.rot[2] = self.app.time * 3
+            car.ban_kanan_belakang.rot[2] = self.app.time * 3
             
             car.update()

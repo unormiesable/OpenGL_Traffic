@@ -2,7 +2,7 @@ import glm
 import pygame as pg
 
 # ATRIBUT KAMERA
-FOV = 50
+FOV = 60
 NEAR = 0.1
 FAR = 100
 
