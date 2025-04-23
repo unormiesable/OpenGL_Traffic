@@ -107,7 +107,7 @@ float getSoftShadowX128() {
     return shadow / 128;
 }
 
-// SETUP AO (TAPI MASIH SHADOW BASED)
+// SETUP AO (TAPI MASIH SHADOW BASED) - (BELUM BERJALAN SESUAI RENCANA) - (TAPI MENGHASILKAN BETTER SHADOW)
 float getFakeAo() {
     float shadow;
     float step_width = 2.0 * shadowBlur; 
@@ -146,7 +146,7 @@ vec3 getLight(vec3 color) {
     // SHADOW
     float shadow = u_enableShadow ? getSoftShadowX128() : 1.0;
     
-    // NGIDE FAKE AO
+    // FAKE AO (BELUM BERJALAN SESUAI RENCANA) (TAPI MENGHASILKAN BETTER SHADOW)
     float ao = getFakeAo() * ao_factor;
 
     // FINAL
