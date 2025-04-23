@@ -67,7 +67,7 @@ class Scene:
                             color=(random.uniform(0.0, 1.0), random.uniform(0.0, 1.0), random.uniform(0.0, 1.0)),
                             sec_color=(random.uniform(0.0, 1.0), random.uniform(0.0, 1.0), random.uniform(0.0, 1.0)),
                             uni_scale=0.7)
-            car.speed = random.uniform(20.0, 19.0)
+            car.speed = random.uniform(12.0, 12.5)
             add(car)
             self.cars.append(car)
         
