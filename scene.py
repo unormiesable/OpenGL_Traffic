@@ -66,9 +66,9 @@ class Scene:
         for i in range(4):
             car = Fixed_Car(app, pos=(-5 + (i * 6), 0, random.uniform(-8.0, 8.0)),
                             color=(random.uniform(0.0, 0.8), random.uniform(0.0, 0.8), random.uniform(0.0, 0.8)),
-                            sec_color=(random.uniform(0.0, 0.8), random.uniform(0.0, 0.8), random.uniform(0.0, 0.8)),
+                            sec_color=(random.uniform(0.3, 0.8), random.uniform(0.3, 0.8), random.uniform(0.3, 0.8)),
                             uni_scale=0.7, spoiler=random.randint(0, 1), is_taxi=random.randint(0, 1))
-            car.speed = random.uniform(12.0, 12.3)
+            car.speed = 12
             add(car)
             self.cars.append(car)
         
