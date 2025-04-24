@@ -68,9 +68,11 @@ class Camera:
         velocity = Cam_Speed * self.app.delta_time
         keys = pg.key.get_pressed()
         
-        # SHIFT == RUN (Faster Aaah Movement)
+        # SHIFT == RUN // CTRL == SLOW (FLY CAMERA SPEED CONTROL)
         if keys[pg.K_LSHIFT] or keys[pg.K_RSHIFT]:
             velocity = 0.05 * self.app.delta_time
+        elif keys[pg.K_LCTRL] or keys[pg.K_RCTRL]:
+            velocity = 0.01 * self.app.delta_time
         else:
             velocity = 0.02 * self.app.delta_time
         

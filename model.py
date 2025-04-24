@@ -62,7 +62,7 @@ class ExtendedBaseModelColor(BaseModelColor):
         self.program['shadowMap'] = 1
         self.depth_texture.use(location=1)
         
-        self.program['new_shade'] = 1.0
+        self.program['new_shade'] = 1
         
         # TESTING AO (FAKE AO)
         self.program['ao_factor'] = 3.0
@@ -309,7 +309,9 @@ class Cube_Plane:
 # MODEL MOBIL 
 class Fixed_Car:
     def __init__(self, app, pos=(0, 0, 0), rot=(0, 0, 0),
-                 scale=(1, 1, 1), uni_scale=1, color=(1.0, 1.0, 1.0), win_color=(0.6, 0.6, 0.8), head_size=0.25, sec_color=(1.0, 1.0, 1.0)):
+                 scale=(1, 1, 1), uni_scale=1, color=(1.0, 1.0, 1.0),
+                 win_color=(0.6, 0.6, 0.8), head_size=0.25, sec_color=(1.0, 1.0, 1.0), 
+                 spoiler=True, is_taxi=False):
 
         self.app = app
         self.pos = glm.vec3(pos)
@@ -319,12 +321,14 @@ class Fixed_Car:
         self.uni_scale = uni_scale
         self.head_size = head_size
         self.sec_color = sec_color
+        self.add_spoiler = spoiler
+        self.is_taxi = is_taxi
 
         self.win_color = win_color
         
         # BUAT OBJEK DARI PRIMITIF
         # BODY
-        self.body = ColorCube(app, pos=(0.0, 1.5, 0.0), color=color, scale=(3, 1, 1.5))
+        self.body = ColorCube(app, pos=glm.vec3(0.0, 1.5, 0.0), color=color, scale=(3.0, 1.0, 1.5))
         self.roof = ColorCube(app, pos=(0.5, 2.6, 0.0), color=color, scale=(1, 1, 1.4))
         self.windf = ColorCube(app, pos=(self.roof.pos[0] - 1.0, 2.18, 0.0), color=color, scale=(1, 1, 1.4), rot=(0, 0, 45))
         self.windb = ColorCube(app, pos=(self.roof.pos[0] + 0.65, 2.24, 0.0), color=color, scale=(1, 1, 1.4), rot=(0, 0, 30))
@@ -334,6 +338,7 @@ class Fixed_Car:
         
         # WIND MISC
         self.winmid = ColorCube(app, pos=(0.5, 2.6, 0.0), color=color, scale=(0.1, 1, self.roof.scale[2] + 0.005))
+        
         
         # WINDOWS
         self.glassf = ColorCube(app, pos=(self.roof.pos[0] - 1.1, 2.3, 0.0), color=win_color, scale=(1, 1, self.roof.scale[2]), rot=(0, 0, 45), uni_scale=0.85)
@@ -366,9 +371,17 @@ class Fixed_Car:
         self.headlightl_out = ColorCylinder(app, color=(0.2, 0.2, 0.2), rot=(0, 0, 90), scale=(self.head_size + 0.1, 0.1, self.head_size + 0.1), pos=(-2.95, 1.9, 1))
         self.headlightr_out = ColorCylinder(app, color=(0.2, 0.2, 0.2), rot=(0, 0, 90), scale=(self.head_size + 0.1, 0.1, self.head_size + 0.1), pos=(-2.95, 1.9, -1))
         
-        #BACKLIGHT
+        # BACKLIGHT
         self.backlightl = ColorCube(app, pos=(3, 2, 1), scale=(0.05, 0.15, 0.3), color=(0.8, 0.2, 0.2))
         self.backlightr = ColorCube(app, pos=(3, 2, -1), scale=(0.05, 0.15, 0.3), color=(0.8, 0.2, 0.2))
+        
+        # SPOILER
+        self.spoiler = ColorCube(app, pos=(2.65, 3, 0), scale=(0.25, 0.05, 1.5), color=sec_color)
+        self.spoiler_stand_kiri = ColorCube(app, pos=(2.65, 2.5, 0.8), scale=(0.07, 0.5, 0.07), color=sec_color)
+        self.spoiler_stand_kanan = ColorCube(app, pos=(2.65, 2.5, -0.8), scale=(0.07, 0.5, 0.07), color=sec_color)
+        
+        # MODE TAXI
+        self.mode_taxi = ColorCube(app, pos=(0.5, 3.7, 0), scale=(0.07, 0.3, 0.6), color=sec_color)
         
         self.update_model_matrices()
         
@@ -426,20 +439,30 @@ class Fixed_Car:
         
         self.backlightl.m_model = self.get_model_matrix(self.backlightl)
         self.backlightr.m_model = self.get_model_matrix(self.backlightr)
+        
+        self.spoiler.m_model = self.get_model_matrix(self.spoiler)
+        self.spoiler_stand_kiri.m_model = self.get_model_matrix(self.spoiler_stand_kiri)
+        self.spoiler_stand_kanan.m_model = self.get_model_matrix(self.spoiler_stand_kanan)
+        
+        self.mode_taxi.m_model = self.get_model_matrix(self.mode_taxi)
 
     def update(self):
         self.update_model_matrices()
 
     def update_car_color(self, new_prime_color, new_sec_color):
         self.color = glm.vec3(new_prime_color)
-        self.new_sec_color = glm.vec3(new_sec_color)
+        self.sec_color = glm.vec3(new_sec_color)
         
         self.body.color = self.color
         self.roof.color = self.color
         self.windf.color = self.color
         self.windb.color = self.color
-        self.bumper.color = self.new_sec_color
+        self.bumper.color = self.sec_color
         self.winmid.color = self.color
+        self.spoiler.color = self.sec_color
+        self.spoiler_stand_kiri.color = self.sec_color
+        self.spoiler_stand_kanan.color = self.sec_color
+        self.mode_taxi.color = self.sec_color
         
         self.update_model_matrices()
 
@@ -476,6 +499,15 @@ class Fixed_Car:
         
         self.backlightl.render()
         self.backlightr.render()
+        
+        if self.add_spoiler == True:
+            self.spoiler.render()
+            self.spoiler_stand_kiri.render()
+            self.spoiler_stand_kanan.render()
+        
+        if self.is_taxi == True:
+            self.mode_taxi.render()
+            
 
     def render_shadow(self):
         self.body.render_shadow()
@@ -510,7 +542,14 @@ class Fixed_Car:
         
         self.backlightl.render_shadow()
         self.backlightr.render_shadow()
-    
+        
+        if self.add_spoiler == True:
+            self.spoiler.render_shadow()
+            self.spoiler_stand_kiri.render_shadow()
+            self.spoiler_stand_kanan.render_shadow()
+
+        if self.is_taxi == True:
+            self.mode_taxi.render_shadow()
       
 # MODEL POHON
 class Tree:

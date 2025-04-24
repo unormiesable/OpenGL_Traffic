@@ -97,7 +97,7 @@ float getSoftShadowX64() {
 
 float getSoftShadowX128() {
     float shadow;
-    float step_width = 0.1 * shadowBlur;
+    float step_width = 0.05 * shadowBlur;
     float extend = step_width * 3.0 + step_width / 2.0;
     for (float y = -extend; y <= extend; y += step_width) {
         for (float x = -extend; x <= extend; x += step_width) {
