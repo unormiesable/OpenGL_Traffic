@@ -28,73 +28,11 @@ uniform float new_shade;
 uniform float ao_factor;
 
 
-// PCF SETUP ========================================================
-float pcfLookup(vec2 offset) {
-    float size = 1.0 / u_resolution.x;
-    return textureProj(shadowMap, shadowCoord + vec4(offset * size, 0.0, 0.0));
-}
-
-float getPCFShadow() {
-    float shadow = 0.0;
-    vec2 offsets[4] = vec2[4](vec2(-1.0, -1.0), vec2(1.0, -1.0), vec2(-1.0, 1.0), vec2(1.0, 1.0));
-    for (int i = 0; i < 4; i++) {
-        shadow += pcfLookup(offsets[i]);
-    }
-    return shadow / 16.0;
-}
-
 // SOFT SHADOW SETUP =================================================
 float lookup(float ox, float oy) {
     vec2 pixelOffset = 1 / u_resolution;
     return textureProj(shadowMap, shadowCoord + vec4(ox * pixelOffset.x * shadowCoord.w,
                                                      oy * pixelOffset.y * shadowCoord.w, 0.0, 0.0));
-}
-
-float getSoftShadowX4() {
-    float shadow;
-    float step_width = 1.5;
-    vec2 offset = mod(floor(gl_FragCoord.xy), 2.0) * step_width;
-    shadow += lookup(-1.5 * step_width + offset.x, 1.5 * step_width - offset.y);
-    shadow += lookup(-1.5 * step_width + offset.x, -0.5 * step_width - offset.y);
-    shadow += lookup( 0.5 * step_width + offset.x, 1.5 * step_width - offset.y);
-    shadow += lookup( 0.5 * step_width + offset.x, -0.5 * step_width - offset.y);
-    return shadow / 4.0;
-}
-
-float getSoftShadowX16() {
-    float shadow;
-    float step_width = 1.0;
-    float extend = step_width * 1.5 * shadowBlur;
-    for (float y = -extend; y <= extend; y += step_width) {
-        for (float x = -extend; x <= extend; x += step_width) {
-            shadow += lookup(x, y);
-        }
-    }
-    return shadow / 16.0;
-}
-
-float getSoftShadowX32() {
-    float shadow;
-    float step_width = 1.0;
-    float extend = step_width * 1.5 * shadowBlur;
-    for (float y = -extend; y <= extend; y += step_width) {
-        for (float x = -extend; x <= extend; x += step_width) {
-            shadow += lookup(x, y);
-        }
-    }
-    return shadow / 32.0;
-}
-
-float getSoftShadowX64() {
-    float shadow;
-    float step_width = 0.1 * shadowBlur;
-    float extend = step_width * 3.0 + step_width / 2.0;
-    for (float y = -extend; y <= extend; y += step_width) {
-        for (float x = -extend; x <= extend; x += step_width) {
-            shadow += lookup(x, y);
-        }
-    }
-    return shadow / 64;
 }
 
 float getSoftShadowX128() {
