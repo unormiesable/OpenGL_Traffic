@@ -63,14 +63,14 @@ class Scene:
         #                   sec_color=(random.uniform(0.0, 1.0), random.uniform(0.0, 1.0), random.uniform(0.0, 1.0))))
         
         # TAMBAHIN MOBIL RANDOM SEGALANYA
-        for i in range(4):
-            car = Fixed_Car(app, pos=(-5 + (i * 6), 0, random.uniform(-8.0, 8.0)),
-                            color=(random.uniform(0.0, 0.8), random.uniform(0.0, 0.8), random.uniform(0.0, 0.8)),
-                            sec_color=(random.uniform(0.3, 0.8), random.uniform(0.3, 0.8), random.uniform(0.3, 0.8)),
-                            uni_scale=0.7, spoiler=random.randint(0, 1), is_taxi=random.randint(0, 1))
-            car.speed = 12
-            add(car)
-            self.cars.append(car)
+        # for i in range(4):
+        #     car = Fixed_Car(app, pos=(-5 + (i * 6), 0, random.uniform(-8.0, 8.0)),
+        #                     color=(random.uniform(0.0, 0.8), random.uniform(0.0, 0.8), random.uniform(0.0, 0.8)),
+        #                     sec_color=(random.uniform(0.3, 0.8), random.uniform(0.3, 0.8), random.uniform(0.3, 0.8)),
+        #                     uni_scale=0.7, spoiler=random.randint(0, 1), is_taxi=random.randint(0, 1))
+        #     car.speed = 6
+        #     add(car)
+        #     self.cars.append(car)
         
         # TEST ADD POHON
         for i in range(20):
@@ -107,4 +107,4 @@ class Scene:
                 
                 car.update()
                 
-        animate_cars()
+        # animate_cars()
