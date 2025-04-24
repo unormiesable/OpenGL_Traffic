@@ -1,7 +1,7 @@
 import glm
 
 # POINT LIGHT
-class Light:
+class PointLight:
     def __init__(self, position=(0, 5, 0), color=(1, 1, 1), intensity=1.0, shadow_blur=1.0):
         self.position = glm.vec3(position[0] * shadow_blur, position[1] * shadow_blur, position[2] * shadow_blur)
         self.color = glm.vec3(color)

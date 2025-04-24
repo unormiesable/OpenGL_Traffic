@@ -4,7 +4,7 @@ import moderngl as mgl
 import sys
 from model import *
 from camera import Camera
-from light import Light
+from point_light import PointLight
 from mesh import Mesh
 from scene import Scene
 from scene_renderer import SceneRenderer
@@ -28,13 +28,13 @@ class GraphicsEngine:
         pg.event.set_grab(True)
         pg.mouse.set_visible(False)
 
-        self.ctx = mgl.create_context()
+        self.ctx = mgl.create_context(require=330)
         self.ctx.enable(flags=mgl.DEPTH_TEST | mgl.CULL_FACE)
         self.clock = pg.time.Clock()
         self.time = 0
         self.delta_time = 0
         
-        self.light = Light(position=(-10, 10, 10), color=(1, 1, 1),intensity=2.0, shadow_blur=4.5)
+        self.light = PointLight(position=(-10, 10, 10), color=(1, 1, 1),intensity=2.0, shadow_blur=4.5)
         self.camera = Camera(self)
         self.mesh = Mesh(self)
         self.scene = Scene(self)
