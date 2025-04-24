@@ -34,7 +34,7 @@ class GraphicsEngine:
         self.time = 0
         self.delta_time = 0
         
-        self.light = Light(position=(10, 10, 10), color=(1, 1, 1),intensity=2.0, shadow_blur=3.0)
+        self.light = Light(position=(-10, 10, 10), color=(1, 1, 1),intensity=2.0, shadow_blur=4.5)
         self.camera = Camera(self)
         self.mesh = Mesh(self)
         self.scene = Scene(self)
@@ -71,7 +71,7 @@ class GraphicsEngine:
                         self.camera.orbit_radius += 1
 
                     # BATAS RADIUS
-                    self.camera.orbit_radius = max(1.0, min(self.camera.orbit_radius, 50.0))
+                    self.camera.orbit_radius = max(1.0, min(self.camera.orbit_radius, 100.0))
                 
                 
     # RENDER SCENE -> SCENE RENDERER

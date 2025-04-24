@@ -21,8 +21,8 @@ class Texture:
     def get_depth_texture(self):
         shadow_res = 4096
         depth_texture = self.ctx.depth_texture((shadow_res, shadow_res))
-        depth_texture.repeat_x = True
-        depth_texture.repeat_y = True
+        depth_texture.repeat_x = False
+        depth_texture.repeat_y = False
         return depth_texture
 
     # TEXTURE CUBE (DIGUNAKAN PADA CUBE DAN SKYBOX)

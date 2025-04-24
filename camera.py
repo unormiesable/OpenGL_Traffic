@@ -7,6 +7,7 @@ NEAR = 0.1
 FAR = 100
 
 Cam_Speed = 0.02
+Rotate_Speed = 1.0
 Mouse_Sens = 0.04
 
 # CLASS KAMERA
@@ -90,6 +91,25 @@ class Camera:
             self.position -= self.up * velocity
 
     def update_orbit(self):
+        keys = pg.key.get_pressed()
+        
+        
+        if keys[pg.K_LSHIFT] or keys[pg.K_RSHIFT]:
+            Rotate_Speed = 0.2 * self.app.delta_time
+        elif keys[pg.K_LCTRL] or keys[pg.K_RCTRL]:
+            Rotate_Speed = 0.05 * self.app.delta_time
+        else:
+            Rotate_Speed = 0.1 * self.app.delta_time
+        
+        if keys[pg.K_LEFT]:
+            self.look_LR += Rotate_Speed
+        if keys[pg.K_RIGHT]:
+            self.look_LR -= Rotate_Speed
+        if keys[pg.K_UP]:
+            self.look_UD += Rotate_Speed
+        if keys[pg.K_DOWN]:
+            self.look_UD -= Rotate_Speed
+
         rel_x, rel_y = pg.mouse.get_rel()
         self.look_LR += rel_x * Mouse_Sens
         self.look_UD -= rel_y * Mouse_Sens
@@ -107,6 +127,7 @@ class Camera:
         self.right = glm.normalize(glm.cross(self.forward, glm.vec3(0, 1, 0)))
         self.up = glm.normalize(glm.cross(self.right, self.forward))
         self.m_view = self.get_view_matrix()
+
 
     # RESET CAMERA
     def set_default(self):

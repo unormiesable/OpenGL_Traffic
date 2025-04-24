@@ -56,16 +56,17 @@ class ExtendedBaseModelColor(BaseModelColor):
         self.program['u_resolution'].write(glm.vec2(self.app.WIN_SIZE))
         
         self.program['u_enableShadow'] = True
+        self.program['u_enableAO'] = True
         self.program['shadowBlur'] = 3.0
 
         self.depth_texture = self.app.mesh.texture.textures['depth_texture']
         self.program['shadowMap'] = 1
         self.depth_texture.use(location=1)
         
-        self.program['new_shade'] = 1
+        self.program['new_shade'] = 0.3
         
         # TESTING AO (FAKE AO)
-        self.program['ao_factor'] = 3.0
+        self.program['ao_factor'] = 5
 
         self.shadow_vao = self.app.mesh.vao.vaos['shadow_' + self.vao_name]
         self.shadow_program = self.shadow_vao.program

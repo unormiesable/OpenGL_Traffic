@@ -48,8 +48,8 @@ class Scene:
             add(ColorCube(self.app, pos=(-16 + (i * 5), 0, 0), scale=(1, 0.05, 0.05)))
             
         # TROTOAR
-        add(ColorCube(self.app, pos=(0, 0, 12), scale=(20, 0.1, 2), color=(0.5, 0.5, 0.5)))
-        add(ColorCube(self.app, pos=(0, 0, -12), scale=(20, 0.1, 2), color=(0.5, 0.5, 0.5)))
+        add(ColorCube(self.app, pos=(0, 0, 12), scale=(20, 0.1, 2), color=(0.3, 0.3, 0.3)))
+        add(ColorCube(self.app, pos=(0, 0, -12), scale=(20, 0.1, 2), color=(0.3, 0.3, 0.3)))
     
         # MOBIL MOBIL (TESTING CLASS MOBIL (MASIH PERLU DIPERBAIKI))
         # for i in range(5):
@@ -73,7 +73,17 @@ class Scene:
             self.cars.append(car)
         
         # TEST ADD POHON
-        # add(Tree(app, pos=(0, 0, 0), uni_scale=1.3))
+        for i in range(20):
+            add(Tree(app, pos=(-20 + (i * 2), 0, random.randint(-20, -15)), 
+                     uni_scale=random.uniform(0.9, 1.1), 
+                     rot=(0, random.randint(0, 360), 0)))
+            
+            add(Tree(app, pos=(-20 + (i * 2), 0, random.randint(15, 20)), 
+                     uni_scale=random.uniform(0.9, 1.1), 
+                     rot=(0, random.randint(0, 360), 0)))
+            
+        # ADD DASAR
+        add(ColorPlane(app, pos=(0, -0.02, 0), uni_scale = 30, color=(0.39, 0.26, 0.13)))
         
     
     # SISTEM ANIMASI (MASIH BETA)

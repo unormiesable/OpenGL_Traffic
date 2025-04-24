@@ -21,10 +21,12 @@ uniform vec3 camPos;
 uniform sampler2DShadow shadowMap;
 uniform vec2 u_resolution;
 uniform bool u_enableShadow;
+uniform bool u_enableAO;
 uniform float shadowBlur;
 uniform vec3 u_color;
 uniform float new_shade;
 uniform float ao_factor;
+
 
 // PCF SETUP ========================================================
 float pcfLookup(vec2 offset) {
@@ -97,7 +99,8 @@ float getSoftShadowX64() {
 
 float getSoftShadowX128() {
     float shadow;
-    float step_width = 0.1 * shadowBlur;
+    float step_width = 0.01 * shadowBlur;
+    
     float extend = step_width * 3.0 + step_width / 2.0;
     for (float y = -extend; y <= extend; y += step_width) {
         for (float x = -extend; x <= extend; x += step_width) {
@@ -115,7 +118,7 @@ float getFakeAo() {
     
     for (float y = -extend; y <= extend; y += step_width) {
         for (float x = -extend; x <= extend; x += step_width) {
-            shadow += lookup(x, y);
+            shadow += lookup(x , y);
         }
     }
     return shadow / 128.0;
@@ -147,7 +150,7 @@ vec3 getLight(vec3 color) {
     float shadow = u_enableShadow ? getSoftShadowX128() : 1.0;
     
     // FAKE AO (BELUM BERJALAN SESUAI RENCANA) (TAPI MENGHASILKAN BETTER SHADOW)
-    float ao = getFakeAo() * ao_factor;
+    float ao = u_enableAO ? getFakeAo() * ao_factor : 1.0;
 
     // FINAL
     return color * (ambient +((diffuse + (shadow * new_shade)) + specular) * (shadow+(ao)));
