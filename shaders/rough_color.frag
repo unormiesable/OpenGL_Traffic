@@ -26,6 +26,7 @@ uniform float shadowBlur;
 uniform vec3 u_color;
 uniform float new_shade;
 uniform float ao_factor;
+uniform float AOBlur;
 
 
 // SOFT SHADOW SETUP =================================================
@@ -51,15 +52,14 @@ float getSoftShadowX128() {
 // SETUP AO (TAPI MASIH SHADOW BASED) - (BELUM BERJALAN SESUAI RENCANA) - (TAPI MENGHASILKAN BETTER SHADOW)
 float getFakeAo() {
     float shadow;
-    float step_width = 2.0 * shadowBlur; 
-    float extend = step_width * 3;
-    
+    float step_width = 0.5 * AOBlur;
+    float extend = step_width * 3.0 + step_width / 2.0;
     for (float y = -extend; y <= extend; y += step_width) {
         for (float x = -extend; x <= extend; x += step_width) {
-            shadow += lookup(x , y);
+            shadow += lookup(x, y);
         }
     }
-    return shadow / 128.0;
+    return shadow / 256;
 }
 
 float getShadow() {

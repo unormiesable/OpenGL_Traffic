@@ -74,11 +74,11 @@ class Scene:
         
         # TEST ADD POHON
         for i in range(20):
-            add(Tree(app, pos=(-20 + (i * 2), 0, random.randint(-20, -15)), 
+            add(Tree(app, pos=(-20 + (i * 2), -0.06, random.randint(-20, -15)), 
                      uni_scale=random.uniform(0.9, 1.1), 
                      rot=(0, random.randint(0, 360), 0)))
             
-            add(Tree(app, pos=(-20 + (i * 2), 0, random.randint(15, 20)), 
+            add(Tree(app, pos=(-20 + (i * 2), -0.06, random.randint(15, 20)), 
                      uni_scale=random.uniform(0.9, 1.1), 
                      rot=(0, random.randint(0, 360), 0)))
             

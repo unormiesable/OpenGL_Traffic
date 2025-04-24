@@ -95,11 +95,11 @@ class Camera:
         
         
         if keys[pg.K_LSHIFT] or keys[pg.K_RSHIFT]:
-            Rotate_Speed = 0.2 * self.app.delta_time
-        elif keys[pg.K_LCTRL] or keys[pg.K_RCTRL]:
-            Rotate_Speed = 0.05 * self.app.delta_time
-        else:
             Rotate_Speed = 0.1 * self.app.delta_time
+        elif keys[pg.K_LCTRL] or keys[pg.K_RCTRL]:
+            Rotate_Speed = 0.02 * self.app.delta_time
+        else:
+            Rotate_Speed = 0.05 * self.app.delta_time
         
         if keys[pg.K_LEFT]:
             self.look_LR += Rotate_Speed
