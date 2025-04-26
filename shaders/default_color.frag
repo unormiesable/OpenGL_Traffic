@@ -76,9 +76,6 @@ float getFakeAo() {
     return shadow / 256;
 }
 
-float getShadow() {
-    return textureProj(shadowMap, shadowCoord);
-}
 
 // LIGHTING ===========================================================
 vec3 getLight(vec3 color) {
@@ -95,7 +92,7 @@ vec3 getLight(vec3 color) {
     // SPECULAR (IS)
     vec3 viewDir = normalize(camPos - fragPos);
     vec3 reflectDir = reflect(-lightDir, Normal);
-    float spec = pow(max(dot(viewDir, reflectDir), 0), 32);
+    float spec = pow(max(dot(viewDir, reflectDir), 0), 64);
     vec3 specular = spec * light.Is;
 
     // SHADOW
