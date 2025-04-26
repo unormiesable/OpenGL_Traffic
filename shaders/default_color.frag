@@ -29,6 +29,7 @@ uniform float ao_factor;
 uniform float AOBlur;
 
 // PCF SETUP ========================================================
+// DAH NEMU SOFT SHADOW JADI GA DIPAKE
 float pcfLookup(vec2 offset) {
     float size = 1.0 / u_resolution.x;
     return textureProj(shadowMap, shadowCoord + vec4(offset * size, 0.0, 0.0));
@@ -50,54 +51,7 @@ float lookup(float ox, float oy) {
                                                      oy * pixelOffset.y * shadowCoord.w, 0.0, 0.0));
 }
 
-float getSoftShadowX4() {
-    float shadow;
-    float step_width = 1.5;
-    vec2 offset = mod(floor(gl_FragCoord.xy), 2.0) * step_width;
-    shadow += lookup(-1.5 * step_width + offset.x, 1.5 * step_width - offset.y);
-    shadow += lookup(-1.5 * step_width + offset.x, -0.5 * step_width - offset.y);
-    shadow += lookup( 0.5 * step_width + offset.x, 1.5 * step_width - offset.y);
-    shadow += lookup( 0.5 * step_width + offset.x, -0.5 * step_width - offset.y);
-    return shadow / 4.0;
-}
-
-float getSoftShadowX16() {
-    float shadow;
-    float step_width = 1.0;
-    float extend = step_width * 1.5 * shadowBlur;
-    for (float y = -extend; y <= extend; y += step_width) {
-        for (float x = -extend; x <= extend; x += step_width) {
-            shadow += lookup(x, y);
-        }
-    }
-    return shadow / 16.0;
-}
-
-float getSoftShadowX32() {
-    float shadow;
-    float step_width = 1.0;
-    float extend = step_width * 1.5 * shadowBlur;
-    for (float y = -extend; y <= extend; y += step_width) {
-        for (float x = -extend; x <= extend; x += step_width) {
-            shadow += lookup(x, y);
-        }
-    }
-    return shadow / 32.0;
-}
-
-float getSoftShadowX64() {
-    float shadow;
-    float step_width = 0.1 * shadowBlur;
-    float extend = step_width * 3.0 + step_width / 2.0;
-    for (float y = -extend; y <= extend; y += step_width) {
-        for (float x = -extend; x <= extend; x += step_width) {
-            shadow += lookup(x, y);
-        }
-    }
-    return shadow / 64;
-}
-
-float getSoftShadowX128() {
+float getSoftShadow() {
     float shadow;
     float step_width = 0.01 * shadowBlur;
     float extend = step_width * 3.0 + step_width / 2.0;
@@ -145,13 +99,13 @@ vec3 getLight(vec3 color) {
     vec3 specular = spec * light.Is;
 
     // SHADOW
-    float shadow = u_enableShadow ? getSoftShadowX128() : 1.0;
+    float shadow = u_enableShadow ? getSoftShadow() : 1.0;
     
     // FAKE AO (BELUM BERJALAN SESUAI RENCANA) (TAPI MENGHASILKAN BETTER SHADOW)
     float ao = u_enableAO ? getFakeAo() * ao_factor : 1.0;
 
     // FINAL
-    return color * (ambient +((diffuse + (shadow * new_shade)) + specular) * (shadow+(ao)));
+    return color * (ambient +((diffuse + (shadow * new_shade)) + specular) * (shadow + (ao)));
 }
 
 // MAIN ===============================================================

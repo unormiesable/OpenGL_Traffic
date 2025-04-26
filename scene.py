@@ -85,6 +85,9 @@ class Scene:
         # ADD DASAR
         add(ColorPlane(app, pos=(0, -0.02, 0), uni_scale = 30, color=(0.39, 0.26, 0.13)))
         
+        # TEST COMP
+        add(CompTest(app, pos=(0, 1, 0), color=(0.5, 0.5, 0.5)))
+        
     
     # SISTEM ANIMASI (MASIH BETA)
     def update(self):
