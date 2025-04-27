@@ -627,3 +627,64 @@ class Tree:
         self.daun_bawah.render_shadow()
         self.daun_tengah.render_shadow()
         self.daun_atas.render_shadow()
+
+
+## LANJUTIN FEB
+class Traffic_Light:
+    def __init__(self, app, pos=(0, 0, 0), rot=(0, 0, 0),
+                 scale=(1, 1, 1), uni_scale=1, color=(1.0, 1.0, 1.0)):
+
+        self.app = app
+        self.pos = glm.vec3(pos)
+        self.rot = glm.vec3([glm.radians(a) for a in rot])
+        self.scale = glm.vec3(scale) * uni_scale
+        self.color = glm.vec3(color)
+
+        # BUAT OBJEK DARI PRIMITIF
+        self.plane = ColorPlane(app, pos=(0, 0, 0), color=color, scale=(5, 5, 5))
+        
+        self.tiang = ColorCylinder(app, pos=(0, 2, 0), color=(0.5, 0.5, 0.5), scale=(0.2, 2, 0.2),)
+        self.box = ColorCube(app, pos=(0, 5, 0), uni_scale=0.4, scale=(1, 3, 1))
+
+        self.update_model_matrices()
+
+    def get_model_matrix(self, part):
+        m_model = glm.mat4()
+
+        # TRANSFORMASI PARENT
+        m_model = glm.translate(m_model, self.pos)
+        m_model = glm.rotate(m_model, self.rot.z, glm.vec3(0, 0, 1))
+        m_model = glm.rotate(m_model, self.rot.y, glm.vec3(0, 1, 0))
+        m_model = glm.rotate(m_model, self.rot.x, glm.vec3(1, 0, 0))
+        m_model = glm.scale(m_model, self.scale)
+
+        # TRANSFORMASI LOKAL
+        m_model = glm.translate(m_model, glm.vec3(part.pos))
+        m_model = glm.rotate(m_model, part.rot.z, glm.vec3(0, 0, 1))
+        m_model = glm.rotate(m_model, part.rot.y, glm.vec3(0, 1, 0))
+        m_model = glm.rotate(m_model, part.rot.x, glm.vec3(1, 0, 0))
+        m_model = glm.scale(m_model, glm.vec3(part.scale))
+
+        return m_model
+
+    def update_model_matrices(self):
+        self.plane.m_model = self.get_model_matrix(self.plane)
+        self.tiang.m_model = self.get_model_matrix(self.tiang)
+        self.box.m_model = self.get_model_matrix(self.box)
+
+    def update(self):
+        self.update_model_matrices()
+
+        self.plane.color = self.color
+
+        self.plane.update()
+
+    def render(self):
+        self.plane.render()
+        self.tiang.render()
+        self.box.render()
+
+    def render_shadow(self):
+        self.plane.render_shadow()
+        self.tiang.render_shadow()
+        self.box.render_shadow()
