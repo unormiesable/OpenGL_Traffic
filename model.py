@@ -64,7 +64,7 @@ class ExtendedBaseModelColor(BaseModelColor):
         self.program['shadowMap'] = 1
         self.depth_texture.use(location=1)
         
-        self.program['new_shade'] = 0.3
+        self.program['new_shade'] = 1
         
         # TESTING AO (FAKE AO)
         self.program['ao_factor'] = 5.0

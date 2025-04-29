@@ -31,7 +31,7 @@ class Scene:
         # add(Plane(app, pos=(0, 0, 0), uni_scale= 5))
         
         # NO TEXTURED
-        # add(ColorPlane(app, pos=(0, 0, 0), color=(0.1, 0.1, 0.1), scale=(2, 1, 1), uni_scale= 10))
+        add(ColorPlane(app, pos=(0, 0, 0), color=(0.1, 0.1, 0.1), scale=(2, 1, 1), uni_scale= 10))
         # add(ColorCube(app, pos=(0, 2, 0), color=(1.0, 0.0, 0.0), scale=(1, 2, 1)))
         # add(ColorCylinder(app, pos=(0, 1, 0), color=(0.2, 0.2, 0.2), scale=(1, 1, 1), rot=(90, 0, 0)))
         
@@ -44,12 +44,12 @@ class Scene:
         #     add(ColorCube(app, pos=((i+1)-5, (i+1)/5, 0), color=(random.uniform(0.0, 1.0), random.uniform(0.0, 1.0), random.uniform(0.0, 1.0)), scale=(0.5, (i+1)/5, 1)))
     
         # GARIS JALAN
-        # for i in range(8):
-        #     add(ColorCube(self.app, pos=(-16 + (i * 5), 0, 0), scale=(1, 0.05, 0.05)))
+        for i in range(8):
+            add(ColorCube(self.app, pos=(-16 + (i * 5), 0, 0), scale=(1, 0.05, 0.05)))
             
         # TROTOAR
-        # add(ColorCube(self.app, pos=(0, 0, 12), scale=(20, 0.1, 2), color=(0.3, 0.3, 0.3)))
-        # add(ColorCube(self.app, pos=(0, 0, -12), scale=(20, 0.1, 2), color=(0.3, 0.3, 0.3)))
+        add(ColorCube(self.app, pos=(0, 0, 12), scale=(20, 0.1, 2), color=(0.3, 0.3, 0.3)))
+        add(ColorCube(self.app, pos=(0, 0, -12), scale=(20, 0.1, 2), color=(0.3, 0.3, 0.3)))
     
         # MOBIL MOBIL (TESTING CLASS MOBIL (MASIH PERLU DIPERBAIKI))
         # for i in range(5):
@@ -63,27 +63,27 @@ class Scene:
         #                   sec_color=(random.uniform(0.0, 1.0), random.uniform(0.0, 1.0), random.uniform(0.0, 1.0))))
         
         # TAMBAHIN MOBIL RANDOM SEGALANYA
-        # for i in range(4):
-        #     car = Fixed_Car(app, pos=(-5 + (i * 6), 0, random.uniform(-8.0, 8.0)),
-        #                     color=(random.uniform(0.0, 0.8), random.uniform(0.0, 0.8), random.uniform(0.0, 0.8)),
-        #                     sec_color=(random.uniform(0.3, 0.8), random.uniform(0.3, 0.8), random.uniform(0.3, 0.8)),
-        #                     uni_scale=0.7, spoiler=random.randint(0, 1), is_taxi=random.randint(0, 1))
-        #     car.speed = 6
-        #     add(car)
-        #     self.cars.append(car)
+        for i in range(4):
+            car = Fixed_Car(app, pos=(-5 + (i * 6), 0, random.uniform(-8.0, 8.0)),
+                            color=(random.uniform(0.0, 0.8), random.uniform(0.0, 0.8), random.uniform(0.0, 0.8)),
+                            sec_color=(random.uniform(0.3, 0.8), random.uniform(0.3, 0.8), random.uniform(0.3, 0.8)),
+                            uni_scale=0.7, spoiler=random.randint(0, 1), is_taxi=random.randint(0, 1))
+            car.speed = 6
+            add(car)
+            self.cars.append(car)
         
         # TEST ADD POHON
-        # for i in range(20):
-        #     add(Tree(app, pos=(-20 + (i * 2), -0.06, random.randint(-20, -15)), 
-        #              uni_scale=random.uniform(0.9, 1.1), 
-        #              rot=(0, random.randint(0, 360), 0)))
+        for i in range(20):
+            add(Tree(app, pos=(-20 + (i * 2), -0.06, random.randint(-20, -15)), 
+                     uni_scale=random.uniform(0.9, 1.1), 
+                     rot=(0, random.randint(0, 360), 0)))
             
-        #     add(Tree(app, pos=(-20 + (i * 2), -0.06, random.randint(15, 20)), 
-        #              uni_scale=random.uniform(0.9, 1.1), 
-        #              rot=(0, random.randint(0, 360), 0)))
+            add(Tree(app, pos=(-20 + (i * 2), -0.06, random.randint(15, 20)), 
+                     uni_scale=random.uniform(0.9, 1.1), 
+                     rot=(0, random.randint(0, 360), 0)))
             
         # ADD DASAR
-        # add(ColorPlane(app, pos=(0, -0.02, 0), uni_scale = 30, color=(0.39, 0.26, 0.13)))
+        add(ColorPlane(app, pos=(0, -0.02, 0), uni_scale = 30, color=(0.39, 0.26, 0.13)))
         
 
         # SETUP SCENE
@@ -93,13 +93,14 @@ class Scene:
         # add(ColorCube(app, color=(0.3, 0.3, 0.3), scale=(1, 0.1/4, 1), pos=(5, 0, 5), uni_scale=4.5))
         
         # TEST TRAFFIC LIGHT
-        add(Traffic_Light(app))
+        # add(Traffic_Light(app))
         
     # SISTEM ANIMASI (MASIH BETA)
     def update(self):
                 
         # ANIMASI MOBIL MOBIL
         def animate_cars():
+            
             for car in self.cars:
                 car.pos[0] -= car.speed * self.app.delta_time / 1000.0
                 if car.pos[0] < -16:
@@ -116,4 +117,4 @@ class Scene:
                 
                 car.update()
                 
-        # animate_cars()
+        animate_cars()
