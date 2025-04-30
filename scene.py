@@ -103,8 +103,8 @@ class Scene:
             
             for car in self.cars:
                 car.pos[0] -= car.speed * self.app.delta_time / 1000.0
-                if car.pos[0] < -16:
-                    car.pos[0] = 16
+                if car.pos[0] < -18:
+                    car.pos[0] = 18
                     car.pos[2] = random.randint(-7, 7)
                     car.update_car_color(new_prime_color=(random.uniform(0.0, 1.0), random.uniform(0.0, 1.0), random.uniform(0.0, 1.0)),
                                         new_sec_color=(random.uniform(0.0, 1.0), random.uniform(0.0, 1.0), random.uniform(0.0, 1.0)))

@@ -11,7 +11,7 @@ from scene_renderer import SceneRenderer
 
 
 # CLASS GRAPHIC ENGINE (MAIN CLASS)
-class GraphicsEngine:
+class CGRAPHEngine:
     def __init__(self, win_size=(1280, 720)):
         
         pg.init()
@@ -92,5 +92,6 @@ class GraphicsEngine:
             self.delta_time = self.clock.tick(60)
 
 if __name__ == '__main__':
-    app = GraphicsEngine()
+    print("\033c")
+    app = CGRAPHEngine()
     app.run()
