@@ -6,6 +6,8 @@ class ShaderProgram:
         
         self.programs['default_color'] = self.get_program('default_color')
         self.programs['rough_color'] = self.get_program('rough_color')
+
+        self.programs['default_texture'] = self.get_program('default_texture')
         
         self.programs['skybox'] = self.get_program('skybox')
         self.programs['skybox_next'] = self.get_program('skybox_next')
