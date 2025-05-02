@@ -54,7 +54,7 @@ class VAO:
         # OBJEK DENGAN TEXTURE ========================================================================
         # PLANE VAO
         self.vaos['plane'] = self.get_vao(
-            program=self.program.programs['default'],
+            program=self.program.programs['default_color'],
             vbo=self.vbo.vbos['plane'])
 
         # PLANE SHADOW VAO
@@ -65,7 +65,7 @@ class VAO:
         
         # CUBE VAO
         self.vaos['cube'] = self.get_vao(
-            program=self.program.programs['default'],
+            program=self.program.programs['default_color'],
             vbo = self.vbo.vbos['cube'])
 
         # CUBE SHADOW VAO
@@ -75,7 +75,7 @@ class VAO:
         
         # GATE VAO
         self.vaos['gate'] = self.get_vao(
-            program=self.program.programs['default'],
+            program=self.program.programs['default_color'],
             vbo=self.vbo.vbos['gate'])
 
         # GATE SHADOW VAO
@@ -85,7 +85,7 @@ class VAO:
         
         # YELLOW CAR VAO
         self.vaos['yellow_car'] = self.get_vao(
-            program=self.program.programs['default'],
+            program=self.program.programs['default_color'],
             vbo=self.vbo.vbos['yellow_car'])
 
         # YELLOW CAR SHADOW VAO
