@@ -3,7 +3,6 @@ class ShaderProgram:
     def __init__(self, ctx):
         self.ctx = ctx
         self.programs = {}
-        self.programs['default'] = self.get_program('default')
         
         self.programs['default_color'] = self.get_program('default_color')
         self.programs['rough_color'] = self.get_program('rough_color')
