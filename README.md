@@ -1,8 +1,8 @@
 # VISUALISASI TRAFFIC DENGAN OPENGL
 
 ## Python Virtual Environment
--  Linux.....................virt
--  Windows...............virtual
+-  Linux....................................virt
+-  Windows..............................virtual
 
 
 ## KAMUS DASAR OPENGL
