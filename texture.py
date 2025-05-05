@@ -10,12 +10,19 @@ class Texture:
         self.textures = {}
         
         # TEXTURE ID (PADA PROJECT INI DINAMAI 'tex_id')
-            
+        
+        # OBJECT TEXTURE (BELUM KEPAKE SIH)
         self.textures[0] = self.get_texture(path='textures/crate.png')
         self.textures['white'] = self.get_texture(path='objects/gate/gate.jpg')
         self.textures['yellow_car'] = self.get_texture(path='objects/yellow_car/yellow_car.jpg')
-        self.textures['skybox'] = self.get_texture_cube(dir_path='textures/skybox/', ext='png')
+        
+        # DEPTH TEXTURE
         self.textures['depth_texture'] = self.get_depth_texture()
+        
+        # SKYBOX
+        self.textures['skybox 1'] = self.get_texture_cube(dir_path='textures/skybox 1/', ext='png')
+        self.textures['skybox 2'] = self.get_texture_cube(dir_path='textures/skybox 2/', ext='png')
+        
     
     # DEPTH TEXTURE UNTUK BAYANGAN (KONTROL SHADOW MAP)
     def get_depth_texture(self):

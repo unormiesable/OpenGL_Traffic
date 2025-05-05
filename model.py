@@ -211,14 +211,13 @@ class Yellow_Car(ExtendedBaseModel):
         
 # SKYBOX DENGAN METODE LAMA
 class SkyBox(BaseModel):
-    def __init__(self, app, vao_name='skybox', tex_id='skybox',
+    def __init__(self, app, vao_name='skybox', tex_id='skybox 2',
                  pos=(0, 0, 0), rot=(0, 0, 0), scale=(1, 1, 1), uni_scale=1):
         super().__init__(app, vao_name, tex_id, pos, rot, scale)
         self.on_init()
 
     def update(self):
         self.m_model = glm.translate(glm.mat4(), self.camera.position)
-        self.program['m_model'].write(self.m_model)
         self.program['m_view'].write(glm.mat4(glm.mat3(self.camera.m_view)))
         self.program['m_proj'].write(self.camera.m_proj)
         
@@ -233,7 +232,7 @@ class SkyBox(BaseModel):
 
 
 class AdvancedSkyBox(BaseModel):
-    def __init__(self, app, vao_name='skybox_next', tex_id='skybox',
+    def __init__(self, app, vao_name='skybox_next', tex_id='skybox 2',
                  pos=(0, 0, 0), rot=(0, 0, 0), scale=(1, 1, 1), uni_scale=1):
         super().__init__(app, vao_name, tex_id, pos, rot, scale, uni_scale)
         self.on_init()
