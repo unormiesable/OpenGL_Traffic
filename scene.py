@@ -1,4 +1,5 @@
 from model import *
+from comp_model import *
 import glm
 import random
 import math
@@ -24,40 +25,60 @@ class Scene:
         app = self.app
         add = self.add_object
         
-        # JALAN
-        add(ColorPlane(app, pos=(0, 0, 0), color=(0.1, 0.1, 0.1), scale=(2, 1, 1), uni_scale= 10))
+        # # TEST SCENE ==========================================================================
+        # # JALAN
+        # add(ColorPlane(app, pos=(0, 0, 0), color=(0.1, 0.1, 0.1), scale=(2, 1, 1), uni_scale= 10))
 
-        # GARIS JALAN
-        for i in range(8):
-            add(ColorCube(self.app, pos=(-16 + (i * 5), 0, 0), scale=(1, 0.05, 0.05)))
+        # # GARIS JALAN
+        # for i in range(8):
+        #     add(ColorCube(self.app, pos=(-16 + (i * 5), 0, 0), scale=(1, 0.05, 0.05)))
             
-        # TROTOAR
-        add(ColorCube(self.app, pos=(0, 0, 12), scale=(20, 0.1, 2), color=(0.3, 0.3, 0.3)))
-        add(ColorCube(self.app, pos=(0, 0, -12), scale=(20, 0.1, 2), color=(0.3, 0.3, 0.3)))
+        # # TROTOAR
+        # add(ColorCube(self.app, pos=(0, 0, 12), scale=(20, 0.1, 2), color=(0.3, 0.3, 0.3)))
+        # add(ColorCube(self.app, pos=(0, 0, -12), scale=(20, 0.1, 2), color=(0.3, 0.3, 0.3)))
     
-        for i in range(4):
-            car = Fixed_Car(app, pos=(-5 + (i * 6), 0, random.uniform(-8.0, 8.0)),
-                            color=(random.uniform(0.0, 0.8), random.uniform(0.0, 0.8), random.uniform(0.0, 0.8)),
-                            sec_color=(random.uniform(0.3, 0.8), random.uniform(0.3, 0.8), random.uniform(0.3, 0.8)),
-                            uni_scale=0.7, spoiler=random.randint(0, 1), is_taxi=random.randint(0, 1))
-            car.speed = 6
-            add(car)
-            self.cars.append(car)
+        # for i in range(4):
+        #     car = Fixed_Car(app, pos=(-5 + (i * 6), 0, random.uniform(-8.0, 8.0)),
+        #                     color=(random.uniform(0.0, 0.8), random.uniform(0.0, 0.8), random.uniform(0.0, 0.8)),
+        #                     sec_color=(random.uniform(0.3, 0.8), random.uniform(0.3, 0.8), random.uniform(0.3, 0.8)),
+        #                     uni_scale=0.7, spoiler=random.randint(0, 1), is_taxi=random.randint(0, 1))
+        #     car.speed = 6
+        #     add(car)
+        #     self.cars.append(car)
         
-        # TEST ADD POHON
-        for i in range(20):
-            add(Tree(app, pos=(-20 + (i * 2), -0.06, random.randint(-20, -15)), 
-                     uni_scale=random.uniform(0.9, 1.1), 
-                     rot=(0, random.randint(0, 360), 0)))
+        # # TEST ADD POHON
+        # for i in range(20):
+        #     add(Tree(app, pos=(-20 + (i * 2), -0.06, random.randint(-20, -15)), 
+        #              uni_scale=random.uniform(0.9, 1.1), 
+        #              rot=(0, random.randint(0, 360), 0)))
             
-            add(Tree(app, pos=(-20 + (i * 2), -0.06, random.randint(15, 20)), 
-                     uni_scale=random.uniform(0.9, 1.1), 
-                     rot=(0, random.randint(0, 360), 0)))
+        #     add(Tree(app, pos=(-20 + (i * 2), -0.06, random.randint(15, 20)), 
+        #              uni_scale=random.uniform(0.9, 1.1), 
+        #              rot=(0, random.randint(0, 360), 0)))
             
-        # ADD DASAR
-        add(ColorPlane(app, pos=(0, -0.02, 0), uni_scale = 30, color=(0.39, 0.26, 0.13)))
+        # # ADD DASAR
+        # add(ColorPlane(app, pos=(0, -0.02, 0), uni_scale = 30, color=(0.39, 0.26, 0.13)))
 
+
+
+        # MAIN SCENE
+        # # JALAN
+        add(ColorPlane(app, pos=(0, 0, 0),
+                       scale=(20, 1, 2),
+                       color=(0.1, 0.1, 0.1),
+                       ))
         
+        add(ColorPlane(app, pos=(0, 0, 0),
+                       scale=(2, 1, 20),
+                       color=(0.1, 0.1, 0.1),
+                       ))
+        
+        # # TROTOAR
+        add(ColorCube(app, pos=(11, 0, 11),
+                      scale=(9, 0.1, 9),
+                      color=(0.5, 0.5, 0.5)))
+
+
     # SISTEM ANIMASI (MASIH BETA)
     def update(self):
                 
@@ -80,4 +101,4 @@ class Scene:
                 
                 car.update()
                 
-        animate_cars()
+        # animate_cars()
