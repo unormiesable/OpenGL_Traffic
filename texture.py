@@ -26,7 +26,7 @@ class Texture:
     
     # DEPTH TEXTURE UNTUK BAYANGAN (KONTROL SHADOW MAP)
     def get_depth_texture(self):
-        shadow_res = 4096 * 2
+        shadow_res = 8192 * 2
         depth_texture = self.ctx.depth_texture((shadow_res, shadow_res))
         depth_texture.repeat_x = False
         depth_texture.repeat_y = False
