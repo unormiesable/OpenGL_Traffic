@@ -80,4 +80,4 @@ class Scene:
                 
                 car.update()
                 
-        # animate_cars()
+        animate_cars()
