@@ -85,9 +85,9 @@ class Camera:
             self.position -= self.right * velocity
         if keys[pg.K_d]:
             self.position += self.right * velocity
-        if keys[pg.K_q]:
-            self.position += self.up * velocity
         if keys[pg.K_e]:
+            self.position += self.up * velocity
+        if keys[pg.K_q]:
             self.position -= self.up * velocity
 
     def update_orbit(self):
