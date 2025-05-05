@@ -77,6 +77,31 @@ class Scene:
         add(ColorCube(app, pos=(11, 0, 11),
                       scale=(9, 0.1, 9),
                       color=(0.5, 0.5, 0.5)))
+        
+        add(ColorCube(app, pos=(-11, 0, 11),
+                      scale=(9, 0.1, 9),
+                      color=(0.5, 0.5, 0.5)))
+        
+        add(ColorCube(app, pos=(-11, 0, -11),
+                      scale=(9, 0.1, 9),
+                      color=(0.5, 0.5, 0.5)))
+        
+        add(ColorCube(app, pos=(11, 0, -11),
+                      scale=(9, 0.1, 9),
+                      color=(0.5, 0.5, 0.5)))
+        
+        # # TAMAN
+        add(ColorCube(app, pos=(11, 0.02, 11),
+                      scale=(8, 0.1, 8),
+                      color=(0.54, 0.4, 0.2)))
+        
+        # # POHON
+
+        for x in range(10):
+            for z in range(8):
+                add(Tree(app, pos=((3.5 + random.uniform(0, 0.7)) +x*1.5, 0.1, 4 + z*2 + random.uniform(0, 1)),
+                            uni_scale=0.4 * random.uniform(0.80, 1.2),
+                            rot=(0, random.randint(0, 360), 0)))
 
 
     # SISTEM ANIMASI (MASIH BETA)
