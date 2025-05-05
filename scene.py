@@ -98,10 +98,10 @@ class Scene:
         
         # # POHON
 
-        for x in range(10):
-            for z in range(8):
-                add(Tree(app, pos=((3.5 + random.uniform(0, 0.7)) +x*1.5, 0.1, 4 + z*2 + random.uniform(0, 1)),
-                            uni_scale=0.4 * random.uniform(0.80, 1.2),
+        for x in range(16):
+            for z in range(16):
+                add(Tree(app, pos=((3.5 + random.uniform(0, 0.7)) + x * 0.9, 0.1, 4 + z * 0.9 + random.uniform(0, 1)),
+                            uni_scale=0.2 * random.uniform(0.80, 1.2),
                             rot=(0, random.randint(0, 360), 0),
                             daun_color=(0.3 + random.uniform(-0.05, 0.05), 0.4 + random.uniform(-0.05, 0.05), 0.1 + random.uniform(-0.05, 0.05))))
 
