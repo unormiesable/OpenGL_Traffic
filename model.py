@@ -231,7 +231,7 @@ class SkyBox(BaseModel):
         self.program['m_view'].write(glm.mat4(glm.mat3(self.camera.m_view)))
 
 
-class AdvancedSkyBox(BaseModel):
+class NextSkyBox(BaseModel):
     def __init__(self, app, vao_name='skybox_next', tex_id='skybox 2',
                  pos=(0, 0, 0), rot=(0, 0, 0), scale=(1, 1, 1), uni_scale=1):
         super().__init__(app, vao_name, tex_id, pos, rot, scale, uni_scale)

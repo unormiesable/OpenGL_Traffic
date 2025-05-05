@@ -14,9 +14,8 @@ class Scene:
         self.cars = []
         
         self.load()
-        self.skybox = SkyBox(app)
+        self.skybox = NextSkyBox(app)
         
-
 
     def add_object(self, obj):
         self.objects.append(obj)

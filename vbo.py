@@ -23,7 +23,7 @@ class VBO:
         
         # SKYBOX (TIDAK DIGUNAKAN UNTUK SAAT INI)
         self.vbos['skybox'] = SkyBoxVBO(ctx)
-        self.vbos['skybox_next'] = AdvancedSkyBoxVBO(ctx)
+        self.vbos['skybox_next'] = NextSkyBoxVBO(ctx)
 
     def destroy(self):
         [vbo.destroy() for vbo in self.vbos.values()]
@@ -170,7 +170,7 @@ class SkyBoxVBO(BaseVBO):
         return vertex_data
 
 
-class AdvancedSkyBoxVBO(BaseVBO):
+class NextSkyBoxVBO(BaseVBO):
     def __init__(self, ctx):
         super().__init__(ctx)
         self.format = '3f'
