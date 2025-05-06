@@ -72,6 +72,19 @@ class Scene:
                        color=(0.1, 0.1, 0.1),
                        ))
         
+        # # GARIS JALAN
+        add(ColorPlane(app, pos=(3, 0.01, 1), scale=(0.02, 1, 1), color=(0.6, 0.6, 0.6)))
+        add(ColorPlane(app, pos=(11.5, 0.01, 0), scale=(8.5, 1, 0.02), color=(0.6, 0.6, 0.6)))
+
+        add(ColorPlane(app, pos=(-3, 0.01, -1), scale=(0.02, 1, 1), color=(0.6, 0.6, 0.6)))
+        add(ColorPlane(app, pos=(-11.5, 0.01, 0), scale=(8.5, 1, 0.02), color=(0.6, 0.6, 0.6)))
+
+        add(ColorPlane(app, pos=(1, 0.01, -3), scale=(1, 1, 0.02), color=(0.6, 0.6, 0.6)))
+        add(ColorPlane(app, pos=(-0, 0.01, -11.5), scale=(0.02, 1, 8.5), color=(0.6, 0.6, 0.6)))
+
+        add(ColorPlane(app, pos=(-1, 0.01, 3), scale=(1, 1, 0.02), color=(0.6, 0.6, 0.6)))
+        add(ColorPlane(app, pos=(-0, 0.01, 11.5), scale=(0.02, 1, 8.5), color=(0.6, 0.6, 0.6)))
+
         # # TROTOAR
         color_trotoar = (0.3, 0.3, 0.3)
         add(ColorCube(app, pos=(11, 0, 11),
