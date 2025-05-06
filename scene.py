@@ -105,21 +105,51 @@ class Scene:
                             daun_color=(0.3 + random.uniform(-0.05, 0.05), 0.4 + random.uniform(-0.05, 0.05), 0.1 + random.uniform(-0.05, 0.05))))
 
         # # TRAFFIC LIGHTS
-        self.lampu = Traffic_Light(app, pos=(-2.5, 0, -2.5), uni_scale=0.3)
-        add(self.lampu)
+        self.lampu0 = Traffic_Light(app, pos=(-2.5, 0, -2.5), uni_scale=0.25, rot=(0, 0, 0))
+        add(self.lampu0)
+
+        self.lampu1 = Traffic_Light(app, pos=(2.5, 0, -2.5), uni_scale=0.25, rot=(0, -90, 0))
+        add(self.lampu1)
+
+        self.lampu2 = Traffic_Light(app, pos=(-2.5, 0, 2.5), uni_scale=0.25, rot=(0, 90, 0))
+        add(self.lampu2)
+
+        self.lampu3 = Traffic_Light(app, pos=(2.5, 0, 2.5), uni_scale=0.25, rot=(0, 180, 0))
+        add(self.lampu3)
 
 
     # SISTEM ANIMASI (MASIH BETA)
     def update(self):
-        
-        # ANIMASI LAMPU (CONTOH INI MAH)
-        def animate_light():
-            if (int(self.app.time)) % 2 == 0 :
-                self.lampu.change_to_red()
-            elif (int(self.app.time)) % 2 == 1 :
-                self.lampu.change_to_green()
+
+        # ANIMASI LAMPU (MASIH CARA KOBOY)
+        def animate_lights():
+            if (int(self.app.time / 10) %4 == 0 ) :
+                self.lampu0.change_to_green()
+
+                self.lampu1.change_to_red()
+                self.lampu2.change_to_red()
+                self.lampu3.change_to_red()
             
-            print(self.app.time)
+            elif (int(self.app.time / 10) %4 == 1 ) :
+                self.lampu1.change_to_green()
+
+                self.lampu0.change_to_red()
+                self.lampu2.change_to_red()
+                self.lampu3.change_to_red()
+
+            elif (int(self.app.time / 10) %4 == 2 ) :
+                self.lampu2.change_to_green()
+
+                self.lampu0.change_to_red()
+                self.lampu1.change_to_red()
+                self.lampu3.change_to_red()
+            
+            elif (int(self.app.time / 10) %4 == 3 ) :
+                self.lampu3.change_to_green()
+
+                self.lampu0.change_to_red()
+                self.lampu1.change_to_red()
+                self.lampu2.change_to_red()
 
 
         # ANIMASI MOBIL MOBIL (INI JUGA SAMA CONTOH)
@@ -142,3 +172,4 @@ class Scene:
                 car.update()
                 
         # animate_cars()
+        animate_lights()
