@@ -144,6 +144,38 @@ class Scene:
                         scale=(0.6, 1, 0.6),
                         pos=(-5 - x*2.5, 0.1, 5), top_color=(random.uniform(0.1, 0.5), random.uniform(0.1, 0.5), random.uniform(0.1, 0.5))))
 
+        # # PARKIRAN
+        add(ColorPlane(app, pos=(-11, 0.11, -12), uni_scale=5, scale=(1.5, 1, 1),
+                       color=(0.1, 0.1, 0.1)))
+        
+        add(ColorPlane(app, pos=(-11, 0.12, -12), uni_scale=5, scale=(1.5, 1, 0.01),
+                       color=(0.5, 0.5, 0.0)))
+        
+        # # GARIS PARKIRAN
+        for x in range(7):          
+            add(ColorPlane(app, pos=(-5 -x*2, 0.12, -11.1), uni_scale=5, scale=(0.2, 1, 0.01),
+                        color=(0.5, 0.5, 0.0),
+                        rot=(0, 65, 0)))
+
+            add(ColorPlane(app, pos=(-5 -x*2, 0.12, -12.9), uni_scale=5, scale=(0.2, 1, 0.01),
+                        color=(0.5, 0.5, 0.0),
+                        rot=(0, -65, 0)))
+            
+        for x in range(random.randint(2, 6)):
+            random1 = random.randint(0, 1)
+            random2 = random.randint(0, 1)
+            
+            if random1 == 1:
+                add(Fixed_Car(app, pos=(-6 -x*2, 0.1, -11), uni_scale=0.45,
+                            rot=(0, 245, 0), color=(random.uniform(0, 1), random.uniform(0, 1), random.uniform(0, 1)),
+                            sec_color=(random.uniform(0, 0.4), random.uniform(0, 0.4), random.uniform(0, 0.4)),
+                            is_taxi=random.randint(0, 1), spoiler=random.randint(0, 1)))
+            
+            if random2 == 1:
+                add(Fixed_Car(app, pos=(-6 -x*2, 0.1, -13), uni_scale=0.45,
+                            rot=(0, -245, 0),color=(random.uniform(0, 1), random.uniform(0, 1), random.uniform(0, 1)),
+                            sec_color=(random.uniform(0, 0.4), random.uniform(0, 0.4), random.uniform(0, 0.4)),
+                            is_taxi=random.randint(0, 1), spoiler=random.randint(0, 1)))
 
         # # CARS
         for x in range(random.randint(5, 8)):
