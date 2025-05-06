@@ -16,7 +16,7 @@ class Texture:
         self.textures['white'] = self.get_texture(path='objects/gate/gate.jpg')
         self.textures['yellow_car'] = self.get_texture(path='objects/yellow_car/yellow_car.jpg')
         
-        # DEPTH TEXTURE
+        # DEPTH TEXTURE (dipake buat shadow)
         self.textures['depth_texture'] = self.get_depth_texture()
         
         # SKYBOX

@@ -384,7 +384,7 @@ class Tree:
         self.daun_atas.render_shadow()
 
 
-## LANJUTIN FEB
+# MODEL TRAFFIC LIGHT
 class Traffic_Light:
     def __init__(self, app, pos=(0, 0, 0), rot=(0, 0, 0),
                  scale=(1, 1, 1), uni_scale=1, color=(1.0, 1.0, 1.0)):
@@ -396,10 +396,15 @@ class Traffic_Light:
         self.color = glm.vec3(color)
 
         # BUAT OBJEK DARI PRIMITIF
-        self.plane = ColorPlane(app, pos=(0, 0, 0), color=color, scale=(5, 5, 5))
-        
-        self.tiang = ColorCylinder(app, pos=(0, 2, 0), color=(0.5, 0.5, 0.5), scale=(0.2, 2, 0.2),)
-        self.box = ColorCube(app, pos=(0, 5, 0), uni_scale=0.4, scale=(1, 3, 1))
+        ## UTAMA
+        self.tiang = ColorCylinder(app, pos=(0, 2, 0), color=(0.5, 0.5, 0.5), scale=(0.15, 2, 0.15),)
+        self.box = ColorCube(app, pos=(0, 5, 0), uni_scale=0.4, scale=(1, 3, 1), color=(0.1, 0.1, 0.1))
+
+        self.red_light = ColorCylinder(app, pos=(-0.05, 5.7, 0), rot=(0, 0, 90), scale=(0.3, 0.4, 0.3), color=(1, 0, 0))
+        self.yellow_light = ColorCylinder(app, pos=(-0.05, 5, 0), rot=(0, 0, 90), scale=(0.3, 0.4, 0.3), color=(1, 1, 0))
+        self.green_light = ColorCylinder(app, pos=(-0.05, 4.3, 0), rot=(0, 0, 90), scale=(0.3, 0.4, 0.3), color=(0, 1, 0))
+
+        ## DETAIL
 
         self.update_model_matrices()
 
@@ -423,23 +428,58 @@ class Traffic_Light:
         return m_model
 
     def update_model_matrices(self):
-        self.plane.m_model = self.get_model_matrix(self.plane)
         self.tiang.m_model = self.get_model_matrix(self.tiang)
         self.box.m_model = self.get_model_matrix(self.box)
+        self.red_light.m_model = self.get_model_matrix(self.red_light)
+        self.yellow_light.m_model = self.get_model_matrix(self.yellow_light)
+        self.green_light.m_model = self.get_model_matrix(self.green_light)
+
 
     def update(self):
         self.update_model_matrices()
 
-        self.plane.color = self.color
 
-        self.plane.update()
+    # GANTI WARNA LAMPU MERAH
+    def change_to_red(self):
+        self.red_light.color = glm.vec3(1, 0, 0)
+        self.yellow_light.color = glm.vec3(0.2, 0.2, 0)
+        self.green_light.color = glm.vec3(0, 0.2, 0)
+
+        self.red_light.update()
+        self.green_light.update()
+        self.yellow_light.update()
+
+    # GANTI WARNA LAMPU KUNING
+    def change_to_yellow(self):
+        self.red_light.color = glm.vec3(0.2, 0, 0)
+        self.yellow_light.color = glm.vec3(1, 1, 0)
+        self.green_light.color = glm.vec3(0, 0.2, 0)
+
+        self.red_light.update()
+        self.green_light.update()
+        self.yellow_light.update()
+
+    # GANTI WARNA LAMPU IJO
+    def change_to_green(self):
+        self.red_light.color = glm.vec3(0.2, 0, 0)
+        self.yellow_light.color = glm.vec3(0.2, 0.2, 0)
+        self.green_light.color = glm.vec3(0, 1, 0)
+
+        self.red_light.update()
+        self.green_light.update()
+        self.yellow_light.update()
+
 
     def render(self):
-        self.plane.render()
         self.tiang.render()
         self.box.render()
+        self.red_light.render()
+        self.yellow_light.render()
+        self.green_light.render()
 
     def render_shadow(self):
-        self.plane.render_shadow()
         self.tiang.render_shadow()
         self.box.render_shadow()
+        self.red_light.render_shadow()
+        self.yellow_light.render_shadow()
+        self.green_light.render_shadow()

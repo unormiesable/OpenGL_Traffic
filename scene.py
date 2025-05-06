@@ -100,15 +100,29 @@ class Scene:
         for x in range(16):
             for z in range(16):
                 add(Tree(app, pos=((3.5 + random.uniform(0, 0.7)) + x * 0.9, 0.1, 4 + z * 0.9 + random.uniform(0, 1)),
-                            uni_scale=0.2 * random.uniform(0.80, 1.2),
+                            uni_scale=0.3 * random.uniform(0.80, 1.2),
                             rot=(0, random.randint(0, 360), 0),
                             daun_color=(0.3 + random.uniform(-0.05, 0.05), 0.4 + random.uniform(-0.05, 0.05), 0.1 + random.uniform(-0.05, 0.05))))
+
+        # # TRAFFIC LIGHTS
+        self.lampu = Traffic_Light(app, pos=(-2.5, 0, -2.5), uni_scale=0.3)
+        add(self.lampu)
 
 
     # SISTEM ANIMASI (MASIH BETA)
     def update(self):
-                
-        # ANIMASI MOBIL MOBIL
+        
+        # ANIMASI LAMPU (CONTOH INI MAH)
+        def animate_light():
+            if (int(self.app.time)) % 2 == 0 :
+                self.lampu.change_to_red()
+            elif (int(self.app.time)) % 2 == 1 :
+                self.lampu.change_to_green()
+            
+            print(self.app.time)
+
+
+        # ANIMASI MOBIL MOBIL (INI JUGA SAMA CONTOH)
         def animate_cars():
             
             for car in self.cars:
