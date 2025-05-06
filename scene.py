@@ -11,7 +11,8 @@ class Scene:
         self.objects = []
         
         # LIST MOBIL
-        self.cars = []
+        self.cars0 = []
+        self.cars1 = []
         
         self.load()
         self.skybox = NextSkyBox(app)
@@ -132,23 +133,40 @@ class Scene:
 
 
         # # BUILDINGS
-        add(Building(app, floor=random.randint(3, 8), uni_scale=0.6,
-                     color=(random.uniform(0.1, 0.5), random.uniform(0.1, 0.5), random.uniform(0.1, 0.5) ), win_scale=0.9,
-                     scale=(0.6, 1, 0.6),
-                     pos=(-5, 0.1, -5), top_color=(random.uniform(0.1, 0.5), random.uniform(0.1, 0.5), random.uniform(0.1, 0.5))))
-    
-        add(Building(app, floor=random.randint(3, 8), uni_scale=0.6,
-                     color=(random.uniform(0.1, 0.5), random.uniform(0.1, 0.5), random.uniform(0.1, 0.5)), win_scale=0.9,
-                     scale=(0.6, 1, 0.6),
-                     pos=(-7.5, 0.1, -5), top_color=(random.uniform(0.1, 0.5), random.uniform(0.1, 0.5), random.uniform(0.1, 0.5))))
+        for x in range(6):
+            add(Building(app, floor=int(random.uniform(4.0, 9.0)), uni_scale=0.6,
+                        color=(random.uniform(0.1, 0.5), random.uniform(0.1, 0.5), random.uniform(0.1, 0.5) ), win_scale=0.9,
+                        scale=(0.6, 1, 0.6),
+                        pos=(-5 - x*2.5, 0.1, -5), top_color=(random.uniform(0.1, 0.5), random.uniform(0.1, 0.5), random.uniform(0.1, 0.5))))
 
 
+        # # CARS
+        for x in range(5) :
+            car = Fixed_Car(app, pos=(-10 + x*4, 0, -1), uni_scale=0.45,
+                        is_taxi=random.randint(0, 1), spoiler=random.randint(0, 1),
+                        color=(random.uniform(0, 1), random.uniform(0, 1), random.uniform(0, 1)),
+                        sec_color=(random.uniform(0, 0.4), random.uniform(0, 0.4), random.uniform(0, 0.4)),
+                        rot=(0, 180, 0))
+            car.speed = 5
+            add(car)
+            self.cars0.append(car)
+        
+        for x in range(5) :
+            car = Fixed_Car(app, pos=(-10 + x*4, 0, 1), uni_scale=0.45,
+                        is_taxi=random.randint(0, 1), spoiler=random.randint(0, 1),
+                        color=(random.uniform(0, 1), random.uniform(0, 1), random.uniform(0, 1)),
+                        sec_color=(random.uniform(0, 0.4), random.uniform(0, 0.4), random.uniform(0, 0.4)),
+                        rot=(0, 0, 0))
+            car.speed = 5
+            add(car)
+            self.cars1.append(car)
+        
     # SISTEM ANIMASI (MASIH BETA)
     def update(self):
 
         # ANIMASI LAMPU (MASIH CARA KOBOY)
         def animate_lights():
-            if (int(self.app.time / 10) %4 == 0 ) :
+            if (int(self.app.time / 10) %4 == 0 ) : 
                 self.lampu0.change_to_green()
 
                 self.lampu1.change_to_red()
@@ -180,15 +198,29 @@ class Scene:
         # ANIMASI MOBIL MOBIL (INI JUGA SAMA CONTOH)
         def animate_cars():
             
-            for car in self.cars:
-                car.pos[0] -= car.speed * self.app.delta_time / 1000.0
-                if car.pos[0] < -18:
-                    car.pos[0] = 18
-                    car.pos[2] = random.randint(-7, 7)
+            for car in self.cars0:
+                car.pos[0] += car.speed * self.app.delta_time / 1000.0
+                if car.pos[0] > 18:
+                    car.pos[0] = -18
+                    car.pos[2] = random.uniform(-1.3, -0.7)
                     car.update_car_color(new_prime_color=(random.uniform(0.0, 1.0), random.uniform(0.0, 1.0), random.uniform(0.0, 1.0)),
                                         new_sec_color=(random.uniform(0.0, 1.0), random.uniform(0.0, 1.0), random.uniform(0.0, 1.0)))
                 
-                # ANIMASI BAN TIAP MOBIL
+                car.ban_kiri_depan.rot[2] = self.app.time * 3
+                car.ban_kiri_belakang.rot[2] = self.app.time * 3
+                car.ban_kanan_depan.rot[2] = self.app.time * 3
+                car.ban_kanan_belakang.rot[2] = self.app.time * 3
+                
+                car.update()
+
+            for car in self.cars1:
+                car.pos[0] -= car.speed * self.app.delta_time / 1000.0
+                if car.pos[0] < -18:
+                    car.pos[0] = 18
+                    car.pos[2] = random.uniform(1.3, 0.7)
+                    car.update_car_color(new_prime_color=(random.uniform(0.0, 1.0), random.uniform(0.0, 1.0), random.uniform(0.0, 1.0)),
+                                        new_sec_color=(random.uniform(0.0, 1.0), random.uniform(0.0, 1.0), random.uniform(0.0, 1.0)))
+
                 car.ban_kiri_depan.rot[2] = self.app.time * 3
                 car.ban_kiri_belakang.rot[2] = self.app.time * 3
                 car.ban_kanan_depan.rot[2] = self.app.time * 3
@@ -196,5 +228,5 @@ class Scene:
                 
                 car.update()
                 
-        # animate_cars()
+        animate_cars()
         animate_lights()
