@@ -33,6 +33,8 @@ class CGRAPHEngine:
         self.clock = pg.time.Clock()
         self.time = 0
         self.delta_time = 0
+
+        self.shadow_res = 8192
         
         self.light = PointLight(position=(-10, 10, 10), color=(1, 1, 1),intensity=1.0, shadow_blur=4.5)
         self.camera = Camera(self)
@@ -40,6 +42,7 @@ class CGRAPHEngine:
         self.scene = Scene(self)
         self.scene_renderer = SceneRenderer(self)
         self.background_color = (0.25, 0.35, 0.5)
+
 
     # HANDLER INPUT USER ===================================================================================
     def check_events(self):
