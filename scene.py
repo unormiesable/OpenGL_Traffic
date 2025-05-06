@@ -139,10 +139,15 @@ class Scene:
                         scale=(0.6, 1, 0.6),
                         pos=(-5 - x*2.5, 0.1, -5), top_color=(random.uniform(0.1, 0.5), random.uniform(0.1, 0.5), random.uniform(0.1, 0.5))))
 
+            add(Building(app, floor=int(random.uniform(4.0, 9.0)), uni_scale=0.6,
+                        color=(random.uniform(0.1, 0.5), random.uniform(0.1, 0.5), random.uniform(0.1, 0.5) ), win_scale=0.9,
+                        scale=(0.6, 1, 0.6),
+                        pos=(-5 - x*2.5, 0.1, 5), top_color=(random.uniform(0.1, 0.5), random.uniform(0.1, 0.5), random.uniform(0.1, 0.5))))
+
 
         # # CARS
-        for x in range(5) :
-            car = Fixed_Car(app, pos=(-10 + x*4, 0, -1), uni_scale=0.45,
+        for x in range(random.randint(5, 8)):
+            car = Fixed_Car(app, pos=(-10 + x*3, 0, -1), uni_scale=0.45,
                         is_taxi=random.randint(0, 1), spoiler=random.randint(0, 1),
                         color=(random.uniform(0, 1), random.uniform(0, 1), random.uniform(0, 1)),
                         sec_color=(random.uniform(0, 0.4), random.uniform(0, 0.4), random.uniform(0, 0.4)),
@@ -151,8 +156,8 @@ class Scene:
             add(car)
             self.cars0.append(car)
         
-        for x in range(5) :
-            car = Fixed_Car(app, pos=(-10 + x*4, 0, 1), uni_scale=0.45,
+        for x in range(random.randint(5, 8)):
+            car = Fixed_Car(app, pos=(-10 + x*3, 0, 1), uni_scale=0.45,
                         is_taxi=random.randint(0, 1), spoiler=random.randint(0, 1),
                         color=(random.uniform(0, 1), random.uniform(0, 1), random.uniform(0, 1)),
                         sec_color=(random.uniform(0, 0.4), random.uniform(0, 0.4), random.uniform(0, 0.4)),
