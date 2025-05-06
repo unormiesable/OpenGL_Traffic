@@ -151,7 +151,7 @@ class Scene:
         add(ColorPlane(app, pos=(-11, 0.12, -12), uni_scale=5, scale=(1.5, 1, 0.01),
                        color=(0.5, 0.5, 0.0)))
         
-        # # GARIS PARKIRAN
+        # # PARKING LINES
         for x in range(7):          
             add(ColorPlane(app, pos=(-5 -x*2, 0.12, -11.1), uni_scale=5, scale=(0.2, 1, 0.01),
                         color=(0.5, 0.5, 0.0),
@@ -160,7 +160,8 @@ class Scene:
             add(ColorPlane(app, pos=(-5 -x*2, 0.12, -12.9), uni_scale=5, scale=(0.2, 1, 0.01),
                         color=(0.5, 0.5, 0.0),
                         rot=(0, -65, 0)))
-            
+        
+        # # PARKED CARS
         for x in range(random.randint(2, 6)):
             random1 = random.randint(0, 1)
             random2 = random.randint(0, 1)
