@@ -131,6 +131,18 @@ class Scene:
         add(self.lampu3)
 
 
+        # # BUILDINGS
+        add(Building(app, floor=random.randint(3, 8), uni_scale=0.6,
+                     color=(random.uniform(0.1, 0.5), random.uniform(0.1, 0.5), random.uniform(0.1, 0.5) ), win_scale=0.9,
+                     scale=(0.6, 1, 0.6),
+                     pos=(-5, 0.1, -5), top_color=(random.uniform(0.1, 0.5), random.uniform(0.1, 0.5), random.uniform(0.1, 0.5))))
+    
+        add(Building(app, floor=random.randint(3, 8), uni_scale=0.6,
+                     color=(random.uniform(0.1, 0.5), random.uniform(0.1, 0.5), random.uniform(0.1, 0.5)), win_scale=0.9,
+                     scale=(0.6, 1, 0.6),
+                     pos=(-7.5, 0.1, -5), top_color=(random.uniform(0.1, 0.5), random.uniform(0.1, 0.5), random.uniform(0.1, 0.5))))
+
+
     # SISTEM ANIMASI (MASIH BETA)
     def update(self):
 

@@ -483,3 +483,87 @@ class Traffic_Light:
         self.red_light.render_shadow()
         self.yellow_light.render_shadow()
         self.green_light.render_shadow()
+
+# MODEL GEDUNG
+class Building:
+    def __init__(self, app, pos=(0, 0, 0), rot=(0, 0, 0),
+                 scale=(1, 1, 1), uni_scale:float=1, color=(1.0, 1.0, 1.0), floor:int = 1, win_scale = 1, top_color=(1, 1, 1)):
+
+        self.app = app
+        self.pos = glm.vec3(pos)
+        self.rot = glm.vec3([glm.radians(a) for a in rot])
+        self.scale = glm.vec3(scale) * uni_scale
+        self.color = glm.vec3(color)
+        self.floor = floor
+
+        self.floors = []
+        self.windows = []
+
+        # BUAT OBJEK DARI PRIMITIF
+        for x in range(floor):
+            main_floor = ColorCube(app, pos=(0, 1 + x, 0), scale=(3, 1, 3), color=self.color)
+
+            for y in range(main_floor.scale[0] + 2) :
+                windows = ColorCube(app, pos=(-2 + y, main_floor.pos[1], 0 ), color=(0.6, 0.6, 0.8), scale=(0.3 * win_scale, 0.3 * win_scale, main_floor.scale[2]+0.02))
+                self.windows.append(windows)
+            
+            for z in range(main_floor.scale[2] + 2) :
+                windows = ColorCube(app, pos=(0, main_floor.pos[1], -2 + z ), color=(0.6, 0.6, 0.8), scale=(main_floor.scale[2]+0.02, 0.3 * win_scale, 0.3 * win_scale))
+                self.windows.append(windows)
+
+            self.floors.append(main_floor)
+
+            self.top = ColorCube(app, pos=(0, self.floor + 0.85, 0), scale=(main_floor.scale[0] + 0.2, 0.2, main_floor.scale[2] + 0.2), color=top_color)
+
+        self.update_model_matrices()
+
+    def get_model_matrix(self, part):
+        m_model = glm.mat4()
+
+
+        # TRANSFORMASI PARENT
+        m_model = glm.translate(m_model, self.pos)
+        m_model = glm.rotate(m_model, self.rot.z, glm.vec3(0, 0, 1))
+        m_model = glm.rotate(m_model, self.rot.y, glm.vec3(0, 1, 0))
+        m_model = glm.rotate(m_model, self.rot.x, glm.vec3(1, 0, 0))
+        m_model = glm.scale(m_model, self.scale)
+
+        # TRANSFORMASI LOKAL
+        m_model = glm.translate(m_model, glm.vec3(part.pos))
+        m_model = glm.rotate(m_model, part.rot.z, glm.vec3(0, 0, 1))
+        m_model = glm.rotate(m_model, part.rot.y, glm.vec3(0, 1, 0))
+        m_model = glm.rotate(m_model, part.rot.x, glm.vec3(1, 0, 0))
+        m_model = glm.scale(m_model, glm.vec3(part.scale))
+
+        return m_model
+
+    def update_model_matrices(self):
+        for x in (self.floors):
+            x.m_model = self.get_model_matrix(x)
+
+        for y in (self.windows):
+            y.m_model = self.get_model_matrix(y)
+
+        self.top.m_model = self.get_model_matrix(self.top)
+
+    def update(self):
+        self.update_model_matrices()
+
+
+    def render(self):
+        for x in (self.floors):
+            x.render()
+
+        for y in (self.windows):
+            y.render()
+
+        self.top.render()
+
+    def render_shadow(self):
+        for x in (self.floors):
+            x.render_shadow()
+
+        for y in (self.windows):
+            y.render_shadow()
+
+        self.top.render_shadow()
