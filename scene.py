@@ -14,6 +14,12 @@ class Scene:
         self.cars0 = []
         self.cars1 = []
         
+        # LIST ANTRIAN DI JALAN (UNTUK MENDAPATKAN POSISI MOBIL PALING BELAKANG)
+        self.antrian0 = []
+        self.antrian1 = []
+        self.antrian2 = []
+        self.antrian3 = []
+        
         self.load()
         self.skybox = NextSkyBox(app)
         
@@ -143,7 +149,7 @@ class Scene:
                             is_taxi=random.randint(0, 1), spoiler=random.randint(0, 1)))
 
         # # CARS
-        for x in range(random.randint(5, 8)):
+        for x in range(random.randint(1, 2)):
             car = Fixed_Car(app, pos=(-10 + x*3, 0, -1), uni_scale=0.45,
                         is_taxi=random.randint(0, 1), spoiler=random.randint(0, 1),
                         color=(random.uniform(0, 1), random.uniform(0, 1), random.uniform(0, 1)),
@@ -153,7 +159,7 @@ class Scene:
             add(car)
             self.cars0.append(car)
         
-        for x in range(random.randint(5, 8)):
+        for x in range(random.randint(1, 2)):
             car = Fixed_Car(app, pos=(-10 + x*3, 0, 1), uni_scale=0.45,
                         is_taxi=random.randint(0, 1), spoiler=random.randint(0, 1),
                         color=(random.uniform(0, 1), random.uniform(0, 1), random.uniform(0, 1)),
@@ -167,29 +173,29 @@ class Scene:
     def update(self):
 
         # ANIMASI LAMPU (MASIH CARA KOBOY)
-        def animate_lights():
-            if (int(self.app.time / 10) %4 == 0 ) : 
+        def animate_lights(divider:int):
+            if (int(self.app.time / divider) %4 == 0 ) : 
                 self.lampu0.change_to_green()
 
                 self.lampu1.change_to_red()
                 self.lampu2.change_to_red()
                 self.lampu3.change_to_red()
             
-            elif (int(self.app.time / 10) %4 == 1 ) :
+            elif (int(self.app.time / divider) %4 == 1 ) :
                 self.lampu1.change_to_green()
 
                 self.lampu0.change_to_red()
                 self.lampu2.change_to_red()
                 self.lampu3.change_to_red()
 
-            elif (int(self.app.time / 10) %4 == 2 ) :
+            elif (int(self.app.time / divider) %4 == 2 ) :
                 self.lampu2.change_to_green()
 
                 self.lampu0.change_to_red()
                 self.lampu1.change_to_red()
                 self.lampu3.change_to_red()
             
-            elif (int(self.app.time / 10) %4 == 3 ) :
+            elif (int(self.app.time / divider) %4 == 3 ) :
                 self.lampu3.change_to_green()
 
                 self.lampu0.change_to_red()
@@ -201,34 +207,38 @@ class Scene:
         def animate_cars():
             
             for car in self.cars0:
-                car.pos[0] += car.speed * self.app.delta_time / 1000.0
-                if car.pos[0] > 18:
-                    car.pos[0] = -18
-                    car.pos[2] = random.uniform(-1.3, -0.7)
-                    car.update_car_color(new_prime_color=(random.uniform(0.0, 1.0), random.uniform(0.0, 1.0), random.uniform(0.0, 1.0)),
-                                        new_sec_color=(random.uniform(0.0, 1.0), random.uniform(0.0, 1.0), random.uniform(0.0, 1.0)))
-                
-                car.ban_kiri_depan.rot[2] = self.app.time * 3
-                car.ban_kiri_belakang.rot[2] = self.app.time * 3
-                car.ban_kanan_depan.rot[2] = self.app.time * 3
-                car.ban_kanan_belakang.rot[2] = self.app.time * 3
-                
-                car.update()
+                if self.lampu0.is_green == True or car.pos[0] >= -2.5 :
+
+                    car.pos[0] += car.speed * self.app.delta_time / 1000.0
+                    if car.pos[0] > 18:
+                        car.pos[0] = -18
+                        car.pos[2] = random.uniform(-1.3, -0.7)
+                        car.update_car_color(new_prime_color=(random.uniform(0.0, 1.0), random.uniform(0.0, 1.0), random.uniform(0.0, 1.0)),
+                                            new_sec_color=(random.uniform(0.0, 1.0), random.uniform(0.0, 1.0), random.uniform(0.0, 1.0)))
+                    
+                    car.ban_kiri_depan.rot[2] = self.app.time * 3
+                    car.ban_kiri_belakang.rot[2] = self.app.time * 3
+                    car.ban_kanan_depan.rot[2] = self.app.time * 3
+                    car.ban_kanan_belakang.rot[2] = self.app.time * 3
+                    
+                    car.update()
 
             for car in self.cars1:
-                car.pos[0] -= car.speed * self.app.delta_time / 1000.0
-                if car.pos[0] < -18:
-                    car.pos[0] = 18
-                    car.pos[2] = random.uniform(1.3, 0.7)
-                    car.update_car_color(new_prime_color=(random.uniform(0.0, 1.0), random.uniform(0.0, 1.0), random.uniform(0.0, 1.0)),
-                                        new_sec_color=(random.uniform(0.0, 1.0), random.uniform(0.0, 1.0), random.uniform(0.0, 1.0)))
+                if (self.lampu3.is_green == True) or (car.pos[0] <=  2.5) :
 
-                car.ban_kiri_depan.rot[2] = self.app.time * 3
-                car.ban_kiri_belakang.rot[2] = self.app.time * 3
-                car.ban_kanan_depan.rot[2] = self.app.time * 3
-                car.ban_kanan_belakang.rot[2] = self.app.time * 3
-                
-                car.update()
+                    car.pos[0] -= car.speed * self.app.delta_time / 1000.0
+                    if car.pos[0] < -18:
+                        car.pos[0] = 18
+                        car.pos[2] = random.uniform(1.3, 0.7)
+                        car.update_car_color(new_prime_color=(random.uniform(0.0, 1.0), random.uniform(0.0, 1.0), random.uniform(0.0, 1.0)),
+                                            new_sec_color=(random.uniform(0.0, 1.0), random.uniform(0.0, 1.0), random.uniform(0.0, 1.0)))
+
+                    car.ban_kiri_depan.rot[2] = self.app.time * 3
+                    car.ban_kiri_belakang.rot[2] = self.app.time * 3
+                    car.ban_kanan_depan.rot[2] = self.app.time * 3
+                    car.ban_kanan_belakang.rot[2] = self.app.time * 3
+                    
+                    car.update()
                 
         animate_cars()
-        animate_lights()
+        animate_lights(5)

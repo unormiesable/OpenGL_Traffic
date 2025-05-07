@@ -395,6 +395,8 @@ class Traffic_Light:
         self.scale = glm.vec3(scale) * uni_scale
         self.color = glm.vec3(color)
 
+        self.is_green = False
+
         # BUAT OBJEK DARI PRIMITIF
         ## UTAMA
         self.tiang = ColorCylinder(app, pos=(0, 2, 0), color=(0.5, 0.5, 0.5), scale=(0.15, 2, 0.15),)
@@ -449,6 +451,8 @@ class Traffic_Light:
         self.green_light.update()
         self.yellow_light.update()
 
+        self.is_green = False
+
     # GANTI WARNA LAMPU KUNING
     def change_to_yellow(self):
         self.red_light.color = glm.vec3(0.2, 0, 0)
@@ -459,6 +463,8 @@ class Traffic_Light:
         self.green_light.update()
         self.yellow_light.update()
 
+        self.is_green = False
+
     # GANTI WARNA LAMPU IJO
     def change_to_green(self):
         self.red_light.color = glm.vec3(0.2, 0, 0)
@@ -468,6 +474,8 @@ class Traffic_Light:
         self.red_light.update()
         self.green_light.update()
         self.yellow_light.update()
+
+        self.is_green = True
 
 
     def render(self):
