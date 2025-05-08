@@ -13,6 +13,8 @@ class Scene:
         # LIST MOBIL
         self.cars0 = []
         self.cars1 = []
+        self.cars2 = []
+        self.cars3 = []
         
         # LIST ANTRIAN DI JALAN (UNTUK MENDAPATKAN POSISI MOBIL PALING BELAKANG)
         self.antrian0 = []
@@ -189,6 +191,16 @@ class Scene:
             car.speed = 5
             add(car)
             self.cars1.append(car)
+
+        for x in range(random.randint(4, 6)):
+            car = Fixed_Car(app, pos=(4 - x*3, 0, 1), uni_scale=0.45,
+                        is_taxi=random.randint(0, 1), spoiler=random.randint(0, 1),
+                        color=(random.uniform(0, 1), random.uniform(0, 1), random.uniform(0, 1)),
+                        sec_color=(random.uniform(0, 0.4), random.uniform(0, 0.4), random.uniform(0, 0.4)),
+                        rot=(0, 0, 0), id=x)
+            car.speed = 5
+            add(car)
+            self.cars2.append(car)
         
         
     # SISTEM ANIMASI (MASIH BETA)
@@ -204,7 +216,7 @@ class Scene:
                 self.lampu1.change_to_red()
                 self.lampu2.change_to_red()
                 self.lampu3.change_to_red()
-                print("Semua lampu merah (jeda)")
+                print("Semua lampu merah (PAUSE DULU BIAR GA TABRAKAN)")
 
             elif cycle == 0:
                 self.lampu0.change_to_green()
@@ -237,56 +249,69 @@ class Scene:
 
 
         # ANIMASI MOBIL MOBIL (INI JUGA SAMA CONTOH)
-        def animate_cars(car_list:list, antrian_list:list, pos:int = 0, traffic_light=self.lampu0, interpolator:float = 0.008): 
-            for car in car_list:
-                       
-                if (car.speed < 5 and car not in antrian_list):
-                    car.speed += interpolator * self.app.delta_time
-                    
-                car.pos[pos] += car.speed * self.app.delta_time / 1000
-                car.update()
-                    
-                if car.pos[pos] < -4 and car not in antrian_list:
-                    antrian_list.append(car)
+        def animate_cars(car_list:list, antrian_list:list, pos:int = 0, traffic_light=self.lampu0, interpolator:float = 0.008, arah = 1): 
+            if arah == 1 :
+                for car in car_list:
+                
+                    if (car.speed < 5 and car not in antrian_list):
+                        car.speed += interpolator * self.app.delta_time
                         
-                if car.pos[pos] > -4 and car in antrian_list:
-                    antrian_list.remove(car)
+                    car.pos[pos] += car.speed * self.app.delta_time / 1000
+                    car.update()
                         
-                if car.pos[pos] > 18:
-                    car.pos[pos] = -18
-                    
-                if antrian_list:
-                    for i, car in enumerate(antrian_list):
-                        if i == 0:
-                            if car.pos[pos] > -4.5 and car.pos[pos] < -4 and traffic_light.is_green == False:
-                                    
-                                if car.speed > 0:
-                                    car.speed -= interpolator * self.app.delta_time
-                                if car.speed < 0:
-                                    car.speed = 0
-                                        
-                            else:
-                                if car.speed < 5:
-                                    car.speed += interpolator * self.app.delta_time
-                                if car.speed > 5:
-                                    car.speed = 5
-                        else:
-                            depan = antrian_list[i - 1]
-                            jarak = depan.pos[pos] - car.pos[pos]
-                            if jarak > 2.7:
-                                    
-                                if car.speed < 5:
-                                    car.speed += interpolator * self.app.delta_time
-                                if car.speed > 5:
-                                    car.speed = 5
-                                        
-                            else:
-                                if car.speed > 0:
-                                    car.speed -= interpolator * self.app.delta_time
-                                    
-                                if car.speed < 0:
-                                    car.speed = 0
+                    if car.pos[pos] < -4 and car not in antrian_list:
+                        antrian_list.append(car)
                             
-        animate_cars(car_list=self.cars0, antrian_list=self.antrian0, pos=0, traffic_light=self.lampu0, interpolator=0.007)
-        animate_cars(car_list=self.cars1, antrian_list=self.antrian1, pos=2, traffic_light=self.lampu1, interpolator=0.007)
+                    if car.pos[pos] > -4 and car in antrian_list:
+                        antrian_list.remove(car)
+                            
+                    if car.pos[pos] > 18:
+                        car.pos[pos] = -18
+                        
+                    if antrian_list:
+                        for i, car in enumerate(antrian_list):
+                            if i == 0:
+                                if car.pos[pos] > -4.5 and car.pos[pos] < -4 and traffic_light.is_green == False:
+                                        
+                                    if car.speed > 0:
+                                        car.speed -= interpolator * self.app.delta_time
+                                    if car.speed < 0:
+                                        car.speed = 0
+                                            
+                                else:
+                                    if car.speed < 5:
+                                        car.speed += interpolator * self.app.delta_time
+                                    if car.speed > 5:
+                                        car.speed = 5
+                            else:
+                                depan = antrian_list[i - 1]
+                                jarak = depan.pos[pos] - car.pos[pos]
+                                if jarak > 2.7:
+                                        
+                                    if car.speed < 5:
+                                        car.speed += interpolator * self.app.delta_time
+                                    if car.speed > 5:
+                                        car.speed = 5
+                                            
+                                else:
+                                    if car.speed > 0:
+                                        car.speed -= interpolator * self.app.delta_time
+                                        
+                                    if car.speed < 0:
+                                        car.speed = 0
+            if arah == -1:
+                for car in car_list:
+
+                        
+                    car.pos[pos] -= car.speed * self.app.delta_time / 1000
+                    car.update()
+
+                    if car.pos[pos] < -18:
+                        car.pos[pos] = 18
+
+                            
+        animate_cars(car_list=self.cars0, antrian_list=self.antrian0, pos=0, traffic_light=self.lampu0, interpolator=0.007, arah=1)
+        animate_cars(car_list=self.cars1, antrian_list=self.antrian1, pos=2, traffic_light=self.lampu1, interpolator=0.007, arah=1)
+        animate_cars(car_list=self.cars2, antrian_list=self.antrian2, pos=0, traffic_light=self.lampu2, interpolator=0.007, arah= -1)
+        
         animate_lights(2)
