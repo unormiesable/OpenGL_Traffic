@@ -2,13 +2,16 @@
 
 ## HOW TO RUN THE PROGRAM?
 #### CLONE REPOSITORY
-<code>git clone https://github.com/unormiesable/OpenGL_Traffic.git</code>
+<pre>
+    <code>git clone https://github.com/unormiesable/OpenGL_Traffic.git</code>
+    <code>cd OpenGL_Traffic</code>
+</pre>
 
 #### PYTHON VIRTUAL ENVIRONMENT
 ###### WINDOWS :
 <pre>
     <code>python -m venv virtual</code>
-    <code>source virtual/Scripts/activate</code>
+    <code>virtual\Scripts\activate</code>
 </pre>
 
 ###### LINUX :
