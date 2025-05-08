@@ -1,6 +1,6 @@
 import pygame as pg
 import moderngl as mgl
-import glm
+from pyglm import glm
 
 # TEXTURE YANG AKAN DIGUNAKAN PADA OBJEK
 class Texture:

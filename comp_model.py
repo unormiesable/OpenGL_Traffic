@@ -1,8 +1,7 @@
 import moderngl as mgl
 import numpy as np
-import glm
+from pyglm import glm
 from model import *
-
 
 # MODEL KOMPOSISI
 # TES KUBUS DAN PLANE
