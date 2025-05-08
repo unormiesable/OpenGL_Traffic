@@ -1,6 +1,6 @@
 import moderngl as mgl
 import numpy as np
-import glm
+from pyglm import glm
 
 # BASE MODEL TANPA TEXTURE
 class BaseModelColor:

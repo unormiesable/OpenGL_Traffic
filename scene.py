@@ -1,6 +1,6 @@
 from model import *
 from comp_model import *
-import glm
+from pyglm import glm
 import random
 import math
 
