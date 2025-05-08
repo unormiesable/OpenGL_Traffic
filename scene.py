@@ -150,7 +150,7 @@ class Scene:
 
         # # CARS
         for x in range(random.randint(3, 6)):
-            car = Fixed_Car(app, pos=(-10 + x*3, 0, -1), uni_scale=0.45,
+            car = Fixed_Car(app, pos=(-4 + x*3, 0, -1), uni_scale=0.45,
                         is_taxi=random.randint(0, 1), spoiler=random.randint(0, 1),
                         color=(random.uniform(0, 1), random.uniform(0, 1), random.uniform(0, 1)),
                         sec_color=(random.uniform(0, 0.4), random.uniform(0, 0.4), random.uniform(0, 0.4)),
@@ -197,21 +197,56 @@ class Scene:
         # ANIMASI MOBIL MOBIL (INI JUGA SAMA CONTOH)
         def animate_cars():
             for car in self.cars0:
+                
+                if (car.speed < 5 and car not in self.antrian0):
+                    car.speed += 0.008 * self.app.delta_time
+                
                 car.pos[0] += car.speed * self.app.delta_time / 1000
                 car.update()
                 
-                if car.pos[0] < -2.5 and car not in self.antrian0:
+                if car.pos[0] < -4 and car not in self.antrian0:
                     self.antrian0.append(car)
                     print("mobil ", car.id," masuk antrian 0")
                     
-                if car.pos[0] > -2.5 and car in self.antrian0:
+                if car.pos[0] > -4 and car in self.antrian0:
                     self.antrian0.remove(car)
                     print("mobil ", car.id," dihapus dari antrian 0")
                     
                 if car.pos[0] > 18:
                     car.pos[0] = -18
                 
+                if self.antrian0:
+                    for i, car in enumerate(self.antrian0):
+                        if i == 0:
+                            if car.pos[0] > -4.5 and car.pos[0] < -4 and self.lampu0.is_green == False:
+                                
+                                if car.speed > 0:
+                                    car.speed -= 0.008 * self.app.delta_time
+                                if car.speed < 0:
+                                    car.speed = 0
+                                    
+                            else:
+                                if car.speed < 5:
+                                    car.speed += 0.008 * self.app.delta_time
+                                if car.speed > 5:
+                                    car.speed = 5
+                        else:
+                            depan = self.antrian0[i - 1]
+                            jarak = depan.pos[0] - car.pos[0]
+                            if jarak > 2.5:
+                                
+                                if car.speed < 5:
+                                    car.speed += 0.008 * self.app.delta_time
+                                if car.speed > 5:
+                                    car.speed = 5
+                                    
+                            else:
+                                if car.speed > 0:
+                                    car.speed -= 0.003 * self.app.delta_time
+                                
+                                if car.speed < 0:
+                                    car.speed = 0
 
                 
         animate_cars()
-        animate_lights(5)
+        animate_lights(1)
