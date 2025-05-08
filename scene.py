@@ -80,6 +80,10 @@ class Scene:
         add(ColorCube(app, pos=(11, 0.02, 11),
                       scale=(8, 0.1, 8),
                       color=(0.35, 0.25, 0.15)))
+
+        add(ColorCube(app, pos=(-11, 0.02, 13),
+                      scale=(8, 0.1, 6),
+                      color=(0.35, 0.25, 0.15)))
         
         # # POHON
 
@@ -89,6 +93,14 @@ class Scene:
                             uni_scale=0.3 * random.uniform(0.80, 1.2),
                             rot=(0, random.randint(0, 360), 0),
                             daun_color=(0.3 + random.uniform(-0.05, 0.05), 0.4 + random.uniform(-0.05, 0.05), 0.1 + random.uniform(-0.05, 0.05))))
+                
+        for x in range(16):
+            for z in range(12):
+                add(Tree(app, pos=((-4.5 - random.uniform(-0.7, 0)) - x * 0.9, 0.1, 8 + z * 0.9 + random.uniform(0, 1)),
+                            uni_scale=0.3 * random.uniform(0.80, 1.2),
+                            rot=(0, random.randint(0, 360), 0),
+                            daun_color=(0.3 + random.uniform(-0.05, 0.05), 0.4 + random.uniform(-0.05, 0.05), 0.1 + random.uniform(-0.05, 0.05))))
+                
 
         # # TRAFFIC LIGHTS
         self.lampu0 = Traffic_Light(app, pos=(-2.5, 0, -2.5), uni_scale=0.25, rot=(0, 0, 0))
