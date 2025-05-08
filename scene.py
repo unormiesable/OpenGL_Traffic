@@ -10,7 +10,7 @@ class Scene:
         self.app = app
         self.objects = []
         
-        # LIST MOBIL
+        # LIST MOBIL (BUAT CEK DI LANE MANA MOBILNYA)
         self.cars0 = []
         self.cars1 = []
         self.cars2 = []
@@ -21,8 +21,6 @@ class Scene:
         self.antrian1 = []
         self.antrian2 = []
         self.antrian3 = []
-        
-        self.speed_limit = 5
         
         self.load()
         self.skybox = NextSkyBox(app)
@@ -347,11 +345,10 @@ class Scene:
                                         car.speed -= interpolator * self.app.delta_time
                                     if car.speed < 0:
                                         car.speed = 0
-
                             
         animate_cars(car_list=self.cars0, antrian_list=self.antrian0, pos=0, traffic_light=self.lampu0, interpolator=0.007, arah=1)
         animate_cars(car_list=self.cars1, antrian_list=self.antrian1, pos=2, traffic_light=self.lampu1, interpolator=0.007, arah=1)
         animate_cars(car_list=self.cars2, antrian_list=self.antrian2, pos=2, traffic_light=self.lampu2, interpolator=0.007, arah= -1)
         animate_cars(car_list=self.cars3, antrian_list=self.antrian3, pos=0, traffic_light=self.lampu3, interpolator=0.007, arah= -1)
         
-        animate_lights(2)
+        animate_lights(1)
