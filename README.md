@@ -19,7 +19,7 @@
 
 #### INSTALL DEPENDENCIES
 <pre>
-    <code>python install -r requirements.txt</code>
+    <code>pip install -r requirements.txt</code>
 </pre>
 
 #### JALANKAN PROGRAM
