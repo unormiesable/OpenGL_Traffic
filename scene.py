@@ -127,6 +127,13 @@ class Scene:
                         color=(random.uniform(0.1, 0.5), random.uniform(0.1, 0.5), random.uniform(0.1, 0.5) ), win_scale=0.9,
                         scale=(0.6, 1, 0.6),
                         pos=(-5 - x*2.5, 0.1, 5), top_color=(random.uniform(0.1, 0.5), random.uniform(0.1, 0.5), random.uniform(0.1, 0.5))))
+            
+            
+            add(Building(app, floor=int(random.uniform(4.0, 9.0)), uni_scale=0.6,
+                        color=(random.uniform(0.1, 0.5), random.uniform(0.1, 0.5), random.uniform(0.1, 0.5) ), win_scale=0.9,
+                        scale=(0.6, 1, 0.6),
+                        pos=(5 + x*2.5, 0.1, -5), top_color=(random.uniform(0.1, 0.5), random.uniform(0.1, 0.5), random.uniform(0.1, 0.5))))
+
 
         # # PARKIRAN
         add(ColorPlane(app, pos=(-11, 0.11, -12), uni_scale=5, scale=(1.5, 1, 1),
