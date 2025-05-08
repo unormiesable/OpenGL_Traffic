@@ -1,9 +1,31 @@
 # VISUALISASI TRAFFIC DENGAN OPENGL
 
-## Python Virtual Environment
--  Linux....................................virt
--  Windows..............................virtual
+## HOW TO RUN THE PROGRAM?
+#### CLONE REPOSITORY
+<code>git clone https://github.com/unormiesable/OpenGL_Traffic.git</code>
 
+#### PYTHON VIRTUAL ENVIRONMENT
+###### WINDOWS :
+<pre>
+    <code>python -m venv virtual</code>
+    <code>source virtual/Scripts/activate</code>
+</pre>
+
+###### LINUX :
+<pre>
+    <code>python -m venv virtual</code>
+    <code>source virtual/bin/activate</code>
+</pre>
+
+#### INSTALL DEPENDENCIES
+<pre>
+    <code>python install -r requirements.txt</code>
+</pre>
+
+#### JALANKAN PROGRAM
+<pre>
+    <code>python main.py</code>
+</pre>
 
 ## KAMUS DASAR OPENGL
 ### VBO (Vertex Buffer Object)
