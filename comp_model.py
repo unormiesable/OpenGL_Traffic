@@ -68,7 +68,7 @@ class Fixed_Car:
     def __init__(self, app, pos=(0, 0, 0), rot=(0, 0, 0),
                  scale=(1, 1, 1), uni_scale=1, color=(1.0, 1.0, 1.0),
                  win_color=(0.6, 0.6, 0.8), head_size=0.25, sec_color=(1.0, 1.0, 1.0), 
-                 spoiler=True, is_taxi=False):
+                 spoiler=True, is_taxi=False, id=0):
 
         self.app = app
         self.pos = glm.vec3(pos)
@@ -80,6 +80,7 @@ class Fixed_Car:
         self.sec_color = sec_color
         self.add_spoiler = spoiler
         self.is_taxi = is_taxi
+        self.id = id
 
         self.win_color = win_color
         

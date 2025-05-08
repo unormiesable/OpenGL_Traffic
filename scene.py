@@ -149,25 +149,16 @@ class Scene:
                             is_taxi=random.randint(0, 1), spoiler=random.randint(0, 1)))
 
         # # CARS
-        for x in range(random.randint(1, 2)):
+        for x in range(random.randint(3, 6)):
             car = Fixed_Car(app, pos=(-10 + x*3, 0, -1), uni_scale=0.45,
                         is_taxi=random.randint(0, 1), spoiler=random.randint(0, 1),
                         color=(random.uniform(0, 1), random.uniform(0, 1), random.uniform(0, 1)),
                         sec_color=(random.uniform(0, 0.4), random.uniform(0, 0.4), random.uniform(0, 0.4)),
-                        rot=(0, 180, 0))
+                        rot=(0, 180, 0), id=x)
             car.speed = 5
             add(car)
             self.cars0.append(car)
         
-        for x in range(random.randint(1, 2)):
-            car = Fixed_Car(app, pos=(-10 + x*3, 0, 1), uni_scale=0.45,
-                        is_taxi=random.randint(0, 1), spoiler=random.randint(0, 1),
-                        color=(random.uniform(0, 1), random.uniform(0, 1), random.uniform(0, 1)),
-                        sec_color=(random.uniform(0, 0.4), random.uniform(0, 0.4), random.uniform(0, 0.4)),
-                        rot=(0, 0, 0))
-            car.speed = 5
-            add(car)
-            self.cars1.append(car)
         
     # SISTEM ANIMASI (MASIH BETA)
     def update(self):
@@ -205,40 +196,22 @@ class Scene:
 
         # ANIMASI MOBIL MOBIL (INI JUGA SAMA CONTOH)
         def animate_cars():
-            
             for car in self.cars0:
-                if self.lampu0.is_green == True or car.pos[0] >= -2.5 :
-
-                    car.pos[0] += car.speed * self.app.delta_time / 1000.0
-                    if car.pos[0] > 18:
-                        car.pos[0] = -18
-                        car.pos[2] = random.uniform(-1.3, -0.7)
-                        car.update_car_color(new_prime_color=(random.uniform(0.0, 1.0), random.uniform(0.0, 1.0), random.uniform(0.0, 1.0)),
-                                            new_sec_color=(random.uniform(0.0, 1.0), random.uniform(0.0, 1.0), random.uniform(0.0, 1.0)))
+                car.pos[0] += car.speed * self.app.delta_time / 1000
+                car.update()
+                
+                if car.pos[0] < -2.5 and car not in self.antrian0:
+                    self.antrian0.append(car)
+                    print("mobil ", car.id," masuk antrian 0")
                     
-                    car.ban_kiri_depan.rot[2] = self.app.time * 3
-                    car.ban_kiri_belakang.rot[2] = self.app.time * 3
-                    car.ban_kanan_depan.rot[2] = self.app.time * 3
-                    car.ban_kanan_belakang.rot[2] = self.app.time * 3
+                if car.pos[0] > -2.5 and car in self.antrian0:
+                    self.antrian0.remove(car)
+                    print("mobil ", car.id," dihapus dari antrian 0")
                     
-                    car.update()
+                if car.pos[0] > 18:
+                    car.pos[0] = -18
+                
 
-            for car in self.cars1:
-                if (self.lampu3.is_green == True) or (car.pos[0] <=  2.5) :
-
-                    car.pos[0] -= car.speed * self.app.delta_time / 1000.0
-                    if car.pos[0] < -18:
-                        car.pos[0] = 18
-                        car.pos[2] = random.uniform(1.3, 0.7)
-                        car.update_car_color(new_prime_color=(random.uniform(0.0, 1.0), random.uniform(0.0, 1.0), random.uniform(0.0, 1.0)),
-                                            new_sec_color=(random.uniform(0.0, 1.0), random.uniform(0.0, 1.0), random.uniform(0.0, 1.0)))
-
-                    car.ban_kiri_depan.rot[2] = self.app.time * 3
-                    car.ban_kiri_belakang.rot[2] = self.app.time * 3
-                    car.ban_kanan_depan.rot[2] = self.app.time * 3
-                    car.ban_kanan_belakang.rot[2] = self.app.time * 3
-                    
-                    car.update()
                 
         animate_cars()
         animate_lights(5)
