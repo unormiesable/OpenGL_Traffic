@@ -32,7 +32,7 @@ class Texture:
         depth_texture.repeat_y = False
         return depth_texture
 
-    # TEXTURE CUBE (DIGUNAKAN PADA CUBE DAN SKYBOX)
+    # TEXTURE CUBE
     def get_texture_cube(self, dir_path, ext='png'):
         faces = ['right', 'left', 'top', 'bottom'] + ['front', 'back'][::-1]
 
@@ -54,6 +54,7 @@ class Texture:
 
         return texture_cube
 
+    # TEXTURE UNTUK OBJEK
     def get_texture(self, path):
         texture = pg.image.load(path).convert()
         texture = pg.transform.flip(texture, flip_x=False, flip_y=True)
