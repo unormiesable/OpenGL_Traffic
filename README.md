@@ -1,6 +1,6 @@
 # VISUALISASI TRAFFIC DENGAN OPENGL
 
-## HOW TO RUN THE PROGRAM ?
+## CARA MENJALANKAN PROGRAM ?
 #### CLONE REPOSITORY
 <pre>
     <code>git clone https://github.com/unormiesable/OpenGL_Traffic.git</code>
@@ -113,7 +113,7 @@
 
 ** Main : Konfig render target (Selain layar utama)
 
-### GBUFFER (Geometry Buffer) -Belum Implementasi
+### GBUFFER (Geometry Buffer)
 * Position
 * Normal
 * Albedo
