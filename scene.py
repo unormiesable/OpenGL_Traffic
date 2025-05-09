@@ -27,7 +27,7 @@ class Scene:
         self.spawn_cooldown = 1000
 
         # WAKTU LAMPU
-        self.wait_time = 1
+        self.wait_time = 2
         
         self.load()
         self.skybox = NextSkyBox(app)

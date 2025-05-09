@@ -93,6 +93,15 @@
 * Jumlah mobil minimum adalah **4** untuk setiap lane
 * Jumlah mobil maksimum adalah **7** untuk setiap lane
 
+###### **MENGATUR WAKTU TRAFFIC LIGHT**
+* Waktu tunggu default adalah 2 satuan
+<pre>
+* F                     =       MENGURANGI WAKTU TUNGGU
+* G                     =       MENAMBAH WAKTU TUNGGU
+</pre>
+* Waktu tunggu minimal adalah 0.5 satuan
+* Waktu tunggu maksimal adalah 5 satuan
+
 ## **KAMUS DASAR OPENGL**
 
 ### <span style="color: green;">VBO (Vertex Buffer Object)</span>
