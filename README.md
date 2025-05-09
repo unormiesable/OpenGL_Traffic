@@ -42,7 +42,9 @@
 
 #### <span style="color: orange;">KONTROL KAMERA</span>
 
-* Tekan **"TAB"** untuk mengubah mode kamera
+<pre>
+* TAB                   =       GANTI MODE KAMERA
+</pre>
 
 ###### **FLY MODE (DEFAULT)**
 <pre>
