@@ -100,14 +100,14 @@
 * Normal Vector
 * (Dan beberapa data lain misalnya seperti "Weight" pada vertex)
 
-**Main** : Hold data raw di **GPU**
+**Main** : Hold data raw di GPU
 
 ### <span style="color: green;">VAO (Vertex Array Object)</span>
 * Referensi/Penunjuk ke VBO yang digunakan
 * Layout Attr Vertex
 * Binding State
 
-**Main** : Cara baca **VBO**
+**Main** : Cara baca VBO
 
 ### <span style="color: green;">FBO (Frame Buffer)</span>
 * Texture and Color Buffer (sebagai output image)
@@ -123,4 +123,4 @@
 * Specular
 * Depth
 
-**Main** : Sekumpulan texture dalam **FBO** untuk deferred shading (Menyimpan data per pixel)
+**Main** : Sekumpulan texture dalam FBO untuk deferred shading (Menyimpan data per pixel)
