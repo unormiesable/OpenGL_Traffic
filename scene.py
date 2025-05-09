@@ -26,6 +26,8 @@ class Scene:
         self.last_spawn_time = 0
         self.spawn_cooldown = 1000
 
+        # WAKTU LAMPU
+        self.wait_time = 1
         
         self.load()
         self.skybox = NextSkyBox(app)
@@ -346,6 +348,12 @@ class Scene:
                             
                     if car.pos[pos] > 18.5:
                         car.pos[pos] = -18.5
+                        car.color = (random.uniform(0.1, 0.8), random.uniform(0.1, 0.8), random.uniform(0.1, 0.8))
+                        
+                        car.update_car_color(
+                            new_prime_color = (random.uniform(0.1, 0.8), random.uniform(0.1, 0.8), random.uniform(0.1, 0.8)),
+                            new_sec_color = (random.uniform(0.1, 0.4), random.uniform(0.1, 0.4), random.uniform(0.1, 0.4))
+                        )
                         
                     if antrian_list:
                         for i, car in enumerate(antrian_list):
@@ -395,6 +403,11 @@ class Scene:
                     
                     if car.pos[pos] < -18.5:
                         car.pos[pos] = 18.5
+                        
+                        car.update_car_color(
+                            new_prime_color = (random.uniform(0.1, 0.8), random.uniform(0.1, 0.8), random.uniform(0.1, 0.8)),
+                            new_sec_color = (random.uniform(0.1, 0.4), random.uniform(0.1, 0.4), random.uniform(0.1, 0.4))
+                        )
                     
                     if antrian_list:
                         for i, car in enumerate(antrian_list):
@@ -428,4 +441,4 @@ class Scene:
         animate_cars(car_list=self.cars2, antrian_list=self.antrian2, pos=2, traffic_light=self.lampu2, interpolator=0.007, arah= -1)
         animate_cars(car_list=self.cars3, antrian_list=self.antrian3, pos=0, traffic_light=self.lampu3, interpolator=0.007, arah= -1)
         
-        animate_lights(1)
+        animate_lights(self.wait_time)

@@ -122,6 +122,22 @@ class CGRAPHEngine:
                     pg.event.set_grab(False)
                 else:
                     pg.event.set_grab(True)
+            
+            # GANTI WAKTU TUNGGU
+            if event.type == pg.KEYDOWN and event.key == pg.K_f:
+                if self.scene.wait_time > 0.5:
+                    self.scene.wait_time -= 0.5
+                    print("WAKTU TUNGGU : ", self.scene.wait_time)
+                else:
+                    print("WAKTU TUNGGU MINIMAL 0.5")
+            
+            if event.type == pg.KEYDOWN and event.key == pg.K_g:
+                if self.scene.wait_time < 5:
+                    self.scene.wait_time += 0.5
+                    print("WAKTU TUNGGU : ", self.scene.wait_time)
+                else:
+                    print("WAKTU TUNGGU MAXIMAL 5")
+            
                     
                     
             # SCROLL -> RADIUS ORBIT
