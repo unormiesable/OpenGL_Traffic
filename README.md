@@ -69,8 +69,8 @@
 </pre>
 
 #### PENGATURAN SCENE
-###### SPAWN MOBIL
 * Pada scene default disediakan 4 mobil untuk setiap lanenya 
+###### SPAWN MOBIL
 <pre>
 * 1                     =       MENAMBAH MOBIL PADA LANE 1
 * 2                     =       MENAMBAH MOBIL PADA LANE 2
@@ -79,7 +79,6 @@
 </pre>
 
 ###### DELETE MOBIL
-* Pada scene default disediakan 4 mobil untuk setiap lanenya 
 <pre>
 * 6                     =       MENGHAPUS MOBIL PADA LANE 1
 * 7                     =       MENGHAPUS MOBIL PADA LANE 2
