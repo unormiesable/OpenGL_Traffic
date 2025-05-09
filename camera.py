@@ -2,7 +2,7 @@ from pyglm import glm
 import pygame as pg
 
 # ATRIBUT KAMERA
-FOV = 60
+FOV = 70
 NEAR = 0.1
 FAR = 100
 
@@ -73,7 +73,7 @@ class Camera:
         if keys[pg.K_LSHIFT] or keys[pg.K_RSHIFT]:
             velocity = 0.05 * self.app.delta_time
         elif keys[pg.K_LCTRL] or keys[pg.K_RCTRL]:
-            velocity = 0.01 * self.app.delta_time
+            velocity = 0.003 * self.app.delta_time
         else:
             velocity = 0.02 * self.app.delta_time
         
