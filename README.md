@@ -31,6 +31,13 @@
 </pre>
 
 ## CARA MENGGUNAKAN ?
+
+#### MENAMPILKAN CURSOR
+* Secara default cursor akan hidden, namun pada situasi tertentu cursor diperlukan untuk mengakses hal lain diluar program tanpa menghentikan program
+<pre>
+* ` (BACKQUOTE)         =       TOGGLE CURSOR
+</pre>
+
 #### KONTROL KAMERA
 
 * Tekan "TAB" untuk mengubah mode kamera

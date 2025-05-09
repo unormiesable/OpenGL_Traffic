@@ -113,6 +113,16 @@ class CGRAPHEngine:
                     # CUMA DEBUG 
                     print("HANYA DAPAT SPAWN/DESTROY MOBIL SETIAP ", self.scene.spawn_cooldown // 1000, " DETIK SEKALI")
 
+            
+            # ` -> TOGGLE MOUSE (KAYA DI GAME)
+            if event.type == pg.KEYDOWN and event.key == pg.K_BACKQUOTE:
+                is_visible = not pg.mouse.get_visible()
+                pg.mouse.set_visible(is_visible)
+                if is_visible:
+                    pg.event.set_grab(False)
+                else:
+                    pg.event.set_grab(True)
+                    
                     
             # SCROLL -> RADIUS ORBIT
             if event.type == pg.MOUSEBUTTONDOWN:
