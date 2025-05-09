@@ -22,6 +22,11 @@ class Scene:
         self.antrian2 = []
         self.antrian3 = []
         
+        # SPAWNER
+        self.last_spawn_time = 0
+        self.spawn_cooldown = 1000
+
+        
         self.load()
         self.skybox = NextSkyBox(app)
         
@@ -169,8 +174,8 @@ class Scene:
                             sec_color=(random.uniform(0, 0.4), random.uniform(0, 0.4), random.uniform(0, 0.4)),
                             is_taxi=random.randint(0, 1), spoiler=random.randint(0, 1)))
 
-        # # CARS
-        for x in range(random.randint(4, 6)):
+        # CARS
+        for x in range(4):
             car = Fixed_Car(app, pos=(-4 + x*3, 0, -1), uni_scale=0.45,
                         is_taxi=random.randint(0, 1), spoiler=random.randint(0, 1),
                         color=(random.uniform(0, 1), random.uniform(0, 1), random.uniform(0, 1)),
@@ -180,7 +185,7 @@ class Scene:
             add(car)
             self.cars0.append(car)
             
-        for x in range(random.randint(4, 6)):
+        for x in range(4):
             car = Fixed_Car(app, pos=(1, 0, -4 - x*3), uni_scale=0.45,
                         is_taxi=random.randint(0, 1), spoiler=random.randint(0, 1),
                         color=(random.uniform(0, 1), random.uniform(0, 1), random.uniform(0, 1)),
@@ -190,7 +195,7 @@ class Scene:
             add(car)
             self.cars1.append(car)
 
-        for x in range(random.randint(4, 6)):
+        for x in range(4):
             car = Fixed_Car(app, pos=(-1, 0, -3 - x*3), uni_scale=0.45,
                         is_taxi=random.randint(0, 1), spoiler=random.randint(0, 1),
                         color=(random.uniform(0, 1), random.uniform(0, 1), random.uniform(0, 1)),
@@ -200,7 +205,7 @@ class Scene:
             add(car)
             self.cars2.append(car)
 
-        for x in range(random.randint(4, 6)):
+        for x in range(4):
             car = Fixed_Car(app, pos=(4 - x*3, 0, 1), uni_scale=0.45,
                         is_taxi=random.randint(0, 1), spoiler=random.randint(0, 1),
                         color=(random.uniform(0, 1), random.uniform(0, 1), random.uniform(0, 1)),
@@ -211,6 +216,43 @@ class Scene:
             self.cars3.append(car)
         
         
+    def spawn_car(self, loc):
+        car = Fixed_Car(self.app, uni_scale=0.45,
+                        is_taxi=random.randint(0, 1), spoiler=random.randint(0, 1),
+                        color=(random.uniform(0, 1), random.uniform(0, 1), random.uniform(0, 1)),
+                        sec_color=(random.uniform(0, 0.4), random.uniform(0, 0.4), random.uniform(0, 0.4)),
+                        pos=(0, -1, 0))
+        car.speed = 5
+        
+        if loc == 0 and len(self.cars0) <= 6:
+            self.cars0.append(car)
+            self.antrian0.append(car)
+            car.rot = glm.vec3(0, glm.radians(180), 0)
+            car.pos = glm.vec3(-20, 0, -1)
+            self.add_object(car)
+            
+        elif loc == 1 and len(self.cars1) <= 6:
+            self.cars1.append(car)
+            self.antrian1.append(car)
+            car.rot = glm.vec3(0, glm.radians(90), 0)
+            car.pos = glm.vec3(1, 0, -20)
+            self.add_object(car)
+            
+        elif loc == 2 and len(self.cars2) <= 6:
+            self.cars2.append(car)
+            self.antrian2.append(car)
+            car.rot = glm.vec3(0, glm.radians(270), 0)
+            car.pos = glm.vec3(-1, 0, -20)
+            self.add_object(car)
+            
+        elif loc == 3 and len(self.cars3) <= 6:
+            self.cars3.append(car)
+            self.antrian3.append(car)
+            car.rot = glm.vec3(0, glm.radians(0), 0)
+            car.pos = glm.vec3(20, 0, 1)
+            self.add_object(car)
+            
+    
     # SISTEM ANIMASI (MASIH BETA)
     def update(self):
 
@@ -267,8 +309,8 @@ class Scene:
                     if car.pos[pos] > -4 and car in antrian_list:
                         antrian_list.remove(car)
                             
-                    if car.pos[pos] > 18:
-                        car.pos[pos] = -18
+                    if car.pos[pos] > 18.5:
+                        car.pos[pos] = -18.5
                         
                     if antrian_list:
                         for i, car in enumerate(antrian_list):
@@ -316,8 +358,8 @@ class Scene:
                     if car.pos[pos] < 4 and car in antrian_list:
                         antrian_list.remove(car)
                     
-                    if car.pos[pos] < -18:
-                        car.pos[pos] = 18
+                    if car.pos[pos] < -18.5:
+                        car.pos[pos] = 18.5
                     
                     if antrian_list:
                         for i, car in enumerate(antrian_list):

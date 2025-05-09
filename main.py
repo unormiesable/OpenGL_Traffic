@@ -57,9 +57,41 @@ class CGRAPHEngine:
             
             # TAB -> GANTI MODE KAMERA
             if event.type == pg.KEYDOWN:
+                s_time = pg.time.get_ticks()
+
                 if event.key == pg.K_TAB:
                     self.camera.use_orbit = not self.camera.use_orbit
-                    self.camera.set_default();
+                    self.camera.set_default()
+
+                # SPAWNER MOBIL & REMOVE MOBIL (REMOVE BELUM)
+                if s_time - self.scene.last_spawn_time >= self.scene.spawn_cooldown:
+                    if event.key == pg.K_1:
+                        if self.scene.cars0.__len__() > 6:
+                            print("LANE 1 PENUH")
+                        self.scene.spawn_car(0)
+                        self.scene.last_spawn_time = s_time
+                        
+                    elif event.key == pg.K_2:
+                        if self.scene.cars1.__len__() > 6:
+                            print("LANE 2 PENUH")
+                        self.scene.spawn_car(1)
+                        self.scene.last_spawn_time = s_time
+                        
+                    elif event.key == pg.K_3:
+                        if self.scene.cars0.__len__() > 6:
+                            print("LANE 3 PENUH")
+                        self.scene.spawn_car(2)
+                        self.scene.last_spawn_time = s_time
+                        
+                    elif event.key == pg.K_4:
+                        if self.scene.cars0.__len__() > 6:
+                            print("LANE 4 PENUH")
+                        self.scene.spawn_car(3)
+                        self.scene.last_spawn_time = s_time
+                else:
+                    # CUMA DEBUG 
+                    print("HANYA DAPAT SPAWN MOBIL SETIAP ", self.scene.spawn_cooldown // 1000, " DETIK SEKALI")
+
                     
             # SCROLL -> RADIUS ORBIT
             if event.type == pg.MOUSEBUTTONDOWN:
