@@ -33,6 +33,27 @@ class Scene:
 
     def add_object(self, obj):
         self.objects.append(obj)
+        
+    def remove_object(self, obj):
+        self.objects.remove(obj)
+        
+        if obj in self.cars0:
+            self.cars0.remove(obj)
+        elif obj in self.cars1:
+            self.cars1.remove(obj)
+        elif obj in self.cars2:
+            self.cars2.remove(obj)
+        elif obj in self.cars3:
+            self.cars3.remove(obj)
+        
+        if obj in self.antrian0:
+            self.antrian0.remove(obj)
+        elif obj in self.antrian1:
+            self.antrian1.remove(obj)
+        elif obj in self.antrian2:
+            self.antrian2.remove(obj)
+        elif obj in self.antrian3:
+            self.antrian3.remove(obj)
 
     def load(self):
         app = self.app
@@ -251,6 +272,20 @@ class Scene:
             car.rot = glm.vec3(0, glm.radians(0), 0)
             car.pos = glm.vec3(20, 0, 1)
             self.add_object(car)
+            
+            
+    def remove_car(self, loc):
+        if loc == 0 and len(self.cars0) > 4:
+            self.remove_object(self.cars0[-1])
+            
+        elif loc == 1 and len(self.cars1) > 4:
+            self.remove_object(self.cars1[-1])
+            
+        elif loc == 2 and len(self.cars2) > 4:
+            self.remove_object(self.cars2[-1])
+            
+        elif loc == 3 and len(self.cars3) > 4:
+            self.remove_object(self.cars3[-1])
             
     
     # SISTEM ANIMASI (MASIH BETA)

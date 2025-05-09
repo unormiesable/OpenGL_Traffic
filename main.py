@@ -88,9 +88,30 @@ class CGRAPHEngine:
                             print("LANE 4 PENUH")
                         self.scene.spawn_car(3)
                         self.scene.last_spawn_time = s_time
+                        
+                    elif event.key == pg.K_6:
+                        self.scene.remove_car(0)
+                        if self.scene.cars0.__len__() <= 4:
+                            print("SETIAP LANE MINIMAL 4 MOBIL")
+                    
+                    elif event.key == pg.K_7:
+                        self.scene.remove_car(1)
+                        if self.scene.cars1.__len__() <= 4:
+                            print("SETIAP LANE MINIMAL 4 MOBIL")
+                    
+                    elif event.key == pg.K_8:
+                        self.scene.remove_car(2)
+                        if self.scene.cars2.__len__() <= 4:
+                            print("SETIAP LANE MINIMAL 4 MOBIL")
+                    
+                    elif event.key == pg.K_9:
+                        self.scene.remove_car(3)
+                        if self.scene.cars3.__len__() <= 4:
+                            print("SETIAP LANE MINIMAL 4 MOBIL")
+                    
                 else:
                     # CUMA DEBUG 
-                    print("HANYA DAPAT SPAWN MOBIL SETIAP ", self.scene.spawn_cooldown // 1000, " DETIK SEKALI")
+                    print("HANYA DAPAT SPAWN/DESTROY MOBIL SETIAP ", self.scene.spawn_cooldown // 1000, " DETIK SEKALI")
 
                     
             # SCROLL -> RADIUS ORBIT
