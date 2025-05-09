@@ -102,7 +102,7 @@
 * Waktu tunggu minimal adalah 0.5 satuan
 * Waktu tunggu maksimal adalah 5 satuan
 
-## **KAMUS DASAR OPENGL**
+<!-- ## **KAMUS DASAR OPENGL**
 
 ### <span style="color: green;">VBO (Vertex Buffer Object)</span>
 * Vertex Coordinate
@@ -134,4 +134,4 @@
 * Specular
 * Depth
 
-**Main** : Sekumpulan texture dalam FBO untuk deferred shading (Menyimpan data per pixel)
+**Main** : Sekumpulan texture dalam FBO untuk deferred shading (Menyimpan data per pixel) -->
