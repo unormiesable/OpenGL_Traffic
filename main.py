@@ -123,7 +123,7 @@ class CGRAPHEngine:
                 else:
                     pg.event.set_grab(True)
             
-            # GANTI WAKTU TUNGGU
+            # GANTI WAKTU TUNGGU (TRAFFIC LIGHT)
             if event.type == pg.KEYDOWN and event.key == pg.K_f:
                 if self.scene.wait_time > 0.5:
                     self.scene.wait_time -= 0.5
@@ -138,8 +138,7 @@ class CGRAPHEngine:
                 else:
                     print("WAKTU TUNGGU MAXIMAL 5")
             
-                    
-                    
+   
             # SCROLL -> RADIUS ORBIT
             if event.type == pg.MOUSEBUTTONDOWN:
                 if self.camera.use_orbit:
