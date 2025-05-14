@@ -247,12 +247,6 @@ class ColorCubeVBO(BaseVBO):
 
 
 class ColorConeVBO(BaseVBO):
-    # REFS
-    # https://www.songho.ca/opengl/gl_cylinder.html
-    # https://community.khronos.org/t/creating-cylinder/57116
-
-
-    # INI AGA LAIN
     def __init__(self, ctx):
         super().__init__(ctx)
         self.format = '3f 3f'
@@ -312,6 +306,11 @@ class ColorConeVBO(BaseVBO):
 
 
 class ColorCylinderVBO(BaseVBO):
+    
+    # REFS
+    # https://www.songho.ca/opengl/gl_cylinder.html
+    # https://community.khronos.org/t/creating-cylinder/57116
+    
     def __init__(self, ctx):
         super().__init__(ctx)
         self.format = '3f 3f'
