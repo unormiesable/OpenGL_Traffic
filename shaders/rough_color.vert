@@ -11,6 +11,7 @@ uniform mat4 m_proj;
 uniform mat4 m_view;
 uniform mat4 m_view_light;
 uniform mat4 m_model;
+uniform float shadowcoordz;
 
 mat4 m_shadow_bias = mat4(
     0.5, 0.0, 0.0, 0.0,
@@ -26,5 +27,5 @@ void main() {
 
     mat4 shadowMVP = m_proj * m_view_light * m_model;
     shadowCoord = m_shadow_bias * shadowMVP * vec4(in_position, 1.0);
-    shadowCoord.z -= 0.00005;
+    shadowCoord.z -= shadowcoordz;
 }

@@ -62,6 +62,7 @@ class ExtendedBaseModelColor(BaseModelColor):
 
         self.depth_texture = self.app.mesh.texture.textures['depth_texture']
         self.program['shadowMap'] = 1
+        self.program['shadowcoordz'] = 0.00008
         self.depth_texture.use(location=1)
         
         self.program['new_shade'] = 1
