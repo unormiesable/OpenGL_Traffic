@@ -98,39 +98,39 @@ class Fixed_Car:
         
         
         # WINDOWS
-        self.glassf = ColorCube(app, pos=(self.roof.pos[0] - 1.1, 2.3, 0.0), color=win_color, scale=(1, 1, self.roof.scale[2]), rot=(0, 0, 45), uni_scale=0.85)
-        self.glassb = ColorCube(app, pos=(self.roof.pos[0] + 0.8, 2.3, 0.0), color=win_color, scale=(1, 1, self.roof.scale[2]), rot=(0, 0, 30), uni_scale=0.85)
+        self.glassf = ColorCube(app, pos=(self.roof.pos[0] - 1.1, 2.3, 0.0), color=win_color, scale=(1, 1, self.roof.scale[2]), rot=(0, 0, 45), uni_scale=0.85, metalness=0.5)
+        self.glassb = ColorCube(app, pos=(self.roof.pos[0] + 0.8, 2.3, 0.0), color=win_color, scale=(1, 1, self.roof.scale[2]), rot=(0, 0, 30), uni_scale=0.85, metalness=0.5)
         
-        self.glassfs = ColorCube(app, pos=(self.roof.pos[0] - 1.0, 2.3, 0.0), color=win_color, scale=(1, 1, self.roof.scale[2] + 0.25), rot=(0, 0, 45), uni_scale=0.85)
-        self.glassbs = ColorCube(app, pos=(self.roof.pos[0] + 0.65, 2.33, 0.0), color=win_color, scale=(1, 1, self.roof.scale[2] + 0.25), rot=(0, 0, 30), uni_scale=0.85)
-        self.glassms = ColorCube(app, pos=(self.roof.pos[0] - 0.03, 2.65, 0.0), color=win_color, scale=(1.15, 1, self.roof.scale[2] + 0.25), rot=(0, 0, 0), uni_scale=0.85)
+        self.glassfs = ColorCube(app, pos=(self.roof.pos[0] - 1.0, 2.3, 0.0), color=win_color, scale=(1, 1, self.roof.scale[2] + 0.25), rot=(0, 0, 45), uni_scale=0.85, metalness=0.5)
+        self.glassbs = ColorCube(app, pos=(self.roof.pos[0] + 0.65, 2.33, 0.0), color=win_color, scale=(1, 1, self.roof.scale[2] + 0.25), rot=(0, 0, 30), uni_scale=0.85, metalness=0.5)
+        self.glassms = ColorCube(app, pos=(self.roof.pos[0] - 0.03, 2.65, 0.0), color=win_color, scale=(1.15, 1, self.roof.scale[2] + 0.25), rot=(0, 0, 0), uni_scale=0.85, metalness=0.5)
         
         # BAN KIRI
-        self.ban_kiri_depan = ColorCylinder(app, pos=(-2, 0.9, 1.8), color=(0.2, 0.2, 0.2), rot=(90, 0, 0), scale=(1, 0.35, 1), uni_scale=0.9)
-        self.ban_kiri_belakang = ColorCylinder(app, pos=(2, 1, 1.8), color=(0.2, 0.2, 0.2), rot=(90, 0, 0), scale=(1, 0.4, 1))
+        self.ban_kiri_depan = ColorCylinder(app, pos=(-2, 0.9, 1.8), color=(0.2, 0.2, 0.2), rot=(90, 0, 0), scale=(1, 0.35, 1), uni_scale=0.9, specularity=0.3)
+        self.ban_kiri_belakang = ColorCylinder(app, pos=(2, 1, 1.8), color=(0.2, 0.2, 0.2), rot=(90, 0, 0), scale=(1, 0.4, 1), specularity=0.3)
         
         # VELG KIRI
-        self.velg_kiri_depan = ColorCylinder(app, pos=(-2, 0.9, 2.05), color=(0.8, 0.8, 0.8), rot=(90, 0, 0), scale=(1, 0.37, 1), uni_scale=0.35)
-        self.velg_kiri_belakang = ColorCylinder(app, pos=(2, 1, 2.05), color=(0.8, 0.8, 0.8), rot=(90, 0, 0), scale=(1, 0.5, 1), uni_scale=0.4)
+        self.velg_kiri_depan = ColorCylinder(app, pos=(-2, 0.9, 2.05), color=(0.8, 0.8, 0.8), rot=(90, 0, 0), scale=(1, 0.37, 1), uni_scale=0.35, metalness=0.2)
+        self.velg_kiri_belakang = ColorCylinder(app, pos=(2, 1, 2.05), color=(0.8, 0.8, 0.8), rot=(90, 0, 0), scale=(1, 0.5, 1), uni_scale=0.4, metalness=0.2)
 
         # BAN KANAN
-        self.ban_kanan_depan = ColorCylinder(app, pos=(-2, 0.9, -1.8), color=(0.2, 0.2, 0.2), rot=(90, 0, 0), scale=(1, 0.35, 1), uni_scale=0.9)
-        self.ban_kanan_belakang = ColorCylinder(app, pos=(2, 1, -1.8), color=(0.2, 0.2, 0.2), rot=(90, 0, 0), scale=(1, 0.4, 1))
+        self.ban_kanan_depan = ColorCylinder(app, pos=(-2, 0.9, -1.8), color=(0.2, 0.2, 0.2), rot=(90, 0, 0), scale=(1, 0.35, 1), uni_scale=0.9, specularity=0.3)
+        self.ban_kanan_belakang = ColorCylinder(app, pos=(2, 1, -1.8), color=(0.2, 0.2, 0.2), rot=(90, 0, 0), scale=(1, 0.4, 1), specularity=0.3)
         
         # VELG KANAN
-        self.velg_kanan_depan = ColorCylinder(app, pos=(-2, 0.9, -2.05), color=(0.8, 0.8, 0.8), rot=(90, 0, 0), scale=(1, 0.37, 1), uni_scale=0.35)
-        self.velg_kanan_belakang = ColorCylinder(app, pos=(2, 1, -2.05), color=(0.8, 0.8, 0.8), rot=(90, 0, 0), scale=(1, 0.5, 1), uni_scale=0.4)
+        self.velg_kanan_depan = ColorCylinder(app, pos=(-2, 0.9, -2.05), color=(0.8, 0.8, 0.8), rot=(90, 0, 0), scale=(1, 0.37, 1), uni_scale=0.35, metalness=0.2)
+        self.velg_kanan_belakang = ColorCylinder(app, pos=(2, 1, -2.05), color=(0.8, 0.8, 0.8), rot=(90, 0, 0), scale=(1, 0.5, 1), uni_scale=0.4, metalness=0.2)
         
         # HEADLIGHT
-        self.headlightl = ColorCylinder(app, rot=(0, 0, 90), scale=(self.head_size, 0.1, self.head_size), pos=(-3, 1.9, 1), color=win_color)
-        self.headlightr = ColorCylinder(app, rot=(0, 0, 90), scale=(self.head_size, 0.1, self.head_size), pos=(-3, 1.9, -1), color=win_color)
+        self.headlightl = ColorCylinder(app, rot=(0, 0, 90), scale=(self.head_size, 0.1, self.head_size), pos=(-3, 1.9, 1), color=win_color, metalness=0.5)
+        self.headlightr = ColorCylinder(app, rot=(0, 0, 90), scale=(self.head_size, 0.1, self.head_size), pos=(-3, 1.9, -1), color=win_color, metalness=0.5)
         
         self.headlightl_out = ColorCylinder(app, color=(0.2, 0.2, 0.2), rot=(0, 0, 90), scale=(self.head_size + 0.1, 0.1, self.head_size + 0.1), pos=(-2.95, 1.9, 1))
         self.headlightr_out = ColorCylinder(app, color=(0.2, 0.2, 0.2), rot=(0, 0, 90), scale=(self.head_size + 0.1, 0.1, self.head_size + 0.1), pos=(-2.95, 1.9, -1))
         
         # BACKLIGHT
-        self.backlightl = ColorCube(app, pos=(3, 2, 1), scale=(0.05, 0.15, 0.3), color=(0.8, 0.2, 0.2))
-        self.backlightr = ColorCube(app, pos=(3, 2, -1), scale=(0.05, 0.15, 0.3), color=(0.8, 0.2, 0.2))
+        self.backlightl = ColorCube(app, pos=(3, 2, 1), scale=(0.05, 0.15, 0.3), color=(0.8, 0.2, 0.2), metalness=0.5)
+        self.backlightr = ColorCube(app, pos=(3, 2, -1), scale=(0.05, 0.15, 0.3), color=(0.8, 0.2, 0.2), metalness=0.5)
         
         # SPOILER
         self.spoiler = ColorCube(app, pos=(2.65, 3, 0), scale=(0.25, 0.05, 1.5), color=sec_color)
@@ -322,9 +322,9 @@ class Tree:
         # BUAT OBJEK DARI PRIMITIF
         self.batang = ColorCylinder(app, pos=(0, 1, 0), color=batang_color, scale=(0.2, 1, 0.2), uni_scale=uni_scale_batang)
         
-        self.daun_bawah = ColorCone(app, pos=(0, 3, 0), color=daun_color, scale=(1.2, 1, 1.2), uni_scale=uni_scale_daun, rot=(5, 0, 2))
-        self.daun_tengah = ColorCone(app, pos=(0, 4.2, 0), color=daun_color, scale=(1.1, 1, 1.1), uni_scale=uni_scale_daun, rot=(2, 0, 5))
-        self.daun_atas = ColorCone(app, pos=(0, 5.3, 0), color=daun_color, scale=(0.95, 0.9, 0.95), uni_scale=uni_scale_daun, rot=(4, 0, 3))
+        self.daun_bawah = ColorCone(app, pos=(0, 3, 0), color=daun_color, scale=(1.2, 1, 1.2), uni_scale=uni_scale_daun, rot=(2, 0, 1), specularity=0.1)
+        self.daun_tengah = ColorCone(app, pos=(0, 4.2, 0), color=daun_color, scale=(1.1, 1, 1.1), uni_scale=uni_scale_daun, rot=(2, 0, 2), specularity=0.1)
+        self.daun_atas = ColorCone(app, pos=(0, 5.3, 0), color=daun_color, scale=(0.95, 0.9, 0.95), uni_scale=uni_scale_daun, rot=(2, 0, 2), specularity=0.1)
 
         self.update_model_matrices()
 

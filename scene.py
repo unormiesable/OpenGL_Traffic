@@ -29,12 +29,11 @@ class Scene:
         app = self.app
         add = self.add_object
         
-        add(ColorPlane(app, uni_scale = 5, pos=(0, 0, 0),
-                       color=(0.6, 0.6, 0.8),
-                       specularity=0.2, metalness=0))    
+        add(ColorPlane(app, uni_scale = 7, pos=(0, 0, 0),
+                       color=(0.5, 0.3, 0.3),
+                       specularity=0.4, metalness=0))    
         
-        add(ColorCylinder(app, pos=(0, 1, 0), rot=(90, 0, 0),
-                      color=(0.8, 0.4, 0.4), specularity=1, metalness=0))
+        add(Fixed_Car(app, color=(0.3, 0.3, 0.3)))
     
     # SISTEM ANIMASI (MASIH BETA)
     def update(self):
