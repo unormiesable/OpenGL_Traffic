@@ -16,6 +16,9 @@ struct Light {
     vec3 Is;
 };
 
+uniform vec3 u_color;
+uniform float specularity;
+
 uniform Light light;
 uniform vec3 camPos;
 uniform sampler2DShadow shadowMap;
@@ -23,7 +26,6 @@ uniform vec2 u_resolution;
 uniform bool u_enableShadow;
 uniform bool u_enableAO;
 uniform float shadowBlur;
-uniform vec3 u_color;
 uniform float new_shade;
 uniform float ao_factor;
 uniform float AOBlur;
@@ -78,7 +80,7 @@ float getFakeAo() {
 
 
 // LIGHTING ===========================================================
-vec3 getLight(vec3 color) {
+vec3 getLight(vec3 color, float specularity) {
     vec3 Normal = normalize(normal);
 
     // AMBIENT (IA)
@@ -93,7 +95,7 @@ vec3 getLight(vec3 color) {
     vec3 viewDir = normalize(camPos - fragPos);
     vec3 reflectDir = reflect(-lightDir, Normal);
     float spec = pow(max(dot(viewDir, reflectDir), 0), 64);
-    vec3 specular = spec * light.Is;
+    vec3 specular = spec * light.Is * specularity;
 
     // SHADOW
     float shadow = u_enableShadow ? getSoftShadow() : 1.0;
@@ -110,7 +112,7 @@ void main() {
     float gamma = 2.2;
     vec3 color = pow(u_color, vec3(gamma));
 
-    color = getLight(color);
+    color = getLight(color, specularity);
 
     color = pow(color, 1.0 / vec3(gamma)); 
     fragColor = vec4(color, 1.0);

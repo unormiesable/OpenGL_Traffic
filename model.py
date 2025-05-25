@@ -4,17 +4,19 @@ from pyglm import glm
 
 # BASE MODEL TANPA TEXTURE
 class BaseModelColor:
-    def __init__(self, app, vao_name, pos=(0, 0, 0), rot=(0, 0, 0), scale=(1, 1, 1), uni_scale=1, color=(1.0, 1.0, 1.0)):
+    def __init__(self, app, vao_name, pos=(0, 0, 0), rot=(0, 0, 0), scale=(1, 1, 1), uni_scale=1, color=(1.0, 1.0, 1.0), specularity=0.0):
         self.app = app
         self.pos = pos
         self.vao_name = vao_name
-        self.color = glm.vec3(color)
         self.rot = glm.vec3([glm.radians(a) for a in rot])
         self.scale = (scale[0] * uni_scale, scale[1] * uni_scale, scale[2] * uni_scale)
         self.m_model = self.get_model_matrix()
         self.vao = app.mesh.vao.vaos[vao_name]
         self.program = self.vao.program
         self.camera = self.app.camera
+        
+        self.color = glm.vec3(color)
+        self.specularity = 0.0
 
     def update(self):
         pass
@@ -33,13 +35,16 @@ class BaseModelColor:
         self.vao.render()
         
 class ExtendedBaseModelColor(BaseModelColor):
-    def __init__(self, app, vao_name, pos, rot, scale, uni_scale=1, color=(1.0, 1.0, 1.0)):
+    def __init__(self, app, vao_name, pos, rot, scale, uni_scale=1, color=(1.0, 1.0, 1.0), specularity=0.0):
         super().__init__(app, vao_name, pos, rot, scale, uni_scale, color)
         self.color = glm.vec3(color)
+        self.specularity = specularity
         self.on_init()
 
     def update(self):
         self.program['u_color'].write(self.color)
+        self.program['specularity'] = self.specularity
+        
         self.program['camPos'].write(self.camera.position)
         self.program['m_view'].write(self.camera.m_view)
         self.program['m_model'].write(self.m_model)
@@ -169,22 +174,30 @@ class ExtendedBaseModel(BaseModel):
 
 # MODEL KUBUS COLOR
 class ColorCube(ExtendedBaseModelColor):
-    def __init__(self, app, vao_name='color_cube', pos=(0, 0, 0), rot=(0, 0, 0), scale=(1, 1, 1), uni_scale=1, color=(1.0, 1.0, 1.0)):
-        super().__init__(app, vao_name, pos, rot, scale, uni_scale, color)
+    def __init__(self, app, vao_name='color_cube', 
+                 pos=(0, 0, 0), rot=(0, 0, 0), scale=(1, 1, 1), uni_scale=1, 
+                 color=(1.0, 1.0, 1.0), specularity=1.0):
+        super().__init__(app, vao_name, pos, rot, scale, uni_scale, color, specularity)
 
 # MODEL PLANE COLOR
 class ColorPlane(ExtendedBaseModelColor):
-    def __init__(self, app, vao_name='color_plane', pos=(0, 0, 0), rot=(0, 0, 0), scale=(1, 1, 1), uni_scale=1, color=(1.0, 1.0, 1.0)):
-        super().__init__(app, vao_name, pos, rot, scale, uni_scale, color)
+    def __init__(self, app, vao_name='color_plane', 
+                 pos=(0, 0, 0), rot=(0, 0, 0), scale=(1, 1, 1), uni_scale=1, 
+                 color=(1.0, 1.0, 1.0), specularity=1.0):
+        super().__init__(app, vao_name, pos, rot, scale, uni_scale, color, specularity)
 
 # MODEL CYLINDER COLOR
 class ColorCylinder(ExtendedBaseModelColor):
-    def __init__(self, app, vao_name='color_cylinder', pos=(0, 0, 0), rot=(0, 0, 0), scale=(1, 1, 1), uni_scale=1, color=(1.0, 1.0, 1.0)):
-        super().__init__(app, vao_name, pos, rot, scale, uni_scale, color)
+    def __init__(self, app, vao_name='color_cylinder', 
+                 pos=(0, 0, 0), rot=(0, 0, 0), scale=(1, 1, 1), uni_scale=1, 
+                 color=(1.0, 1.0, 1.0), specularity=1.0):
+        super().__init__(app, vao_name, pos, rot, scale, uni_scale, color, specularity)
 
 class ColorCone(ExtendedBaseModelColor):
-    def __init__(self, app, vao_name='color_cone', pos=(0, 0, 0), rot=(0, 0, 0), scale=(1, 1, 1), uni_scale=1, color=(1.0, 1.0, 1.0)):
-        super().__init__(app, vao_name, pos, rot, scale, uni_scale, color)
+    def __init__(self, app, vao_name='color_cone', 
+                 pos=(0, 0, 0), rot=(0, 0, 0), scale=(1, 1, 1), uni_scale=1, 
+                 color=(1.0, 1.0, 1.0), specularity=1.0):
+        super().__init__(app, vao_name, pos, rot, scale, uni_scale, color, specularity)
 
 # MODEL PLANE
 class Plane(ExtendedBaseModel):
