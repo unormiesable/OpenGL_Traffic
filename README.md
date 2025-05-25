@@ -8,8 +8,8 @@ Fokus utama kami di sini adalah menciptakan sebuah kerangka game engine yang mod
 
 #
 ### LIST FITUR YANG MUNGKIN DIKEMBANGKAN
-<pre><code>- Materials Shader (Setiap objek dapat memiliki material yang berbeda beda)
-- Screen Space Effect (Terdapat renderer untuk efek layar)
+<pre><code>- Materials Shader (Setiap objek dapat memiliki material yang berbeda beda) (PROGRESS)
+- Screen Space Effect (Terdapat renderer untuk efek layar) (PROGRESS)
 - Animation System (Setiap objek dapat memiliki data animasi)
 - integrasi Physics Engine (Atau membuat Physics engine sederhana)</code></pre>
 
