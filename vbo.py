@@ -333,11 +333,10 @@ class ColorConeVBO(BaseVBO):
 
 
 class ColorCylinderVBO(BaseVBO):
-    
     # REFS
     # https://www.songho.ca/opengl/gl_cylinder.html
     # https://community.khronos.org/t/creating-cylinder/57116
-    
+
     def __init__(self, ctx):
         super().__init__(ctx)
         self.format = '3f 3f'
@@ -349,7 +348,6 @@ class ColorCylinderVBO(BaseVBO):
         return np.array(data, dtype='f4')
 
     def get_vertex_data(self):
-        # BELUM SIAP BUAT DIUBAH 
         height = 2.0
         radius = 1.0
         segments = 32
@@ -379,7 +377,6 @@ class ColorCylinderVBO(BaseVBO):
         atas_tengah = 1
 
         indices = []
-        
         for i in range(segments):
             p1 = vert_bawah + i
             p2 = vert_bawah + (i + 1) % segments
@@ -395,8 +392,7 @@ class ColorCylinderVBO(BaseVBO):
             bawah_next = vert_bawah + (i + 1) % segments
             atas = vert_atas + i
             atas_next = vert_atas + (i + 1) % segments
-            
-            # WAIT KEKNYA KEBALIK??? (FIXED)
+
             indices.append((bawah, atas_next, bawah_next))
             indices.append((bawah, atas, atas_next))
 
@@ -404,17 +400,23 @@ class ColorCylinderVBO(BaseVBO):
         normals = []
 
         for tri_indices in indices:
-            if tri_indices[0] == bawah_tengah:
-                for _ in range(3):
-                    normals.append((0, -1, 0))
-            elif tri_indices[0] == atas_tengah:
-                 for _ in range(3):
-                     normals.append((0, 1, 0))
+            p1 = np.array(vertices[tri_indices[0]])
+            p2 = np.array(vertices[tri_indices[1]])
+            p3 = np.array(vertices[tri_indices[2]])
+
+            edge1 = p2 - p1
+            edge2 = p3 - p1
+
+            normal = np.cross(edge1, edge2)
+
+            norm_length = np.linalg.norm(normal)
+            if norm_length > 0:
+                normal = normal / norm_length
             else:
-                for vert_id in tri_indices:
-                    v = np.array(vertices[vert_id])
-                    normal = np.array([v[0], 0.0, v[2]])                        
-                    normals.append(tuple(normal))
+                normal = np.array([0.0, 0.0, 0.0])
+
+            for _ in range(3):
+                normals.append(tuple(normal))
 
         normals = np.array(normals, dtype='f4')
         vertex_data = np.hstack([normals, vertex_data])
