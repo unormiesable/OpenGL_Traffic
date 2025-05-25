@@ -93,7 +93,7 @@ class SxvxnEngine:
     # RENDER SCENE -> SCENE RENDERER
     def render(self):
         self.ctx.clear(color=(self.background_color))
-        self.scene_renderer.render(lighting = 1, skybox = 1)
+        self.scene_renderer.render(lighting = 1, skybox = 1, post = 1)
         pg.display.flip()
 
     def get_time(self):
