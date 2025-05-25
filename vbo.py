@@ -288,26 +288,29 @@ class ColorConeVBO(BaseVBO):
             side_indices.append((apex_index, p2_idx, p1_idx)) 
 
         indices = base_indices + side_indices
-        vertex_positions_data = self.get_data(vertices, indices)
-        vertex_normals_map = {}
-        vertex_normals_map[0] = (0.0, -1.0, 0.0)
-        vertex_normals_map[apex_index] = (0.0, 1.0, 0.0) 
-        for i in range(segments):
-            vert_id = i + 1
-            x, y, z = vertices[vert_id]
-            
-            normal_vec = np.array([x, -(radius**2 / height), z]) 
-            normal_vec = normal_vec / np.linalg.norm(normal_vec)
-            vertex_normals_map[vert_id] = tuple(normal_vec)
-
-        normals_data = []
-        for tri_indices in indices:
-            for vert_id in tri_indices:
-                normals_data.append(vertex_normals_map[vert_id])
-
-        normals = np.array(normals_data, dtype='f4')
         
-        vertex_data = np.hstack([normals, vertex_positions_data])
+        vertex_positions_data = []
+        normals_data = []
+
+        for tri_indices in indices:
+            v0_pos = np.array(vertices[tri_indices[0]])
+            v1_pos = np.array(vertices[tri_indices[1]])
+            v2_pos = np.array(vertices[tri_indices[2]])
+
+            edge1 = v1_pos - v0_pos
+            edge2 = v2_pos - v0_pos
+            
+            normal = np.cross(edge1, edge2)
+            normal = normal / np.linalg.norm(normal)
+
+            for vert_id in tri_indices:
+                vertex_positions_data.append(vertices[vert_id])
+                normals_data.append(tuple(normal))
+
+        vertex_positions_data = np.array(vertex_positions_data, dtype='f4')
+        normals_data = np.array(normals_data, dtype='f4')
+        
+        vertex_data = np.hstack([normals_data, vertex_positions_data])
         return vertex_data
 
 
