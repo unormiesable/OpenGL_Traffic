@@ -31,15 +31,15 @@ class Scene:
         
         add(ColorPlane(app, uni_scale = 5, pos=(0, 0, 0),
                        color=(0.6, 0.6, 0.8),
-                       specularity=0.5))
+                       specularity=0.2, metalness=0))
         
-        add(ColorCube(app, pos=(2, 1, 0),
+        add(ColorCube(app, pos=(-1.5, 1, 0),
                       color=(0.8, 0.4, 0.4),
-                      specularity=1))
+                      specularity=0.2, metalness=0))
         
-        add(ColorCube(app, pos=(-2, 1, 0),
+        add(ColorCube(app, pos=(1.5, 1, 0),
                       color=(0.4, 0.8, 0.4),
-                      specularity=1))
+                      specularity=0.2, metalness=1))
         
         
         # add(ColorCone(app, pos=(0, 1, 0),

@@ -16,9 +16,12 @@ struct Light {
     vec3 Is;
 };
 
+// MATERIALS SETUPS
 uniform vec3 u_color;
 uniform float specularity;
+uniform float metalness;
 
+// LIGHTS AND SHADOW SETUPS
 uniform Light light;
 uniform vec3 camPos;
 uniform sampler2DShadow shadowMap;
@@ -30,21 +33,6 @@ uniform float new_shade;
 uniform float ao_factor;
 uniform float AOBlur;
 
-// PCF SETUP ========================================================
-// DAH NEMU SOFT SHADOW JADI GA DIPAKE
-float pcfLookup(vec2 offset) {
-    float size = 1.0 / u_resolution.x;
-    return textureProj(shadowMap, shadowCoord + vec4(offset * size, 0.0, 0.0));
-}
-
-float getPCFShadow() {
-    float shadow = 0.0;
-    vec2 offsets[4] = vec2[4](vec2(-1.0, -1.0), vec2(1.0, -1.0), vec2(-1.0, 1.0), vec2(1.0, 1.0));
-    for (int i = 0; i < 4; i++) {
-        shadow += pcfLookup(offsets[i]);
-    }
-    return shadow / 16.0;
-}
 
 // SOFT SHADOW SETUP =================================================
 float lookup(float ox, float oy) {
@@ -80,7 +68,7 @@ float getFakeAo() {
 
 
 // LIGHTING ===========================================================
-vec3 getLight(vec3 color, float specularity) {
+vec3 getLight(vec3 color, float specularity, float metalness) {
     vec3 Normal = normalize(normal);
 
     // AMBIENT (IA)
@@ -89,13 +77,14 @@ vec3 getLight(vec3 color, float specularity) {
     // DIFFUSE (ID)
     vec3 lightDir = normalize(light.position - fragPos);
     float diff = max(0, dot(lightDir, Normal));
-    vec3 diffuse = diff * light.Id;
+    vec3 diffuse = diff * light.Id / (1 + (metalness * 10));
 
     // SPECULAR (IS)
     vec3 viewDir = normalize(camPos - fragPos);
     vec3 reflectDir = reflect(-lightDir, Normal);
     float spec = pow(max(dot(viewDir, reflectDir), 0), 64);
-    vec3 specular = spec * light.Is * specularity;
+
+    vec3 specular = spec * light.Is * (specularity + metalness);
 
     // SHADOW
     float shadow = u_enableShadow ? getSoftShadow() : 1.0;
@@ -112,7 +101,7 @@ void main() {
     float gamma = 2.2;
     vec3 color = pow(u_color, vec3(gamma));
 
-    color = getLight(color, specularity);
+    color = getLight(color, specularity, metalness);
 
     color = pow(color, 1.0 / vec3(gamma)); 
     fragColor = vec4(color, 1.0);

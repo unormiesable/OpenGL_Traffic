@@ -16,8 +16,7 @@ class BaseModelColor:
         self.camera = self.app.camera
         
         self.color = glm.vec3(color)
-        self.specularity = 0.0
-
+        
     def update(self):
         pass
 
@@ -35,15 +34,23 @@ class BaseModelColor:
         self.vao.render()
         
 class ExtendedBaseModelColor(BaseModelColor):
-    def __init__(self, app, vao_name, pos, rot, scale, uni_scale=1, color=(1.0, 1.0, 1.0), specularity=0.0):
+    def __init__(self, app, vao_name, 
+                 pos, rot, scale, uni_scale=1, 
+                 color=(1.0, 1.0, 1.0), specularity=0.0, metalness=0.0):
         super().__init__(app, vao_name, pos, rot, scale, uni_scale, color)
+        
+        
+        # MATERIALS SETUPS
         self.color = glm.vec3(color)
         self.specularity = specularity
+        self.metalness = metalness
+        
         self.on_init()
 
     def update(self):
         self.program['u_color'].write(self.color)
         self.program['specularity'] = self.specularity
+        self.program['metalness'] = self.metalness
         
         self.program['camPos'].write(self.camera.position)
         self.program['m_view'].write(self.camera.m_view)
@@ -176,28 +183,29 @@ class ExtendedBaseModel(BaseModel):
 class ColorCube(ExtendedBaseModelColor):
     def __init__(self, app, vao_name='color_cube', 
                  pos=(0, 0, 0), rot=(0, 0, 0), scale=(1, 1, 1), uni_scale=1, 
-                 color=(1.0, 1.0, 1.0), specularity=1.0):
-        super().__init__(app, vao_name, pos, rot, scale, uni_scale, color, specularity)
+                 color=(0.8, 0.8, 0.8), specularity=0.5, metalness=0.0):
+        super().__init__(app, vao_name, pos, rot, scale, uni_scale, color, specularity, metalness)
 
 # MODEL PLANE COLOR
 class ColorPlane(ExtendedBaseModelColor):
     def __init__(self, app, vao_name='color_plane', 
                  pos=(0, 0, 0), rot=(0, 0, 0), scale=(1, 1, 1), uni_scale=1, 
-                 color=(1.0, 1.0, 1.0), specularity=1.0):
-        super().__init__(app, vao_name, pos, rot, scale, uni_scale, color, specularity)
+                 color=(0.8, 0.8, 0.8), specularity=0.5, metalness=0.0):
+        super().__init__(app, vao_name, pos, rot, scale, uni_scale, color, specularity, metalness)
 
 # MODEL CYLINDER COLOR
 class ColorCylinder(ExtendedBaseModelColor):
     def __init__(self, app, vao_name='color_cylinder', 
                  pos=(0, 0, 0), rot=(0, 0, 0), scale=(1, 1, 1), uni_scale=1, 
-                 color=(1.0, 1.0, 1.0), specularity=1.0):
-        super().__init__(app, vao_name, pos, rot, scale, uni_scale, color, specularity)
+                 color=(0.8, 0.8, 0.8), specularity=0.5, metalness=0.0):
+        super().__init__(app, vao_name, pos, rot, scale, uni_scale, color, specularity, metalness)
 
+# MODEL CONE COLOR
 class ColorCone(ExtendedBaseModelColor):
     def __init__(self, app, vao_name='color_cone', 
                  pos=(0, 0, 0), rot=(0, 0, 0), scale=(1, 1, 1), uni_scale=1, 
-                 color=(1.0, 1.0, 1.0), specularity=1.0):
-        super().__init__(app, vao_name, pos, rot, scale, uni_scale, color, specularity)
+                 color=(0.8, 0.8, 0.8), specularity=0.5, metalness=0.0):
+        super().__init__(app, vao_name, pos, rot, scale, uni_scale, color, specularity, metalness)
 
 # MODEL PLANE
 class Plane(ExtendedBaseModel):
