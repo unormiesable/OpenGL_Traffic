@@ -102,7 +102,7 @@ vec3 getLight(vec3 color) {
     float ao = u_enableAO ? getFakeAo() * ao_factor : 1.0;
 
     // FINAL
-    return color * (ambient +((diffuse + (shadow * new_shade)) + specular) * (shadow + (ao)));
+    return color * (ambient +(diffuse + specular) * ( (shadow * new_shade) + (ao)));
 }
 
 // MAIN ===============================================================
