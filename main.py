@@ -105,7 +105,7 @@ class SxvxnEngine:
             self.check_events()
             self.camera.update()
             self.render()
-            self.delta_time = self.clock.tick(60)
+            self.delta_time = self.clock.tick(100)
 
 if __name__ == '__main__':
     print("\033c")
