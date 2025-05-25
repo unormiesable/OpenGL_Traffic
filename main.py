@@ -12,11 +12,11 @@ from scene_renderer import SceneRenderer
 
 # CLASS GRAPHIC ENGINE (MAIN CLASS)
 class SxvxnEngine:
-    def __init__(self, win_size=(1600, 900)):
+    def __init__(self, win_size=(600, 400)):
         
         pg.init()
         pg.display.set_caption("Sxvxn Engine - Testing")
-        pg.display.set_icon(pg.image.load('images/traffic-light.png'))
+        pg.display.set_icon(pg.image.load('images/7-engine.png'))
         self.WIN_SIZE = win_size
         
         pg.display.gl_set_attribute(pg.GL_CONTEXT_MAJOR_VERSION, 3)
