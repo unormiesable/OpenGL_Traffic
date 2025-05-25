@@ -11,7 +11,7 @@ Fokus utama kami di sini adalah menciptakan sebuah kerangka game engine yang mod
 <pre><code>- Basic Primitive Objects (Plane, Cube, Cone, Cylinder, Sphere)
 - Materials Shader (Setiap objek dapat memiliki material yang berbeda beda)
 - Screen Space Effect (Terdapat renderer untuk efek layar)
-- Multiple Lights System
+- Multiple Lights System (Point, Directional, Spot, Area)
 - Animation System (Setiap objek dapat memiliki data animasi)
 - Integrasi Physics Engine (Atau membuat Physics engine sederhana)</code></pre>
 
