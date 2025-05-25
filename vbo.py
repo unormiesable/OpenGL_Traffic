@@ -7,6 +7,8 @@ class VBO:
     def __init__(self, ctx):
         self.vbos = {}
         
+        self.vbos['fullscreen_quad'] = FullscreenQuadVBO(ctx)
+        
         # OBJEK DENGAN TEXTURE
         self.vbos['cube'] = CubeVBO(ctx)
         self.vbos['plane'] = PlaneVBO(ctx)
@@ -46,6 +48,22 @@ class BaseVBO:
 
     def destroy(self):
         self.vbo.release()
+
+
+class FullscreenQuadVBO(BaseVBO):
+    def __init__(self, ctx):
+        super().__init__(ctx)
+        self.format = '2f'
+        self.attribs = ['in_uv']
+
+    def get_vertex_data(self):
+        vertices = np.array([
+            [-1.0, -1.0],
+            [ 1.0, -1.0],
+            [-1.0,  1.0],
+            [ 1.0,  1.0]
+        ], dtype='f4')
+        return vertices
 
 
 class PlaneVBO(BaseVBO):

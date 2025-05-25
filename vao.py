@@ -9,6 +9,13 @@ class VAO:
         self.program = ShaderProgram(ctx)
         self.vaos = {}
 
+        # OBJEK LAYAR
+        self.vaos['fullscreen_quad'] = self.get_vao(
+            program=self.program.programs['postprocess'],
+            vbo=self.vbo.vbos['fullscreen_quad']
+        )
+        self.program.programs['postprocess']['u_texture'] = 0
+        
         # OBJEK TANPA TEXTURE ========================================================================
         # COLOR CUBE VAO
         self.vaos['color_cube'] = self.get_vao(
