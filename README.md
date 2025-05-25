@@ -8,16 +8,17 @@ Fokus utama kami di sini adalah menciptakan sebuah kerangka game engine yang mod
 
 #
 ### LIST FITUR YANG MUNGKIN DIKEMBANGKAN :
-<pre><code>- Materials Shader (Setiap objek dapat memiliki material yang berbeda beda) (PROGRESS)
-- Screen Space Effect (Terdapat renderer untuk efek layar) (PROGRESS)
+<pre><code>- Basic Primitive Objects (Plane, Cube, Cone, Cylinder, Sphere)
+- Materials Shader (Setiap objek dapat memiliki material yang berbeda beda)
+- Screen Space Effect (Terdapat renderer untuk efek layar)
+- Multiple Lights System
 - Animation System (Setiap objek dapat memiliki data animasi)
 - Integrasi Physics Engine (Atau membuat Physics engine sederhana)</code></pre>
 
 
-### TARGET :
-<pre><code>- Material Non PBR (Color, Specular, Metalness)
-- Screen Space Effect (Vignette, Brightness, Contrast, Filter)
-- Pysics Engine (Integrasi PyBullet)
-- Animations System (Kemungkinan From Scratch)</code></pre>
+### PROGRESS :
+<pre><code>- Basic Object (Plane, Cube, Cone, Cylinder)
+- Materials Shader Basic (Color, Specular dan Metalness)
+- Screen Space Effect (Fullscreen Quad dan Shader Brightness)</code></pre>
 #
 * Started : Sunday - 05 25 2025
