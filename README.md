@@ -8,11 +8,9 @@ Fokus utama kami di sini adalah menciptakan sebuah kerangka game engine yang mod
 
 #
 ### LIST FITUR YANG MUNGKIN DIKEMBANGKAN
-<pre><code>
-- Materials Shader (Setiap objek dapat memiliki material yang berbeda beda)
+<pre><code>- Materials Shader (Setiap objek dapat memiliki material yang berbeda beda)
 - Animation System (Setiap objek dapat memiliki data animasi)
-- integrasi Physics Engine (Atau membuat Physics engine sederhana)
-</code></pre>
+- integrasi Physics Engine (Atau membuat Physics engine sederhana)</code></pre>
 
 #
 * Started : Sunday - 05 25 2025
