@@ -33,8 +33,8 @@ class Scene:
                        color=(0.6, 0.6, 0.8),
                        specularity=0.2, metalness=0))    
         
-        add(ColorCylinder(app, pos=(0, 1, 0),
-                      color=(0.8, 0.4, 0.4)))
+        add(ColorCylinder(app, pos=(0, 1, 0), rot=(90, 0, 0),
+                      color=(0.8, 0.4, 0.4), specularity=1, metalness=0))
     
     # SISTEM ANIMASI (MASIH BETA)
     def update(self):
