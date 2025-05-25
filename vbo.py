@@ -274,34 +274,40 @@ class ColorConeVBO(BaseVBO):
             vertices.append((x, -height / 2, z))
         vertices.append(apex)
 
-        base_indices = [(0, i + 1, ((i + 1) % segments) + 1) for i in range(segments)]
+        base_indices = []
+        for i in range(segments):
+            p1_idx = i + 1
+            p2_idx = ((i + 1) % segments) + 1
+            base_indices.append((0, p1_idx, p2_idx))
 
-        apex_index = len(vertices) - 1
-        side_indices = [(apex_index, ((i + 1) % segments) + 1, i + 1) for i in range(segments)]
+        apex_index = len(vertices) - 1 
+        side_indices = []
+        for i in range(segments):
+            p1_idx = i + 1
+            p2_idx = ((i + 1) % segments) + 1
+            side_indices.append((apex_index, p2_idx, p1_idx)) 
 
         indices = base_indices + side_indices
-        vertex_data = self.get_data(vertices, indices)
-        vertex_data = vertex_data.reshape(-1, 3)
-
-        normals = []
-
-        for x in range(len(base_indices) * 3):
-            normals.append((0, -1, 0))
-
+        vertex_positions_data = self.get_data(vertices, indices)
+        vertex_normals_map = {}
+        vertex_normals_map[0] = (0.0, -1.0, 0.0)
+        vertex_normals_map[apex_index] = (0.0, 1.0, 0.0) 
         for i in range(segments):
-            p1 = np.array(vertices[i + 1])
-            p2 = np.array(vertices[((i + 1) % segments) + 1])
-            apex_pos = np.array(vertices[apex_index])
-            edge1 = p1 - apex_pos
-            edge2 = p2 - apex_pos
-            normal = np.cross(edge1, edge2)
-            normal = normal / np.linalg.norm(normal)
-            for x in range(3):
-                normals.append(tuple(normal))
+            vert_id = i + 1
+            x, y, z = vertices[vert_id]
+            
+            normal_vec = np.array([x, -(radius**2 / height), z]) 
+            normal_vec = normal_vec / np.linalg.norm(normal_vec)
+            vertex_normals_map[vert_id] = tuple(normal_vec)
 
-        normals = np.array(normals, dtype='f4')
+        normals_data = []
+        for tri_indices in indices:
+            for vert_id in tri_indices:
+                normals_data.append(vertex_normals_map[vert_id])
 
-        vertex_data = np.hstack([normals, vertex_data])
+        normals = np.array(normals_data, dtype='f4')
+        
+        vertex_data = np.hstack([normals, vertex_positions_data])
         return vertex_data
 
 

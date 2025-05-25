@@ -5,7 +5,6 @@ class ShaderProgram:
         self.programs = {}
         
         self.programs['default_color'] = self.get_program('default_color')
-        self.programs['rough_color'] = self.get_program('rough_color')
 
         self.programs['default_texture'] = self.get_program('default_texture')
         

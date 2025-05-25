@@ -29,8 +29,17 @@ class Scene:
         app = self.app
         add = self.add_object
         
-        add(ColorPlane(app, uni_scale = 3, color=(0.6, 0.6, 0.8)))
-        add(ColorCube(app, pos=(0, 1, 0), color=(0.8, 0.4, 0.4)))
+        add(ColorPlane(app, uni_scale = 3, pos=(0, 0, 0),
+                       color=(0.6, 0.6, 0.8)))
+        
+        # add(ColorCube(app, pos=(0, 1, 0),
+        #               color=(0.8, 0.4, 0.4)))
+        
+        add(ColorCone(app, pos=(0, 1, 0),
+                      color=(0.8, 0.4, 0.4)))
+        
+        # add(ColorCylinder(app, pos=(0, 1, 0),
+        #               color=(0.8, 0.4, 0.4)))
     
     # SISTEM ANIMASI (MASIH BETA)
     def update(self):

@@ -66,14 +66,14 @@ float getSoftShadow() {
 // SETUP AO (TAPI MASIH SHADOW BASED) - (BELUM BERJALAN SESUAI RENCANA) - (TAPI MENGHASILKAN BETTER SHADOW)
 float getFakeAo() {
     float shadow;
-    float step_width = 0.2 * AOBlur;
+    float step_width = 0.05 * AOBlur;
     float extend = step_width * 3.0 + step_width / 2.0;
     for (float y = -extend; y <= extend; y += step_width) {
         for (float x = -extend; x <= extend; x += step_width) {
             shadow += lookup(x, y);
         }
     }
-    return shadow / 512;
+    return shadow / 256;
 }
 
 
@@ -98,11 +98,11 @@ vec3 getLight(vec3 color) {
     // SHADOW
     float shadow = u_enableShadow ? getSoftShadow() : 1.0;
     
-    // FAKE AO (BELUM BERJALAN SESUAI RENCANA) (TAPI MENGHASILKAN BETTER SHADOW)
+    // FAKE AO (CAVITY)
     float ao = u_enableAO ? getFakeAo() * ao_factor : 1.0;
 
     // FINAL
-    return color * (ambient +((diffuse + (shadow * new_shade)) + specular) * (shadow + (ao)));
+    return color * (ambient +((diffuse) + specular) * ((3 * shadow) * new_shade + (ao)));
 }
 
 // MAIN ===============================================================
