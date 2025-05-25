@@ -12,7 +12,6 @@ class Texture:
         # TEXTURE ID (PADA PROJECT INI DINAMAI 'tex_id')
         
         # OBJECT TEXTURE (BELUM KEPAKE SIH)
-        self.textures[0] = self.get_texture(path='textures/crate.png')
         self.textures['white'] = self.get_texture(path='objects/gate/gate.jpg')
         self.textures['yellow_car'] = self.get_texture(path='objects/yellow_car/yellow_car.jpg')
         

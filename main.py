@@ -11,11 +11,11 @@ from scene_renderer import SceneRenderer
 
 
 # CLASS GRAPHIC ENGINE (MAIN CLASS)
-class CGRAPHEngine:
+class SxvxnEngine:
     def __init__(self, win_size=(1280, 720)):
         
         pg.init()
-        pg.display.set_caption("Grafika Komputer - Traffic Light Visualization (Alpha)")
+        pg.display.set_caption("Sxvxn Engine - Testing")
         pg.display.set_icon(pg.image.load('images/traffic-light.png'))
         self.WIN_SIZE = win_size
         
@@ -63,57 +63,7 @@ class CGRAPHEngine:
                     self.camera.use_orbit = not self.camera.use_orbit
                     self.camera.set_default()
 
-                # SPAWNER MOBIL & REMOVE MOBIL (REMOVE BELUM)
-                if s_time - self.scene.last_spawn_time >= self.scene.spawn_cooldown:
-                    if event.key == pg.K_1:
-                        if self.scene.cars0.__len__() > 6:
-                            print("LANE 1 PENUH")
-                        self.scene.spawn_car(0)
-                        self.scene.last_spawn_time = s_time
-                        
-                    elif event.key == pg.K_2:
-                        if self.scene.cars1.__len__() > 6:
-                            print("LANE 2 PENUH")
-                        self.scene.spawn_car(1)
-                        self.scene.last_spawn_time = s_time
-                        
-                    elif event.key == pg.K_3:
-                        if self.scene.cars0.__len__() > 6:
-                            print("LANE 3 PENUH")
-                        self.scene.spawn_car(2)
-                        self.scene.last_spawn_time = s_time
-                        
-                    elif event.key == pg.K_4:
-                        if self.scene.cars0.__len__() > 6:
-                            print("LANE 4 PENUH")
-                        self.scene.spawn_car(3)
-                        self.scene.last_spawn_time = s_time
-                        
-                    elif event.key == pg.K_6:
-                        self.scene.remove_car(0)
-                        if self.scene.cars0.__len__() <= 4:
-                            print("SETIAP LANE MINIMAL 4 MOBIL")
-                    
-                    elif event.key == pg.K_7:
-                        self.scene.remove_car(1)
-                        if self.scene.cars1.__len__() <= 4:
-                            print("SETIAP LANE MINIMAL 4 MOBIL")
-                    
-                    elif event.key == pg.K_8:
-                        self.scene.remove_car(2)
-                        if self.scene.cars2.__len__() <= 4:
-                            print("SETIAP LANE MINIMAL 4 MOBIL")
-                    
-                    elif event.key == pg.K_9:
-                        self.scene.remove_car(3)
-                        if self.scene.cars3.__len__() <= 4:
-                            print("SETIAP LANE MINIMAL 4 MOBIL")
-                    
-                else:
-                    # CUMA DEBUG 
-                    print("HANYA DAPAT SPAWN/DESTROY MOBIL SETIAP ", self.scene.spawn_cooldown // 1000, " DETIK SEKALI")
 
-            
             # ` -> TOGGLE MOUSE (KAYA DI GAME)
             if event.type == pg.KEYDOWN and event.key == pg.K_BACKQUOTE:
                 is_visible = not pg.mouse.get_visible()
@@ -123,22 +73,7 @@ class CGRAPHEngine:
                 else:
                     pg.event.set_grab(True)
             
-            # GANTI WAKTU TUNGGU (TRAFFIC LIGHT)
-            if event.type == pg.KEYDOWN and event.key == pg.K_f:
-                if self.scene.wait_time > 0.5:
-                    self.scene.wait_time -= 0.5
-                    print("WAKTU TUNGGU : ", self.scene.wait_time)
-                else:
-                    print("WAKTU TUNGGU MINIMAL 0.5")
             
-            if event.type == pg.KEYDOWN and event.key == pg.K_g:
-                if self.scene.wait_time < 5:
-                    self.scene.wait_time += 0.5
-                    print("WAKTU TUNGGU : ", self.scene.wait_time)
-                else:
-                    print("WAKTU TUNGGU MAXIMAL 5")
-            
-   
             # SCROLL -> RADIUS ORBIT
             if event.type == pg.MOUSEBUTTONDOWN:
                 if self.camera.use_orbit:
@@ -174,5 +109,5 @@ class CGRAPHEngine:
 
 if __name__ == '__main__':
     print("\033c")
-    app = CGRAPHEngine()
+    app = SxvxnEngine()
     app.run()
