@@ -14,7 +14,6 @@ class VAO:
             program=self.program.programs['postprocess'],
             vbo=self.vbo.vbos['fullscreen_quad']
         )
-        self.program.programs['postprocess']['u_texture'] = 0
         
         # OBJEK TANPA TEXTURE ========================================================================
         # COLOR CUBE VAO
