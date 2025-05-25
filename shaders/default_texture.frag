@@ -66,7 +66,7 @@ float getSoftShadow() {
 // SETUP AO (TAPI MASIH SHADOW BASED) - (BELUM BERJALAN SESUAI RENCANA) - (TAPI MENGHASILKAN BETTER SHADOW)
 float getFakeAo() {
     float shadow;
-    float step_width = 0.5 * AOBlur;
+    float step_width = 0.1 * AOBlur;
     float extend = step_width * 3.0 + step_width / 2.0;
     for (float y = -extend; y <= extend; y += step_width) {
         for (float x = -extend; x <= extend; x += step_width) {

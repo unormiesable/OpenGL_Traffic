@@ -69,12 +69,12 @@ class ExtendedBaseModelColor(BaseModelColor):
         
         self.program['u_enableShadow'] = True
         self.program['u_enableAO'] = True
-        self.program['shadowBlur'] = 2
-        self.program['AOBlur'] = 8
+        self.program['shadowBlur'] = 5
+        self.program['AOBlur'] = 10
 
         self.depth_texture = self.app.mesh.texture.textures['depth_texture']
         self.program['shadowMap'] = 1
-        self.program['shadowcoordz'] = 0.0001
+        self.program['shadowcoordz'] = 0.00015
         self.depth_texture.use(location=1)
         
         self.program['new_shade'] = 2

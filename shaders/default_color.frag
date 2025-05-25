@@ -53,7 +53,7 @@ float getSoftShadow() {
     return shadow / 128;
 }
 
-// SETUP AO (TAPI MASIH SHADOW BASED) - (BELUM BERJALAN SESUAI RENCANA) - (TAPI MENGHASILKAN BETTER SHADOW)
+// SETUP AO (TAPI MASIH SHADOW BASED) (CAVITY)
 float getFakeAo() {
     float shadow;
     float step_width = 0.1 * AOBlur;
