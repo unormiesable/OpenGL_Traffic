@@ -12,7 +12,7 @@ from scene_renderer import SceneRenderer
 
 # CLASS GRAPHIC ENGINE (MAIN CLASS)
 class SxvxnEngine:
-    def __init__(self, win_size=(600, 400)):
+    def __init__(self, win_size=(1600, 900)):
         
         pg.init()
         pg.display.set_caption("Sxvxn Engine - Testing")
