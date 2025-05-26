@@ -117,6 +117,7 @@ class BaseModel:
         self.vao = app.mesh.vao.vaos[vao_name]
         self.program = self.vao.program
         self.camera = self.app.camera
+        self.uni_scale = uni_scale
 
     def update(self):
         pass
@@ -146,6 +147,9 @@ class ExtendedBaseModel(BaseModel):
         self.program['camPos'].write(self.camera.position)
         self.program['m_view'].write(self.camera.m_view)
         self.program['m_model'].write(self.m_model)
+        
+    def animate(self):
+        self.m_model = self.get_model_matrix()
 
     def update_shadow(self):
         self.shadow_program['m_model'].write(self.m_model)
