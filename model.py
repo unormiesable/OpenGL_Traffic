@@ -211,6 +211,14 @@ class ColorCone(ExtendedBaseModelColor):
                  color=(0.8, 0.8, 0.8), specularity=0.5, metalness=0.0):
         super().__init__(app, vao_name, pos, rot, scale, uni_scale, color, specularity, metalness)
 
+
+class ColorSphere(ExtendedBaseModelColor):
+    def __init__(self, app, vao_name='color_sphere', 
+                 pos=(0, 0, 0), rot=(0, 0, 0), scale=(1, 1, 1), uni_scale=1, 
+                 color=(0.8, 0.8, 0.8), specularity=0.5, metalness=0.0):
+        super().__init__(app, vao_name, pos, rot, scale, uni_scale, color, specularity, metalness)
+
+
 # MODEL PLANE
 class Plane(ExtendedBaseModel):
     def __init__(self, app, vao_name='plane', tex_id='white', pos=(0, 0, 0), rot=(0, 0, 0), scale=(1, 1, 1), uni_scale=1):

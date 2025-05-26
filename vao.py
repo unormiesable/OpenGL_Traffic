@@ -56,6 +56,16 @@ class VAO:
             program=self.program.programs['shadow_map'],
             vbo = self.vbo.vbos['color_cone'])
         
+        # COLOR SPHERE VAO
+        self.vaos['color_sphere'] = self.get_vao(
+            program=self.program.programs['default_color'],
+            vbo = self.vbo.vbos['color_sphere'])
+
+        # COLOR SPHERE SHADOW VAO
+        self.vaos['shadow_color_sphere'] = self.get_vao(
+            program=self.program.programs['shadow_map'],
+            vbo = self.vbo.vbos['color_sphere'])
+        
         
         # OBJEK DENGAN TEXTURE ========================================================================
         # PLANE VAO

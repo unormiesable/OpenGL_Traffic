@@ -24,10 +24,13 @@ class Scene:
         
         self.objs = []
         
-        self.main_obj = ColorCube(app, pos=(0, 1, 0), rot=(0, random.randint(0, 360), 0))
+        self.main_obj = ColorSphere(app, pos=(0, 1, 0), rot=(0, random.randint(0, 360), 0))
         self.objs.append(self.main_obj)
         add(self.main_obj)
-    
+
+        self.main_obj = ColorPlane(app, pos=(0, 0, 0), rot=(0, 0, 0), uni_scale=5)
+        self.objs.append(self.main_obj)
+        add(self.main_obj)
             
     
     # SISTEM ANIMASI (MASIH BETA)

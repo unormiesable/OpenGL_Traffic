@@ -18,6 +18,7 @@ class VBO:
         self.vbos['color_plane'] = ColorPlaneVBO(ctx)
         self.vbos['color_cylinder'] = ColorCylinderVBO(ctx)
         self.vbos['color_cone'] = ColorConeVBO(ctx)
+        self.vbos['color_sphere'] = ColorSphereVBO(ctx)
         
         # OBJEK DENGAN OBJ FILE
         self.vbos['gate'] = GateVBO(ctx)
@@ -420,4 +421,80 @@ class ColorCylinderVBO(BaseVBO):
 
         normals = np.array(normals, dtype='f4')
         vertex_data = np.hstack([normals, vertex_data])
+        return vertex_data
+
+
+class ColorSphereVBO(BaseVBO):
+    def __init__(self, ctx):
+        super().__init__(ctx)
+        self.format = '3f 3f'
+        self.attribs = ['in_normal', 'in_position']
+
+    def get_vertex_data(self):
+        radius = 1.0
+        h_seg = 32
+        v_seg = 32
+
+        unique_vertices = []
+        for i in range(h_seg + 1):
+            theta = i * np.pi / h_seg
+            sin_theta = np.sin(theta)
+            cos_theta = np.cos(theta)
+
+            for j in range(v_seg + 1):
+                phi = j * 2 * np.pi / v_seg
+                sin_phi = np.sin(phi)
+                cos_phi = np.cos(phi)
+
+                x = radius * sin_theta * cos_phi
+                y = radius * cos_theta
+                z = radius * sin_theta * sin_phi
+
+                unique_vertices.append(np.array([x, y, z], dtype='f4'))
+        
+        unique_vertices = np.array(unique_vertices, dtype='f4')
+        final_vertex_positions = []
+        final_normals = []
+
+        for i in range(h_seg):
+            for j in range(v_seg):
+                p1_idx = i * (v_seg + 1) + j
+                p2_idx = p1_idx + 1
+                p3_idx = (i + 1) * (v_seg + 1) + j
+                p4_idx = p3_idx + 1
+                
+                v0_pos_t1 = unique_vertices[p1_idx]
+                v1_pos_t1 = unique_vertices[p3_idx]
+                v2_pos_t1 = unique_vertices[p2_idx]
+
+                v0_A = unique_vertices[p1_idx]
+                v1_A = unique_vertices[p2_idx]
+                v2_A = unique_vertices[p4_idx]
+
+                edge1_A = v1_A - v0_A
+                edge2_A = v2_A - v0_A
+                
+                normal_A = np.cross(edge1_A, edge2_A)
+                normal_A = normal_A / np.linalg.norm(normal_A) if np.linalg.norm(normal_A) > 0 else np.array([0.0, 0.0, 0.0])
+
+                final_vertex_positions.extend([v0_A, v1_A, v2_A])
+                final_normals.extend([normal_A, normal_A, normal_A])
+
+                v0_B = unique_vertices[p1_idx]
+                v1_B = unique_vertices[p4_idx]
+                v2_B = unique_vertices[p3_idx]
+
+                edge1_B = v1_B - v0_B
+                edge2_B = v2_B - v0_B
+                
+                normal_B = np.cross(edge1_B, edge2_B)
+                normal_B = normal_B / np.linalg.norm(normal_B) if np.linalg.norm(normal_B) > 0 else np.array([0.0, 0.0, 0.0])
+
+                final_vertex_positions.extend([v0_B, v1_B, v2_B])
+                final_normals.extend([normal_B, normal_B, normal_B])
+        
+        final_vertex_positions = np.array(final_vertex_positions, dtype='f4')
+        final_normals = np.array(final_normals, dtype='f4')
+
+        vertex_data = np.hstack([final_normals, final_vertex_positions])
         return vertex_data
