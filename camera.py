@@ -64,18 +64,19 @@ class Camera:
             self.update_camera_vectors()
             self.m_view = self.get_view_matrix()
 
-
+    
     def move(self):
         velocity = Cam_Speed * self.app.delta_time
         keys = pg.key.get_pressed()
         
         # SHIFT == RUN // CTRL == SLOW (FLY CAMERA SPEED CONTROL)
         if keys[pg.K_LSHIFT] or keys[pg.K_RSHIFT]:
-            velocity = 0.05 * self.app.delta_time
+            velocity = 0.05 * self.app.delta_time         
         elif keys[pg.K_LCTRL] or keys[pg.K_RCTRL]:
             velocity = 0.003 * self.app.delta_time
         else:
             velocity = 0.02 * self.app.delta_time
+
         
         if keys[pg.K_w]:
             self.position += self.forward * velocity
