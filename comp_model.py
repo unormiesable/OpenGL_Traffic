@@ -205,6 +205,9 @@ class Fixed_Car:
 
     def update(self):
         self.update_model_matrices()
+    
+    def animate(self):
+        self.update_model_matrices()
 
     def update_car_color(self, new_prime_color, new_sec_color):
         self.color = glm.vec3(new_prime_color)
@@ -370,6 +373,9 @@ class Tree:
         self.daun_tengah.update()
         self.daun_atas.update()
 
+    def animate(self):
+        self.update_model_matrices()
+
     def render(self):
         self.batang.render()
         
@@ -441,7 +447,9 @@ class Traffic_Light:
 
     def update(self):
         self.update_model_matrices()
-
+        
+    def animate(self):
+        self.update_model_matrices()
 
     # GANTI WARNA LAMPU MERAH
     def change_to_red(self):
@@ -559,7 +567,9 @@ class Building:
 
     def update(self):
         self.update_model_matrices()
-
+        
+    def animate(self):
+        self.update_model_matrices()
 
     def render(self):
         for x in (self.floors):
