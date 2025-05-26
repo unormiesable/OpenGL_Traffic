@@ -24,7 +24,7 @@ class Scene:
         
         self.objs = []
         
-        self.main_obj = ColorSphere(app, pos=(0, 1, 0), rot=(0, random.randint(0, 360), 0))
+        self.main_obj = ColorCylinder(app, pos=(0, 1, 0), rot=(0, random.randint(0, 360), 0))
         self.objs.append(self.main_obj)
         add(self.main_obj)
 

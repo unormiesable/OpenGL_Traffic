@@ -416,7 +416,7 @@ class ColorCylinderVBO(BaseVBO):
             else:
                 normal = np.array([0.0, 0.0, 0.0])
 
-            for _ in range(3):
+            for x in range(3):
                 normals.append(tuple(normal))
 
         normals = np.array(normals, dtype='f4')
