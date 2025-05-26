@@ -202,6 +202,8 @@ class ColorPlane(ExtendedBaseModelColor):
                  color=(0.8, 0.8, 0.8), specularity=0.5, metalness=0.0):
         super().__init__(app, vao_name, pos, rot, scale, uni_scale, color, specularity, metalness)
 
+
+
 # MODEL CYLINDER COLOR
 class ColorCylinder(ExtendedBaseModelColor):
     def __init__(self, app, vao_name='color_cylinder', 
