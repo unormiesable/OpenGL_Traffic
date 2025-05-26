@@ -318,6 +318,7 @@ class Tree:
         self.rot = glm.vec3([glm.radians(a) for a in rot])
         self.scale = glm.vec3(scale) * uni_scale
         self.color = glm.vec3(color)
+        self.uni_scale = uni_scale
 
         # BUAT OBJEK DARI PRIMITIF
         self.batang = ColorCylinder(app, pos=(0, 1, 0), color=batang_color, scale=(0.2, 1, 0.2), uni_scale=uni_scale_batang)
@@ -394,6 +395,7 @@ class Traffic_Light:
         self.rot = glm.vec3([glm.radians(a) for a in rot])
         self.scale = glm.vec3(scale) * uni_scale
         self.color = glm.vec3(color)
+        self.uni_scale = uni_scale
 
         self.is_green = False
 
@@ -503,6 +505,7 @@ class Building:
         self.scale = glm.vec3(scale) * uni_scale
         self.color = glm.vec3(color)
         self.floor = floor
+        self.uni_scale = uni_scale
 
         self.floors = []
         self.windows = []
