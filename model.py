@@ -16,6 +16,7 @@ class BaseModelColor:
         self.camera = self.app.camera
         
         self.color = glm.vec3(color)
+        self.uni_scale = uni_scale
         
     def update(self):
         pass
@@ -48,6 +49,7 @@ class ExtendedBaseModelColor(BaseModelColor):
         self.on_init()
 
     def update(self):
+        
         self.program['u_color'].write(self.color)
         self.program['specularity'] = self.specularity
         self.program['metalness'] = self.metalness
@@ -55,7 +57,9 @@ class ExtendedBaseModelColor(BaseModelColor):
         self.program['camPos'].write(self.camera.position)
         self.program['m_view'].write(self.camera.m_view)
         self.program['m_model'].write(self.m_model)
-
+        
+        self.m_model = self.get_model_matrix()
+        
     def update_shadow(self):
         self.shadow_program['m_model'].write(self.m_model)
 
