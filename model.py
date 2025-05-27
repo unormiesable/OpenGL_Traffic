@@ -33,7 +33,11 @@ class BaseModelColor:
     def render(self):
         self.update()
         self.vao.render()
-        
+
+
+
+
+
 class ExtendedBaseModelColor(BaseModelColor):
     def __init__(self, app, vao_name, 
                  pos, rot, scale, uni_scale=1, 
@@ -46,6 +50,8 @@ class ExtendedBaseModelColor(BaseModelColor):
         self.specularity = specularity
         self.metalness = metalness
         
+        self.keyframes = []
+        
         self.on_init()
 
     def update(self):
@@ -57,9 +63,6 @@ class ExtendedBaseModelColor(BaseModelColor):
         self.program['camPos'].write(self.camera.position)
         self.program['m_view'].write(self.camera.m_view)
         self.program['m_model'].write(self.m_model)
-
-    def animate(self):
-        self.m_model = self.get_model_matrix()
         
     def update_shadow(self):
         self.shadow_program['m_model'].write(self.m_model)
@@ -101,6 +104,81 @@ class ExtendedBaseModelColor(BaseModelColor):
         self.program['light.Ia'].write(self.app.light.Ia)
         self.program['light.Id'].write(self.app.light.Id)
         self.program['light.Is'].write(self.app.light.Is)
+        
+    # KEYFRAMES SYSTEM
+    def animate(self):
+        if len(self.keyframes) < 2:
+            if len(self.keyframes) == 1:
+                key = self.keyframes[0]
+                self.pos = key[0]
+                self.rot = glm.vec3([glm.radians(a) for a in key[1]])
+                self.scale = glm.vec3(key[2][0] * self.uni_scale, key[2][1] * self.uni_scale, key[2][2] * self.uni_scale)
+            self.m_model = self.get_model_matrix()
+            return
+
+        self.keyframes.sort(key=lambda k: k[3])
+
+        current_time = self.app.time
+
+        key_before = None
+        key_after = None
+
+        for i, key in enumerate(self.keyframes):
+            if key[3] <= current_time:
+                key_before = key
+            if key[3] >= current_time:
+                key_after = key
+                break
+
+        if key_before is None and key_after is None:
+            self.m_model = self.get_model_matrix()
+            return
+        elif key_before is None:
+            key = self.keyframes[0]
+            self.pos = key[0]
+            self.rot = glm.vec3([glm.radians(a) for a in key[1]])
+            self.scale = glm.vec3(key[2][0] * self.uni_scale, key[2][1] * self.uni_scale, key[2][2] * self.uni_scale)
+        elif key_after is None:
+            key = self.keyframes[-1]
+            self.pos = key[0]
+            self.rot = glm.vec3([glm.radians(a) for a in key[1]])
+            self.scale = glm.vec3(key[2][0] * self.uni_scale, key[2][1] * self.uni_scale, key[2][2] * self.uni_scale)
+        elif key_before == key_after:
+            key = key_before
+            self.pos = key[0]
+            self.rot = glm.vec3([glm.radians(a) for a in key[1]])
+            self.scale = glm.vec3(key[2][0] * self.uni_scale, key[2][1] * self.uni_scale, key[2][2] * self.uni_scale)
+        else:
+            time_start = key_before[3]
+            time_end = key_after[3]
+            duration = time_end - time_start
+
+            if duration == 0:
+                self.pos = key_before[0]
+                self.rot = glm.vec3([glm.radians(a) for a in key_before[1]])
+                self.scale = glm.vec3(key_before[2][0] * self.uni_scale, key_before[2][1] * self.uni_scale, key_before[2][2] * self.uni_scale)
+            else:
+                t = (current_time - time_start) / duration
+                self.pos = glm.mix(glm.vec3(key_before[0]), glm.vec3(key_after[0]), t)
+                rot_before_rad = glm.vec3([glm.radians(a) for a in key_before[1]])
+                rot_after_rad = glm.vec3([glm.radians(a) for a in key_after[1]])
+                self.rot = glm.mix(rot_before_rad, rot_after_rad, t)
+
+                scale_before_raw = glm.vec3(key_before[2])
+                scale_after_raw = glm.vec3(key_after[2])
+                interpolated_scale_raw = glm.mix(scale_before_raw, scale_after_raw, t)
+                self.scale = glm.vec3(
+                    interpolated_scale_raw.x * self.uni_scale,
+                    interpolated_scale_raw.y * self.uni_scale,
+                    interpolated_scale_raw.z * self.uni_scale
+                )
+        
+        self.m_model = self.get_model_matrix()
+    
+    def add_keyframe(self, pos=(0, 0, 0), rot=(0, 0, 0), scale=(1, 1, 1), time=0):
+        self.keyframes.append((pos, rot, scale, time))
+
+
 
 
 
@@ -135,6 +213,9 @@ class BaseModel:
         self.update()
         self.vao.render()
         
+
+
+
 
 # EXTENDED BASE MODEL (MODEL DIDASARI BASE MODEL DENGAN PARAMETER TAMBAHAN)
 class ExtendedBaseModel(BaseModel):
@@ -188,6 +269,10 @@ class ExtendedBaseModel(BaseModel):
         self.program['light.Id'].write(self.app.light.Id)
         self.program['light.Is'].write(self.app.light.Is)
 
+
+
+
+
 # MODEL KUBUS COLOR
 class ColorCube(ExtendedBaseModelColor):
     def __init__(self, app, vao_name='color_cube', 
@@ -201,8 +286,6 @@ class ColorPlane(ExtendedBaseModelColor):
                  pos=(0, 0, 0), rot=(0, 0, 0), scale=(1, 1, 1), uni_scale=1, 
                  color=(0.8, 0.8, 0.8), specularity=0.5, metalness=0.0):
         super().__init__(app, vao_name, pos, rot, scale, uni_scale, color, specularity, metalness)
-
-
 
 # MODEL CYLINDER COLOR
 class ColorCylinder(ExtendedBaseModelColor):
@@ -218,12 +301,14 @@ class ColorCone(ExtendedBaseModelColor):
                  color=(0.8, 0.8, 0.8), specularity=0.5, metalness=0.0):
         super().__init__(app, vao_name, pos, rot, scale, uni_scale, color, specularity, metalness)
 
-
 class ColorSphere(ExtendedBaseModelColor):
     def __init__(self, app, vao_name='color_sphere', 
                  pos=(0, 0, 0), rot=(0, 0, 0), scale=(1, 1, 1), uni_scale=1, 
                  color=(0.8, 0.8, 0.8), specularity=0.5, metalness=0.0):
         super().__init__(app, vao_name, pos, rot, scale, uni_scale, color, specularity, metalness)
+
+
+
 
 
 # MODEL PLANE
@@ -249,7 +334,11 @@ class Yellow_Car(ExtendedBaseModel):
                  pos=(0, -0.5, 0), rot=(0, 0, 0), scale=(1, 1, 1),
                  uni_scale=1):
         super().__init__(app, vao_name, tex_id, pos, rot, scale, uni_scale)
-        
+
+
+
+
+   
 # SKYBOX DENGAN METODE LAMA
 class SkyBox(BaseModel):
     def __init__(self, app, vao_name='skybox', tex_id='skybox 2',

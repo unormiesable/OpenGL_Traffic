@@ -26,6 +26,12 @@ class Scene:
                 
         self.Cube_001 = ColorCube(app, pos=(0, 1, 0), rot=(0, 0, 0), color=(0.2, 0.8, 0.2))
         self.objs.append(self.Cube_001)
+        
+        a = self.Cube_001
+        a.add_keyframe(pos=(0, 1, 0), rot=(0, 0, 0), scale=(1, 1, 1), time=3)
+        a.add_keyframe(pos=(3, 1, 0), rot=(0, 180, 0), scale=(1, 1, 1), time=6)
+        a.add_keyframe(pos=(-3, 1, 0), rot=(0, 360, 0), scale=(1, 1, 1), time=9)
+        
         add(self.Cube_001)
         
         self.Plane_001 = ColorPlane(app, pos=(0, 0, 0), rot=(0, 0, 0), color=(0.3, 0.3, 0.5), uni_scale=5)
@@ -35,5 +41,6 @@ class Scene:
     
     # SISTEM ANIMASI (MASIH BETA)
     def update(self):
-        pass
+        self.Cube_001.animate()
+        
                 
