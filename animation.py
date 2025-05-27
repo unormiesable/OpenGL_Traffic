@@ -21,35 +21,35 @@ class Animation:
         self.keyframes.sort(key=lambda k: k[3])
         current_time = self.app.time
 
-        key_before = None
-        key_after = None
+        prev_key = None
+        next_key = None
 
         for i, key in enumerate(self.keyframes):
             if key[3] <= current_time:
-                key_before = key
+                prev_key = key
             if key[3] >= current_time:
-                key_after = key
+                next_key = key
                 break
 
-        if key_before is None and key_after is None:
+        if prev_key is None and next_key is None:
             self.target_model.m_model = self.target_model.get_model_matrix()
             return
-        elif key_before is None:
+        elif prev_key is None:
             self._apply_keyframe(self.keyframes[0])
-        elif key_after is None:
+        elif next_key is None:
             self._apply_keyframe(self.keyframes[-1])
-        elif key_before == key_after:
-            self._apply_keyframe(key_before)
+        elif prev_key == next_key:
+            self._apply_keyframe(prev_key)
         else:
-            time_start = key_before[3]
-            time_end = key_after[3]
+            time_start = prev_key[3]
+            time_end = next_key[3]
             duration = time_end - time_start
 
             if duration == 0:
-                self._apply_keyframe(key_before)
+                self._apply_keyframe(prev_key)
             else:
                 t = (current_time - time_start) / duration
-                interpolation_type = key_before[4]
+                interpolation_type = prev_key[4]
 
                 if interpolation_type == 'linear':
                     t_mod = t
@@ -60,23 +60,22 @@ class Animation:
                 else:
                     t_mod = t 
 
-                pos_start = glm.vec3(key_before[0])
-                pos_end = glm.vec3(key_after[0])
+                pos_start = glm.vec3(prev_key[0])
+                pos_end = glm.vec3(next_key[0])
                 self.target_model.pos = glm.mix(pos_start, pos_end, t_mod)
 
-                rot_start = glm.vec3([glm.radians(a) for a in key_before[1]])
-                rot_end = glm.vec3([glm.radians(a) for a in key_after[1]])
+                rot_start = glm.vec3([glm.radians(a) for a in prev_key[1]])
+                rot_end = glm.vec3([glm.radians(a) for a in next_key[1]])
                 self.target_model.rot = glm.mix(rot_start, rot_end, t_mod)
 
-                scale_start = glm.vec3(key_before[2])
-                scale_end = glm.vec3(key_after[2])
+                scale_start = glm.vec3(prev_key[2])
+                scale_end = glm.vec3(next_key[2])
                 scale_interp = glm.mix(scale_start, scale_end, t_mod)
                 self.target_model.scale = glm.vec3(
                     scale_interp.x * self.target_model.uni_scale,
                     scale_interp.y * self.target_model.uni_scale,
                     scale_interp.z * self.target_model.uni_scale
                 )
-
         self.target_model.animate()
 
     def _apply_keyframe(self, key):
