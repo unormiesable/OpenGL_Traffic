@@ -2,7 +2,7 @@ from pyglm import glm
 import numpy as np
 
 class Animation:
-    def __init__(self, target_model, app):
+    def __init__(self, app, target_model):
         self.target_model = target_model
         self.app = app
         self.keyframes = []

@@ -24,7 +24,7 @@ class Scene:
         add = self.add_object
         
         Plane = ColorPlane(app, uni_scale=5)
-        Plane.anim = Animation(Plane, app)
+        Plane.anim = Animation(app, Plane)
         
         Plane.anim.add_keyframe(rot=Plane.rot, time=0)
         Plane.anim.add_keyframe(rot=(0, 3600, 0), time=20)
