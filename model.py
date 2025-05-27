@@ -105,78 +105,8 @@ class ExtendedBaseModelColor(BaseModelColor):
         self.program['light.Id'].write(self.app.light.Id)
         self.program['light.Is'].write(self.app.light.Is)
         
-    # KEYFRAMES SYSTEM
     def animate(self):
-        if len(self.keyframes) < 2:
-            if len(self.keyframes) == 1:
-                key = self.keyframes[0]
-                self.pos = key[0]
-                self.rot = glm.vec3([glm.radians(a) for a in key[1]])
-                self.scale = glm.vec3(key[2][0] * self.uni_scale, key[2][1] * self.uni_scale, key[2][2] * self.uni_scale)
-            self.m_model = self.get_model_matrix()
-            return
-
-        self.keyframes.sort(key=lambda k: k[3])
-
-        current_time = self.app.time
-
-        key_before = None
-        key_after = None
-
-        for i, key in enumerate(self.keyframes):
-            if key[3] <= current_time:
-                key_before = key
-            if key[3] >= current_time:
-                key_after = key
-                break
-
-        if key_before is None and key_after is None:
-            self.m_model = self.get_model_matrix()
-            return
-        elif key_before is None:
-            key = self.keyframes[0]
-            self.pos = key[0]
-            self.rot = glm.vec3([glm.radians(a) for a in key[1]])
-            self.scale = glm.vec3(key[2][0] * self.uni_scale, key[2][1] * self.uni_scale, key[2][2] * self.uni_scale)
-        elif key_after is None:
-            key = self.keyframes[-1]
-            self.pos = key[0]
-            self.rot = glm.vec3([glm.radians(a) for a in key[1]])
-            self.scale = glm.vec3(key[2][0] * self.uni_scale, key[2][1] * self.uni_scale, key[2][2] * self.uni_scale)
-        elif key_before == key_after:
-            key = key_before
-            self.pos = key[0]
-            self.rot = glm.vec3([glm.radians(a) for a in key[1]])
-            self.scale = glm.vec3(key[2][0] * self.uni_scale, key[2][1] * self.uni_scale, key[2][2] * self.uni_scale)
-        else:
-            time_start = key_before[3]
-            time_end = key_after[3]
-            duration = time_end - time_start
-
-            if duration == 0:
-                self.pos = key_before[0]
-                self.rot = glm.vec3([glm.radians(a) for a in key_before[1]])
-                self.scale = glm.vec3(key_before[2][0] * self.uni_scale, key_before[2][1] * self.uni_scale, key_before[2][2] * self.uni_scale)
-            else:
-                t = (current_time - time_start) / duration
-                self.pos = glm.mix(glm.vec3(key_before[0]), glm.vec3(key_after[0]), t)
-                rot_before_rad = glm.vec3([glm.radians(a) for a in key_before[1]])
-                rot_after_rad = glm.vec3([glm.radians(a) for a in key_after[1]])
-                self.rot = glm.mix(rot_before_rad, rot_after_rad, t)
-
-                scale_before_raw = glm.vec3(key_before[2])
-                scale_after_raw = glm.vec3(key_after[2])
-                interpolated_scale_raw = glm.mix(scale_before_raw, scale_after_raw, t)
-                self.scale = glm.vec3(
-                    interpolated_scale_raw.x * self.uni_scale,
-                    interpolated_scale_raw.y * self.uni_scale,
-                    interpolated_scale_raw.z * self.uni_scale
-                )
-        
         self.m_model = self.get_model_matrix()
-    
-    def add_keyframe(self, pos=(0, 0, 0), rot=(0, 0, 0), scale=(1, 1, 1), time=0):
-        self.keyframes.append((pos, rot, scale, time))
 
 
 
