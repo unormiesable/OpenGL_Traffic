@@ -26,10 +26,13 @@ class Scene:
         Plane = ColorPlane(app, uni_scale=5)
         Plane.anim = Animation(Plane, app)
         
-        Plane.anim.add_keyframe(rot=(0, 0, 0), time=0)
-        Plane.anim.add_keyframe(rot=(0, 180, 0), time=2)
+        Plane.anim.add_keyframe(rot=Plane.rot, time=0)
+        Plane.anim.add_keyframe(rot=(0, 3600, 0), time=20)
         
         add(Plane)
+        
+        self.Cube = ColorCube(app, pos=(0, 1, 0))        
+        add(self.Cube)
         
                 
     # SISTEM ANIMASI (MASIH BETA)
@@ -38,4 +41,5 @@ class Scene:
             if hasattr(o, 'anim'):
                 o.anim.animate()
         
-                
+        self.Cube.pos = glm.vec3(0, 2 + (math.sin(self.app.time * 4))/2, 0)
+        self.Cube.animate()
