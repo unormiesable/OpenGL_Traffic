@@ -19,6 +19,7 @@ Fokus utama kami di sini adalah menciptakan sebuah kerangka game engine yang mod
 ### PROGRESS :
 <pre><code>- Basic Object (Plane, Cube, Cone, Cylinder)
 - Materials Shader Basic (Color, Specular dan Metalness)
-- Screen Space Effect (Fullscreen Quad dan Shader Brightness)</code></pre>
+- Screen Space Effect (Fullscreen Quad dan Shader Brightness)
+- Animation System (Keyframes & Lerp)</code></pre>
 #
 * Started : Sunday - 05 25 2025
