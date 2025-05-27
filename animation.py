@@ -77,4 +77,4 @@ class Animation:
                     interpolated_scale_raw.z * self.target_model.uni_scale
                 )
         
-        self.target_model.m_model = self.target_model.get_model_matrix()
+        self.target_model.animate()

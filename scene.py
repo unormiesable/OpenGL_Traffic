@@ -25,7 +25,7 @@ class Scene:
         
         self.objs = []
         
-        self.Cube_001 = ColorCube(app, pos=(0, 1, 0), rot=(0, 0, 0), color=(0.2, 0.8, 0.2))
+        self.Cube_001 = Fixed_Car(app, pos=(0, 1, 0), rot=(0, 0, 0), color=(0.2, 0.8, 0.2))
         self.Cube_001.anim = Animation(self.Cube_001, app)
         self.objs.append(self.Cube_001)
         
