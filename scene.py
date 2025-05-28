@@ -23,15 +23,16 @@ class Scene:
         app = self.app
         add = self.add_object
         
-        Plane = ColorPlane(app, uni_scale=5)
+        Plane = ColorPlane(app, uni_scale=5, specularity=0)
         Plane.anim = Animation(app, Plane)
         
         Plane.anim.add_keyframe(rot=Plane.rot, time=2, interpolation='ease_in_out')
         Plane.anim.add_keyframe(rot=(0, 720, 0), time=5, interpolation='ease_in_out')
+        Plane.anim.add_keyframe(rot=(0, 360, 0), time=10, interpolation='ease_in_out')
         
         add(Plane)
         
-        self.Cube = ColorCube(app, pos=(0, 1, 0))        
+        self.Cube = ColorCube(app, pos=(0, 1, 0), specularity=1.0, metalness=0)        
         add(self.Cube)
         
                 
