@@ -23,24 +23,22 @@ class Scene:
         app = self.app
         add = self.add_object
         
-        Plane = ColorPlane(app, uni_scale=5, specularity=0)
-        Plane.anim = Animation(app, Plane)
-        
-        Plane.anim.add_keyframe(rot=Plane.rot, time=2, interpolation='ease_in_out')
-        Plane.anim.add_keyframe(rot=(0, 720, 0), time=5, interpolation='ease_in_out')
-        Plane.anim.add_keyframe(rot=(0, 360, 0), time=10, interpolation='ease_in_out')
-        
+        Plane = ColorPlane(app, uni_scale=5, specularity=0, pos=(0, 0, 0))
+        self.app.physics.add_physics('plane.urdf', Plane.pos, (0, 0, 0))
         add(Plane)
         
-        self.Cube = ColorCube(app, pos=(0, 1, 0), specularity=1.0, metalness=0)        
-        add(self.Cube)
+        self.Cube_001 = ColorCube(app, pos=(0, 5, 0), specularity=1.0, metalness=0)
+        self.Cube_001_phy = self.app.physics.add_physics('cube.urdf', self.Cube_001.pos, (0, 0, 0))
+        add(self.Cube_001)
         
                 
     # SISTEM ANIMASI (MASIH BETA)
     def update(self):
         for o in self.objects:
-            if hasattr(o, 'anim'):
+            if hasattr(o, 'anim') or hasattr(o, 'physics'):
                 o.anim.animate()
+    
+        print(self.app.physics.get_pos(self.Cube_001_phy))
+        self.Cube_001.pos = (self.app.physics.get_pos(self.Cube_001_phy))
         
-        self.Cube.pos = glm.vec3(0, 2 + (math.sin(self.app.time * 4))/2, 0)
-        self.Cube.animate()
+        self.Cube_001.animate()

@@ -9,6 +9,8 @@ from mesh import Mesh
 from scene import Scene
 from scene_renderer import SceneRenderer
 
+from physics import Physics
+
 
 # CLASS GRAPHIC ENGINE (MAIN CLASS)
 class SxvxnEngine:
@@ -33,6 +35,8 @@ class SxvxnEngine:
         self.clock = pg.time.Clock()
         self.time = 0
         self.delta_time = 0
+        
+        self.physics = Physics()
 
         self.shadow_res = 8192
         
@@ -42,6 +46,8 @@ class SxvxnEngine:
         self.scene = Scene(self)
         self.scene_renderer = SceneRenderer(self)
         self.background_color = (0.25, 0.35, 0.5)
+        
+        
 
 
     # HANDLER INPUT USER ===================================================================================
@@ -52,6 +58,7 @@ class SxvxnEngine:
             if event.type == pg.QUIT or (event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE):
                 self.mesh.destroy()
                 self.scene_renderer.destroy()
+                self.physics.disconnect()
                 pg.quit()
                 sys.exit()
             
@@ -105,6 +112,9 @@ class SxvxnEngine:
             self.check_events()
             self.camera.update()
             self.scene.update()
+            
+            self.physics.stepSimulation()
+            
             self.render()
             self.delta_time = self.clock.tick(100)
 
