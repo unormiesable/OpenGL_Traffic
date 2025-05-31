@@ -21,11 +21,10 @@ class Physics:
     
     def get_rot(self, physics_object):
         res = p.getBasePositionAndOrientation(physics_object)
-        rot = p.getEulerFromQuaternion(res[1])
+        quat = res[1]
+        glm_quat = glm.quat(quat[3], quat[0], quat[2], -quat[1])
         
-        fixed_rot = glm.vec3(rot[0], rot[2], -rot[1])
-        
-        return fixed_rot
+        return glm_quat
     
     def get_status(self, object):
         rot = self.get_rot(object)
