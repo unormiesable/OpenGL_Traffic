@@ -17,9 +17,14 @@ class Physics:
                           baseOrientation=p.getQuaternionFromEuler((baserot[0], baserot[2], baserot[1])),
                           globalScaling=scale * 2)
     
-    def add_physics_geometry(self, geometry=p.GEOM_BOX ,half_extents=(0.5, 0.5, 0.5), pos=(0, 0, 0), rot=(0, 0, 0), mass=1, scale=(1, 1, 1)):
-        collision_shape = p.createCollisionShape(geometry, halfExtents=half_extents, meshScale=(scale[0], scale[2], scale[1]))
-        visual_shape = p.createVisualShape(geometry, halfExtents=half_extents, rgbaColor=[1, 0, 0, 1], meshScale=(scale[0], scale[2], scale[1]))
+    def add_physics_geometry(self, geometry=p.GEOM_BOX ,half_extents=(0.5, 0.5, 0.5), pos=(0, 0, 0), rot=(0, 0, 0), mass=1, scale=(1, 1, 1), radius=1, height=1):
+        collision_shape = p.createCollisionShape(geometry, halfExtents=half_extents, 
+                                                 meshScale=(scale[0], scale[2], scale[1]), 
+                                                 radius=radius, height=height)
+        
+        visual_shape = p.createVisualShape(geometry, halfExtents=half_extents, rgbaColor=[1, 0, 0, 1],
+                                           meshScale=(scale[0], scale[2], scale[1]),
+                                           radius=radius)
         
         orientation = p.getQuaternionFromEuler((rot[0], rot[2], rot[1]))
         body = p.createMultiBody(baseMass=mass,
