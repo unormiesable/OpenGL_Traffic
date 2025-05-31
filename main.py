@@ -35,11 +35,11 @@ class SxvxnEngine:
         self.clock = pg.time.Clock()
         self.time = 0
         self.delta_time = 0
+        self.ticks = 100
         
         self.physics = Physics()
 
         self.shadow_res = 8192
-        
         self.light = PointLight(position=(-10, 10, 10), color=(1, 1, 1),intensity=1.0, shadow_blur=4.5)
         self.camera = Camera(self)
         self.mesh = Mesh(self)
@@ -116,7 +116,7 @@ class SxvxnEngine:
             self.physics.stepSimulation()
             
             self.render()
-            self.delta_time = self.clock.tick(100)
+            self.delta_time = self.clock.tick(self.ticks)
 
 if __name__ == '__main__':
     print("\033c")

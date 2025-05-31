@@ -6,8 +6,10 @@ from pyglm import glm
 class Physics:
     def __init__(self):
         self.client = p.connect(p.DIRECT)
+        self.timestep = 60
+        
         p.setAdditionalSearchPath(pybullet_data.getDataPath())
-        p.setGravity(0, 0, -9.81 * 5)
+        p.setGravity(0, 0, -9.81)
         
     def add_physics_urdf(self, urdf, basepos=(0, 0, 0), baserot=(0, 0, 0), scale=1):
         return p.loadURDF(urdf, basePosition=(basepos[0], basepos[2], basepos[1]),
@@ -25,8 +27,6 @@ class Physics:
                                 basePosition=(pos[0], pos[2], pos[1]),
                                 baseOrientation=orientation)
         return body
-
-    
     
     def get_pos(self, object):
         res = p.getBasePositionAndOrientation(object)

@@ -50,11 +50,11 @@ class Scene:
                                                     half_extents=(self.Cube_002.scale[0], self.Cube_002.scale[2], self.Cube_002.scale[1]),
                                                     pos=self.Cube_002.pos,
                                                     rot=self.Cube_002.rot,
-                                                    mass=1)
+                                                    mass=2)
         self.Cube_002.physics = self.Cube_002_phy
         
         
-        self.Sphere_001 = ColorSphere(app, pos=(0.5, 4, 0), rot=(0, 0, 0), color=(0.3, 0.8, 0.3), uni_scale=0.5, scale=(1, 1, 1),
+        self.Sphere_001 = ColorSphere(app, pos=(0, 4, 0), rot=(0, 0, 0), color=(0.3, 0.8, 0.3), uni_scale=0.5, scale=(1, 1, 1),
                                   specularity=1.0, metalness=0)
         add(self.Sphere_001)
         
@@ -62,7 +62,7 @@ class Scene:
                                                     scale=self.Sphere_001.scale,
                                                     pos=self.Sphere_001.pos,
                                                     rot=self.Sphere_001.rot,
-                                                    mass=1)
+                                                    mass=3)
         self.Sphere_001.physics = self.Sphere_001_phy
 
 
