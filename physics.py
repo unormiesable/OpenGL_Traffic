@@ -16,13 +16,13 @@ class Physics:
     
     def get_pos(self, object):
         res = p.getBasePositionAndOrientation(object)
-        pos = glm.vec3(res[0][0], res[0][2], res[0][1])
+        pos = glm.vec3(res[0][0], res[0][2], -res[0][1])
         return pos
     
     def get_rot(self, physics_object):
         res = p.getBasePositionAndOrientation(physics_object)
         rot = p.getEulerFromQuaternion(res[1])
-        fixed_rot = glm.vec3(-rot[0], -rot[2], -rot[1])
+        fixed_rot = glm.vec3(rot[0], rot[2], -rot[1])
         
         return fixed_rot
     
