@@ -10,6 +10,7 @@ class Physics:
         
         p.setAdditionalSearchPath(pybullet_data.getDataPath())
         p.setGravity(0, 0, -9.81)
+        p.setTimeStep(1/self.timestep)
         
     def add_physics_urdf(self, urdf, basepos=(0, 0, 0), baserot=(0, 0, 0), scale=1):
         return p.loadURDF(urdf, basePosition=(basepos[0], basepos[2], basepos[1]),

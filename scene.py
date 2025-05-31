@@ -42,7 +42,7 @@ class Scene:
         self.Cube_001.physics = self.Cube_001_phy
         
         
-        self.Cube_002 = ColorCube(app, pos=(0, 5, 0), rot=(45, 20, 0), color=(0.3, 0.8, 0.3), uni_scale=0.5, scale=(1, 2, 1),
+        self.Cube_002 = ColorCube(app, pos=(0, 5, 0), rot=(45, 20, 0), color=(0.3, 0.8, 0.3), uni_scale=0.5, scale=(1, 6, 1),
                                   specularity=1.0, metalness=0)
         add(self.Cube_002)
         
