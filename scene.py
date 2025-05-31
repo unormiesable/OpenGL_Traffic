@@ -28,7 +28,7 @@ class Scene:
         add(Plane)
         
 
-        self.Cube_001 = ColorCube(app, pos=(0.5, 5, 0), rot=(0, 0, 0), color=(0.8, 0.3, 0.3), uni_scale=0.5,
+        self.Cube_001 = ColorCube(app, pos=(0.5, 5, 0), rot=(0, 90, 0), color=(0.8, 0.3, 0.3), uni_scale=0.5,
                                   specularity=1.0, metalness=0)
         self.Cube_001_phy = self.app.physics.add_physics('cube.urdf', self.Cube_001.pos, self.Cube_001.rot, scale=0.5)
         self.Cube_001.physics = self.Cube_001_phy
@@ -40,7 +40,7 @@ class Scene:
         self.Cube_002.physics = self.Cube_002_phy
         add(self.Cube_002)
 
-        add(ColorCube(app, pos=(0, 0, 0), color=(0, 0, 1), uni_scale=0.1, specularity=1.0, metalness=0))
+        # add(ColorCube(app, pos=(0, 0, 0), color=(0, 0, 1), uni_scale=0.1, specularity=1.0, metalness=0))
         
                 
     # SISTEM ANIMASI (MASIH BETA)
