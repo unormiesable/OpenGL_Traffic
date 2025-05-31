@@ -28,7 +28,13 @@ class Scene:
         add(Plane)
         
 
-        self.Cube_001 = ColorCube(app, pos=(0.5, 5, 0), rot=(0, 90, 0), color=(0.8, 0.3, 0.3), uni_scale=0.5,
+        # self.Cube_001 = ColorCube(app, pos=(0, 3, 0), rot=(0, 0, 0), color=(0.8, 0.3, 0.3), uni_scale=0.5,
+        #                           specularity=1.0, metalness=0)
+        # self.Cube_001_phy = self.app.physics.add_physics('cube.urdf', self.Cube_001.pos, self.Cube_001.rot, scale=0.5)
+        # self.Cube_001.physics = self.Cube_001_phy
+        # add(self.Cube_001)
+        
+        self.Cube_001 = ColorCube(app, pos=(0.5, 5, 0), rot=(0, 0, 0), color=(0.8, 0.3, 0.3), uni_scale=0.5,
                                   specularity=1.0, metalness=0)
         self.Cube_001_phy = self.app.physics.add_physics('cube.urdf', self.Cube_001.pos, self.Cube_001.rot, scale=0.5)
         self.Cube_001.physics = self.Cube_001_phy
@@ -45,12 +51,14 @@ class Scene:
                 
     # SISTEM ANIMASI (MASIH BETA)
     def update(self):
+        
+        y = self.app.time
+        
         for o in self.objects:
             if hasattr(o, 'anim'):
                 o.anim.animate()
             
             if hasattr(o, 'physics'):
                 o.pos = (self.app.physics.get_pos(o.physics))
-                o.rot = (self.app.physics.get_rot(o.physics))
+                o.set_global_rotation(self.app.physics.get_rot(o.physics))
                 o.animate()
-        

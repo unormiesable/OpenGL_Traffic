@@ -18,6 +18,7 @@ class BaseModelColor:
         self.color = glm.vec3(color)
         self.uni_scale = uni_scale
         
+        
     def update(self):
         pass
 
@@ -104,9 +105,42 @@ class ExtendedBaseModelColor(BaseModelColor):
         self.program['light.Ia'].write(self.app.light.Ia)
         self.program['light.Id'].write(self.app.light.Id)
         self.program['light.Is'].write(self.app.light.Is)
-        
+
     def animate(self):
         self.m_model = self.get_model_matrix()
+            
+    def set_global_rotation(self, x, y, z):
+        current_pos = glm.vec3(self.m_model[3])
+        current_scale = glm.vec3(
+            glm.length(glm.vec3(self.m_model[0])),
+            glm.length(glm.vec3(self.m_model[1])),
+            glm.length(glm.vec3(self.m_model[2])))
+        
+        rotation_only = glm.mat4(glm.mat3(self.m_model))
+
+        global_rot = glm.mat4()
+        global_rot = glm.rotate(global_rot, x, glm.vec3(1, 0, 0))
+        global_rot = glm.rotate(global_rot, y, glm.vec3(0, 1, 0))
+        global_rot = glm.rotate(global_rot, z, glm.vec3(0, 0, 1))
+        
+        new_rotation = global_rot * rotation_only
+
+        self.m_model = glm.translate(glm.mat4(), current_pos)
+        self.m_model = self.m_model * new_rotation
+        self.m_model = glm.scale(self.m_model, current_scale)
+        
+        sy = glm.sqrt(new_rotation[0][0] * new_rotation[0][0] + 
+            new_rotation[1][0] * new_rotation[1][0])
+        
+        singular = sy < 1e-6
+        if not singular:
+            self.rot.x = glm.atan2(new_rotation[2][1], new_rotation[2][2])
+            self.rot.y = glm.atan2(-new_rotation[2][0], sy)
+            self.rot.z = glm.atan2(new_rotation[1][0], new_rotation[0][0])
+        else:
+            self.rot.x = glm.atan2(-new_rotation[1][2], new_rotation[1][1])
+            self.rot.y = glm.atan2(-new_rotation[2][0], sy)
+            self.rot.z = 0
 
 
 
