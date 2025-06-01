@@ -35,12 +35,9 @@ uniform float ao_factor;
 uniform float AOBlur;
 
 // OUTLINE
-uniform float u_outlineWidth = 1;
-uniform bool u_enableOutline = true;
-
-// DARK SIDE
-uniform float u_darkside_factor = 2;
-uniform bool u_enable_darkside = true;
+uniform float u_outlineWidth = 2;
+uniform vec3 u_outlineColor = vec3(0, 0, 0);
+uniform bool u_enableOutline = true; 
 
 
 // SOFT SHADOW SETUP =================================================
@@ -61,7 +58,6 @@ float getSoftShadow() {
     }
     return shadow / 128;
 }
-
 
 // SETUP AO (TAPI MASIH SHADOW BASED) (CAVITY)
 float getFakeAo() {
@@ -106,28 +102,25 @@ vec3 getLight(vec3 color, float specularity, float metalness) {
     return color * (ambient +(diffuse + specular) * ( (shadow * new_shade) + (ao)));
 }
 
-
-// DARKSIDE ============================================================
-float getDarkSideFactor() {
-    vec3 normalDir = normalize(normal);
-    float side = 1.0 - max(0.0, dot(normalDir, vec3(0.0, 1.0, 0.0)));
-    side = smoothstep(0.0, u_darkside_factor, side);
-    
-    return side;
-}
-
-
-// OUTLINE ==============================================================
+// OUTLINE ============================================================
 float getOutlineFactor() {
-    float depth = gl_FragCoord.z;
-    float depthRight = dFdx(depth);
-    float depthUp = dFdy(depth);
-    float edge = length(vec2(depthRight, depthUp)) * 2000.0;
+    vec3 viewDir = normalize(camPos - fragPos);
+    vec3 normalDir = normalize(normal);
+    float edge = dot(viewDir, normalDir);
     edge = smoothstep(0.0, u_outlineWidth, edge);
-    
-    return edge;
+
+    return 1.0 - edge;
 }
 
+// GRADIENT ===========================================================
+float getShadowGradient() {
+    float shadowCenter = textureProj(shadowMap, shadowCoord);
+    float shadowRight = textureProj(shadowMap, shadowCoord + vec4(0.01, 0.0, 0.0, 0.0));
+    float shadowUp = textureProj(shadowMap, shadowCoord + vec4(0.0, 0.01, 0.0, 0.0));
+    
+    float gradient = length(vec2(shadowRight - shadowCenter, shadowUp - shadowCenter));
+    return smoothstep(0.0, 0.2, gradient);
+}
 
 // MAIN ===============================================================
 void main() {
@@ -135,25 +128,12 @@ void main() {
     vec3 color = pow(u_color, vec3(gamma));
 
     float shadow = u_enableShadow ? getSoftShadow() : 1.0;
+    float shadowEdge = getShadowGradient();
     
-    float outlineFactor = 0.0;
-    if (u_enableOutline && shadow < 0.99) {
-        outlineFactor = getOutlineFactor();
-        outlineFactor *= (1.0 - shadow);
-    }
-
-    float darksideFactor = 0.0;
-    if (u_enable_darkside && shadow < 0.99) {
-        darksideFactor = getDarkSideFactor();
-        darksideFactor *= (1.0 - shadow);
-    }
+    float outlineFactor = (u_enableOutline ? getOutlineFactor() : 0.0) * shadowEdge;
 
     vec3 renderColor = getLight(color, specularity, metalness);
-
-    vec3 outlineColor = renderColor * 0.5;
-
-    vec3 renderOutline = mix(renderColor, outlineColor, outlineFactor);
-    vec3 finalColor = mix(renderOutline, outlineColor, darksideFactor);
+    vec3 finalColor = mix(renderColor, u_outlineColor, outlineFactor);
 
     finalColor = pow(finalColor, 1.0 / vec3(gamma)); 
     fragColor = vec4(finalColor, 1.0);
