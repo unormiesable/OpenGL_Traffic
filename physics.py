@@ -12,10 +12,17 @@ class Physics:
         p.setGravity(0, 0, -9.81)
         p.setTimeStep(1/self.timestep)
         
+        p.setPhysicsEngineParameter(
+            enableFileCaching=0,
+            deterministicOverlappingPairs=1,
+            numSolverIterations=5,
+        )
+        
     def add_physics_urdf(self, urdf, basepos=(0, 0, 0), baserot=(0, 0, 0), scale=1):
         return p.loadURDF(urdf, basePosition=(basepos[0], basepos[2], basepos[1]),
                           baseOrientation=p.getQuaternionFromEuler((baserot[0], baserot[2], baserot[1])),
-                          globalScaling=scale * 2)
+                          globalScaling=scale * 2,
+                          flags=p.URDF_ENABLE_SLEEPING)
     
     def add_physics_geometry(self, geometry=p.GEOM_BOX ,half_extents=(0.5, 0.5, 0.5), pos=(0, 0, 0), rot=(0, 0, 0), mass=1, scale=(1, 1, 1), radius=1, height=1):
         collision_shape = p.createCollisionShape(geometry, halfExtents=half_extents, 
@@ -31,7 +38,8 @@ class Physics:
                                 baseCollisionShapeIndex=collision_shape,
                                 baseVisualShapeIndex=visual_shape,
                                 basePosition=(pos[0], pos[2], pos[1]),
-                                baseOrientation=orientation)
+                                baseOrientation=orientation,
+                                flags=p.URDF_ENABLE_SLEEPING)
         return body
     
     def get_pos(self, object):

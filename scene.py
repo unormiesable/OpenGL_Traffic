@@ -25,49 +25,26 @@ class Scene:
         app = self.app
         add = self.add_object
         
-        Plane = ColorPlane(app, uni_scale=15, specularity=0, pos=(0, 0, 0), color=(0.3, 0.5, 0.3))
+        Plane = ColorPlane(app, uni_scale=30, specularity=1, pos=(0, 0, 0), color=(0.3, 0.5, 0.3))
         self.app.physics.add_physics_urdf('plane.urdf', Plane.pos, (0, 0, 0))
         add(Plane)
         
 
-        self.Cube_001 = ColorCube(app, pos=(0, 4, 0), rot=(90, -15, -35), color=(0.8, 0.3, 0.3), uni_scale=0.5, scale=(1, 2, 1),
-                                  specularity=1.0, metalness=0)
-        add(self.Cube_001)
-        
-        self.Cube_001_phy = self.app.physics.add_physics_geometry(geometry=p.GEOM_BOX,
-                                                    half_extents=(self.Cube_001.scale[0], self.Cube_001.scale[2], self.Cube_001.scale[1]),
-                                                    pos=self.Cube_001.pos,
-                                                    rot=self.Cube_001.rot,
-                                                    mass=1)
-        self.Cube_001.physics = self.Cube_001_phy
-        
-        
-        self.Cube_002 = ColorCube(app, pos=(0, 6, 0), rot=(45, 20, 0), color=(0.4, 0.3, 0.4), uni_scale=0.5, scale=(1, 6, 1),
-                                  specularity=1.0, metalness=0)
-        add(self.Cube_002)
-        
-        self.Cube_002_phy = self.app.physics.add_physics_geometry(geometry=p.GEOM_BOX,
-                                                    half_extents=(self.Cube_002.scale[0], self.Cube_002.scale[2], self.Cube_002.scale[1]),
-                                                    pos=self.Cube_002.pos,
-                                                    rot=self.Cube_002.rot,
-                                                    mass=2)
-        self.Cube_002.physics = self.Cube_002_phy
-        
-        
-        self.Sphere_001 = ColorSphere(app, pos=(0, 2, 0), rot=(0, 0, 0), color=(0.8, 0.8, 0.2), uni_scale=1, scale=(1, 1, 1),
-                                  specularity=1.0, metalness=0)
-        add(self.Sphere_001)
-        
-        self.Sphere_001_phy = self.app.physics.add_physics_geometry(geometry=p.GEOM_SPHERE,
-                                                    radius=self.Sphere_001.uni_scale,
-                                                    scale=self.Sphere_001.scale,
-                                                    pos=self.Sphere_001.pos,
-                                                    rot=self.Sphere_001.rot,
-                                                    mass=30)
-        self.Sphere_001.physics = self.Sphere_001_phy
-
-
-        # add(ColorCube(app, pos=(0, 0, 0), color=(0, 0, 1), uni_scale=0.1, specularity=1.0, metalness=0))
+        for x in range(10):
+            for y in range(10):
+                for z in range(5):
+                    self.Cube_001 = ColorCube(app, pos=(-5 + (x * 1.1), 2 + (y * 1.2), -2.5 + (z * 1.1)),
+                                            rot=(random.randint(0, 360), random.randint(0, 360), random.randint(0, 360)),
+                                            color=(0.8, 0.3, 0.3),
+                                            uni_scale=0.5, scale=(1, 1, 1),
+                                            specularity=1.0, metalness=0)
+                    self.Cube_001_phy = self.app.physics.add_physics_geometry(geometry=p.GEOM_BOX,
+                                                                half_extents=(self.Cube_001.scale[0], self.Cube_001.scale[2], self.Cube_001.scale[1]),
+                                                                pos=self.Cube_001.pos,
+                                                                rot=self.Cube_001.rot,
+                                                                mass=1)
+                    self.Cube_001.physics = self.Cube_001_phy
+                    add(self.Cube_001)
         
                 
     # SISTEM ANIMASI (MASIH BETA)

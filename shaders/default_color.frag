@@ -9,6 +9,7 @@ in vec3 normal;
 in vec3 fragPos;
 in vec4 shadowCoord;
 
+
 struct Light {
     vec3 position;
     vec3 Ia;
@@ -32,6 +33,11 @@ uniform float shadowBlur;
 uniform float new_shade;
 uniform float ao_factor;
 uniform float AOBlur;
+
+// OUTLINE
+uniform float u_outlineWidth = 0.1;
+uniform vec3 u_outlineColor = vec3(0, 0, 0);
+uniform bool u_enableOutline = true; 
 
 
 // SOFT SHADOW SETUP =================================================
@@ -96,13 +102,26 @@ vec3 getLight(vec3 color, float specularity, float metalness) {
     return color * (ambient +(diffuse + specular) * ( (shadow * new_shade) + (ao)));
 }
 
+// OUTLINE ============================================================
+float getOutlineFactor() {
+    vec3 viewDir = normalize(camPos - fragPos);
+    vec3 normalDir = normalize(normal);
+    float edge = dot(viewDir, normalDir);
+    edge = smoothstep(0.0, u_outlineWidth, edge);
+
+    return 1.0 - edge;
+}
+
 // MAIN ===============================================================
 void main() {
     float gamma = 2.2;
     vec3 color = pow(u_color, vec3(gamma));
 
-    color = getLight(color, specularity, metalness);
+    float outlineFactor = u_enableOutline ? getOutlineFactor() : 0.0;
 
-    color = pow(color, 1.0 / vec3(gamma)); 
-    fragColor = vec4(color, 1.0);
+    vec3 renderColor = getLight(color, specularity, metalness);
+    vec3 finalColor = mix(renderColor, u_outlineColor, outlineFactor);
+
+    finalColor = pow(finalColor, 1.0 / vec3(gamma)); 
+    fragColor = vec4(finalColor, 1.0);
 }
