@@ -4,7 +4,7 @@ import pygame as pg
 # ATRIBUT KAMERA
 FOV = 70
 NEAR = 0.1
-FAR = 100
+FAR = 500
 
 Cam_Speed = 0.02
 Rotate_Speed = 1.0

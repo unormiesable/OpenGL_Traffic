@@ -26,9 +26,11 @@ class UI:
         imgui.new_frame()
         imgui.set_next_window_position(0, 0)
         imgui.set_next_window_size(300, 150)
-        imgui.begin("DEBUG INFO")
+        imgui.begin("GUI TESTING")
+        imgui.text("HELLO WORLD")
         imgui.text("FPS: {:.2f}".format(self.engine.clock.get_fps()))
         imgui.end()
+        
 
         imgui.render()
         self.renderer.render(imgui.get_draw_data())
