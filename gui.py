@@ -27,20 +27,21 @@ class UI:
         
         imgui.set_next_window_position(0, 0)
         imgui.set_next_window_size(300, 50)
-        imgui.begin("GUI TESTING 1", flags=imgui.WINDOW_NO_MOVE | imgui.WINDOW_NO_RESIZE)
+        imgui.begin("GUI TESTING 1", flags=imgui.WINDOW_NO_MOVE | imgui.WINDOW_NO_RESIZE | imgui.WINDOW_NO_COLLAPSE)
         imgui.text("THIS IS TESTING 1")
         imgui.end()
         
         imgui.set_next_window_position(0, 55)
         imgui.set_next_window_size(300, 100)
-        imgui.begin("GUI TESTING 2", flags=imgui.WINDOW_NO_MOVE | imgui.WINDOW_NO_RESIZE)
+        imgui.begin("GUI TESTING 2", flags=imgui.WINDOW_NO_MOVE | imgui.WINDOW_NO_RESIZE | imgui.WINDOW_NO_COLLAPSE)
         imgui.text("THIS IS TESTING 2 \nNOTHING IS GOING ON HERE \nFR DAWWWGGG")
         imgui.end()
         
         imgui.set_next_window_position(0, 160)
         imgui.set_next_window_size(300, 80)
-        imgui.begin("GUI TESTING 3", flags=imgui.WINDOW_NO_MOVE | imgui.WINDOW_NO_RESIZE)
-        imgui.slider_float("TEST SLIDER", self.app.test_value, 0, 1000)
+        imgui.begin("GUI TESTING 3", flags=imgui.WINDOW_NO_MOVE | imgui.WINDOW_NO_RESIZE | imgui.WINDOW_NO_COLLAPSE)
+        changed, self.app.test_value = imgui.slider_float("TEST VALUE", self.app.test_value, 0, 1000)
+        print("Test Value: {:.2f}".format(self.app.test_value))
         imgui.end()
         
 
