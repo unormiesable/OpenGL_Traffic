@@ -49,6 +49,7 @@ class SxvxnEngine:
         self.background_color = (0.25, 0.35, 0.5)
 
         self.ui = UI(self)
+        self.test_value = 0
 
 
     # HANDLER INPUT USER ===================================================================================
