@@ -13,10 +13,11 @@ class Physics:
         p.setTimeStep(1/self.timestep)
         
         p.setPhysicsEngineParameter(
-            enableFileCaching=0,
-            deterministicOverlappingPairs=1,
-            numSolverIterations=10,
-            enableConeFriction=0
+            enableFileCaching= 0,
+            deterministicOverlappingPairs= 1,
+            numSolverIterations= 10,
+            enableConeFriction= 0,
+            solverResidualThreshold= 1e-7
         )
         
     def add_physics_urdf(self, urdf, basepos=(0, 0, 0), baserot=(0, 0, 0), scale=1):
