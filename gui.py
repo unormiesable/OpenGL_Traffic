@@ -24,11 +24,17 @@ class UI:
         io.display_size = self.engine.WIN_SIZE
 
         imgui.new_frame()
+        
         imgui.set_next_window_position(0, 0)
-        imgui.set_next_window_size(300, 150)
-        imgui.begin("GUI TESTING")
-        imgui.text("HELLO WORLD")
-        imgui.text("FPS: {:.2f}".format(self.engine.clock.get_fps()))
+        imgui.set_next_window_size(300, 50)
+        imgui.begin("GUI TESTING 1", flags=imgui.WINDOW_NO_MOVE | imgui.WINDOW_NO_RESIZE)
+        imgui.text("THIS IS TESTING 1")
+        imgui.end()
+        
+        imgui.set_next_window_position(0, 55)
+        imgui.set_next_window_size(300, 100)
+        imgui.begin("GUI TESTING 2", flags=imgui.WINDOW_NO_MOVE | imgui.WINDOW_NO_RESIZE)
+        imgui.text("THIS IS TESTING 2 \nNOTHING IS GOING ON HERE \nFR DAWWWGGG")
         imgui.end()
         
 
