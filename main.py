@@ -49,7 +49,7 @@ class SxvxnEngine:
         self.background_color = (0.25, 0.35, 0.5)
 
         self.ui = UI(self)
-        self.test_value = 0
+        self.playing = False
 
 
     # HANDLER INPUT USER ===================================================================================
@@ -108,8 +108,8 @@ class SxvxnEngine:
         self.scene_renderer.render(lighting=1, skybox=1, post=1)
         self.ui.render()
         pg.display.flip()
-
-
+            
+            
     def get_time(self):
         self.time = pg.time.get_ticks() * 0.001
 
@@ -119,12 +119,21 @@ class SxvxnEngine:
             self.get_time()
             self.check_events()
             self.camera.update()
-            self.scene.update()
             
-            self.physics.stepSimulation()
+            if self.playing:
+                self.scene.update()
+                self.physics.stepSimulation()
             
             self.render()
             self.delta_time = self.clock.tick(self.ticks)
+
+
+    # PLAY / PAUSE
+    def toggle_play(self):
+        if self.playing:
+            self.playing = False
+        else:
+            self.playing = True
 
 
 if __name__ == '__main__':

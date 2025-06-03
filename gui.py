@@ -38,11 +38,13 @@ class UI:
         imgui.end()
         
         imgui.set_next_window_position(0, 160)
-        imgui.set_next_window_size(300, 80)
-        imgui.begin("GUI TESTING 3", flags=imgui.WINDOW_NO_MOVE | imgui.WINDOW_NO_RESIZE | imgui.WINDOW_NO_COLLAPSE)
-        changed, self.app.test_value = imgui.slider_float("TEST VALUE", self.app.test_value, 0, 1000)
-        print("Test Value: {:.2f}".format(self.app.test_value))
+        imgui.set_next_window_size(300, 100)
+        imgui.begin("SCENE PLAYER", flags=imgui.WINDOW_NO_MOVE | imgui.WINDOW_NO_RESIZE | imgui.WINDOW_NO_COLLAPSE)
+        button_text = "PAUSE" if self.app.playing else "PLAY"
+        if imgui.button(button_text):
+            self.app.toggle_play()
         imgui.end()
+    
         
 
         imgui.render()

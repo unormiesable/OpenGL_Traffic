@@ -56,13 +56,14 @@ class Camera:
         self.up = glm.normalize(glm.cross(self.right, self.forward))
 
     def update(self):
-        if self.use_orbit:
-            self.update_orbit()
-        else:
-            self.move()
-            self.rotate()
-            self.update_camera_vectors()
-            self.m_view = self.get_view_matrix()
+        if not pg.mouse.get_visible():
+            if self.use_orbit:
+                self.update_orbit()
+            else:
+                self.move()
+                self.rotate()
+                self.update_camera_vectors()
+                self.m_view = self.get_view_matrix()
 
     
     def move(self):
