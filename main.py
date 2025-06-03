@@ -11,6 +11,10 @@ from scene_renderer import SceneRenderer
 
 from physics import Physics
 
+import imgui
+from imgui.integrations.opengl import ProgrammablePipelineRenderer
+
+
 
 # CLASS GRAPHIC ENGINE (MAIN CLASS)
 class SxvxnEngine:
@@ -46,12 +50,25 @@ class SxvxnEngine:
         self.scene = Scene(self)
         self.scene_renderer = SceneRenderer(self)
         self.background_color = (0.25, 0.35, 0.5)
-        
+
+        imgui.create_context()
+        self.imgui_renderer = ProgrammablePipelineRenderer()
+        imgui.get_io().ini_file_name = None
+
         
 
 
     # HANDLER INPUT USER ===================================================================================
     def check_events(self):
+        
+        io = imgui.get_io()
+        io.mouse_down[0] = pg.mouse.get_pressed()[0]  # Left click
+        io.mouse_down[1] = pg.mouse.get_pressed()[2]  # Right click
+        io.mouse_down[2] = pg.mouse.get_pressed()[1]  # Middle click
+
+        mouse_x, mouse_y = pg.mouse.get_pos()
+        io.mouse_pos = mouse_x, mouse_y
+
         for event in pg.event.get():
             
             # ESCAPE -> QUIT
@@ -99,9 +116,28 @@ class SxvxnEngine:
                 
     # RENDER SCENE -> SCENE RENDERER
     def render(self):
-        self.ctx.clear(color=(self.background_color))
-        self.scene_renderer.render(lighting = 1, skybox = 1, post = 1)
+        self.ctx.clear(color=self.background_color)
+        self.scene_renderer.render(lighting=1, skybox=1, post=1)
+
+        # IMGUI RENDER
+        io = imgui.get_io()
+        io.display_size = self.WIN_SIZE
+        self.ctx.viewport = (0, 0, *self.WIN_SIZE)
+
+        imgui.new_frame()
+        imgui.set_next_window_position(0, 0)
+        imgui.set_next_window_size(300, 150)
+        imgui.begin("DEBUG INFO")
+        imgui.text("FPS: {:.2f}".format(self.clock.get_fps()))
+        imgui.end()
+        imgui.render()
+        self.imgui_renderer.render(imgui.get_draw_data())
+        
+        # SWAP BUFFER
         pg.display.flip()
+
+
+
 
     def get_time(self):
         self.time = pg.time.get_ticks() * 0.001
@@ -117,6 +153,7 @@ class SxvxnEngine:
             
             self.render()
             self.delta_time = self.clock.tick(self.ticks)
+            imgui.get_io().delta_time = self.delta_time / 1000.0
 
 if __name__ == '__main__':
     print("\033c")
