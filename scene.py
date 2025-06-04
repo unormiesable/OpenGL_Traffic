@@ -26,6 +26,7 @@ class Scene:
         add = self.add_object
         
         Plane = ColorPlane(app, uni_scale=30, specularity=1, pos=(0, 0, 0), color=(0.4, 0.4, 0.4))
+        add(ColorPlane(app, uni_scale=30, specularity=1, pos=(0, 0, 0), color=(0.4, 0.4, 0.4), rot=(180, 0, 0)))
         self.app.physics.add_physics_urdf('plane.urdf', Plane.pos, (0, 0, 0))
         add(Plane)
         

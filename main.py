@@ -77,11 +77,10 @@ class SxvxnEngine:
             
             # TAB -> GANTI MODE KAMERA
             if event.type == pg.KEYDOWN:
-                s_time = pg.time.get_ticks()
-
                 if event.key == pg.K_TAB:
-                    self.camera.use_orbit = not self.camera.use_orbit
-                    self.camera.set_default()
+                    if not pg.mouse.get_visible():
+                        self.camera.use_orbit = not self.camera.use_orbit
+                        self.camera.set_default()
 
 
             # ` -> TOGGLE MOUSE (KAYA DI GAME)
