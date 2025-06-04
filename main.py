@@ -10,7 +10,7 @@ from scene import Scene
 from scene_renderer import SceneRenderer
 from physics import Physics
 
-from gui import UI
+from gui import GUI
 
 
 # CLASS GRAPHIC ENGINE (MAIN CLASS)
@@ -48,14 +48,14 @@ class SxvxnEngine:
         self.scene_renderer = SceneRenderer(self)
         self.background_color = (0.25, 0.35, 0.5)
 
-        self.ui = UI(self)
+        self.gui = GUI(self)
         self.playing = False
 
 
     # HANDLER INPUT USER ===================================================================================
     def check_events(self):
         
-        self.ui.process_input()
+        self.gui.process_input()
 
         for event in pg.event.get():
             
@@ -106,7 +106,7 @@ class SxvxnEngine:
     def render(self):
         self.ctx.clear(color=self.background_color)
         self.scene_renderer.render(lighting=1, skybox=1, post=1)
-        self.ui.render()
+        self.gui.render()
         pg.display.flip()
             
             

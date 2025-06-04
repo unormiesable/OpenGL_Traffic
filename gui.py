@@ -3,7 +3,7 @@ import pygame as pg
 from imgui.integrations.opengl import ProgrammablePipelineRenderer
 
 
-class UI:
+class GUI:
     def __init__(self, app):
         self.app = app
         imgui.create_context()
