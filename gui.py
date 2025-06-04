@@ -26,7 +26,7 @@ class GUI:
         imgui.new_frame()
         
         imgui.set_next_window_position(0, 0)
-        imgui.set_next_window_size(300, 100)
+        imgui.set_next_window_size(300, 75)
         imgui.begin("SCENE PLAYER", flags=imgui.WINDOW_NO_MOVE | imgui.WINDOW_NO_RESIZE | imgui.WINDOW_NO_COLLAPSE)
         
         imgui.text(f"FPS: {int(self.app.clock.get_fps())}")
@@ -41,7 +41,16 @@ class GUI:
             self.app.reset()
             
         imgui.same_line(spacing=10)
+        
+        if imgui.button("REVERSE"):
+            self.app.reverse()
             
+        imgui.end()
+        
+        imgui.set_next_window_position(0, 80)
+        imgui.set_next_window_size(300, 75)
+        imgui.begin("SCENE RENDERER", flags=imgui.WINDOW_NO_MOVE | imgui.WINDOW_NO_RESIZE | imgui.WINDOW_NO_COLLAPSE)
+        
         if imgui.button("RENDER"):
             self.app.toggle_render_view()
 
@@ -49,9 +58,9 @@ class GUI:
             
         if imgui.button("COLOR"):
             self.app.toggle_color()
-        
-        
+            
         imgui.end()
+        
 
 
         imgui.render()

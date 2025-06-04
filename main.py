@@ -119,7 +119,7 @@ class SxvxnEngine:
             
             
     def get_time(self):
-        self.time = pg.time.get_ticks() * 0.001
+        self.time = pg.time.get_ticks() * self.ticks_multiplier
 
 
     def run(self):
@@ -138,10 +138,7 @@ class SxvxnEngine:
 
     # PLAY / PAUSE
     def toggle_play(self):
-        if self.playing:
-            self.playing = False
-        else:
-            self.playing = True
+        self.playing = 1 - self.playing
 
 
     def reset(self):
