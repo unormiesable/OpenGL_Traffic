@@ -29,6 +29,8 @@ class GUI:
         imgui.set_next_window_size(300, 100)
         imgui.begin("SCENE PLAYER", flags=imgui.WINDOW_NO_MOVE | imgui.WINDOW_NO_RESIZE | imgui.WINDOW_NO_COLLAPSE)
         
+        imgui.text(f"FPS: {int(self.app.clock.get_fps())}")
+        
         button_text = "PAUSE" if self.app.playing else "PLAY"
         if imgui.button(button_text):
             self.app.toggle_play()

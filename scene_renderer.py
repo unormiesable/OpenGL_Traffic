@@ -20,7 +20,7 @@ class SceneRenderer:
             obj.render_shadow()
 
     def main_render(self, skybox=False):
-        self.ctx.clear(1.0, 0.0, 1.0)
+        self.ctx.clear(0.2, 0.2, 0.2)
         for obj in self.scene.objects:
             obj.render()
         if skybox:

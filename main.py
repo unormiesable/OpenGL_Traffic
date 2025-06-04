@@ -113,7 +113,7 @@ class SxvxnEngine:
     # RENDER SCENE -> SCENE RENDERER
     def render(self):
         self.ctx.clear(color=self.background_color)
-        self.scene_renderer.render(lighting=self.render_type, skybox=1, post=self.render_type)
+        self.scene_renderer.render(lighting=self.render_type, skybox=self.render_type, post=self.render_type)
         self.gui.render()
         pg.display.flip()
             
