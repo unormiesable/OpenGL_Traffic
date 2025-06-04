@@ -19,7 +19,7 @@ class Scene:
 
     def add_object(self, obj):
         self.objects.append(obj)
-        
+
 
     def load(self):
         app = self.app
@@ -59,4 +59,3 @@ class Scene:
                 o.pos = self.app.physics.get_pos(o.physics)
                 rotation_quat = self.app.physics.get_rot(o.physics)
                 o.update_quat(rotation_quat)
-            

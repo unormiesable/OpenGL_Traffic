@@ -136,6 +136,15 @@ class SxvxnEngine:
             self.playing = True
 
 
+    def reset(self):
+        self.physics.disconnect()
+        self.physics = Physics()
+        self.scene = Scene(self)
+        self.time = 0
+        self.delta_time = 0
+        self.clock.tick(self.ticks)
+
+
 if __name__ == '__main__':
     print("\033c")
     app = SxvxnEngine()
