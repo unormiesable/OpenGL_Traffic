@@ -57,9 +57,21 @@ class ExtendedBaseModelColor(BaseModelColor):
 
     def update(self):
         
-        self.program['u_color'].write(self.color)
-        self.program['specularity'] = self.specularity
-        self.program['metalness'] = self.metalness
+        if self.app.render_type == 1:
+            self.program['specularity'] = self.specularity
+            self.program['metalness'] = self.metalness
+        else :
+            self.program['specularity'] = 0
+            self.program['metalness'] = 0
+        
+        
+        if self.app.render_color == 1 :
+            self.program['u_color'].write(self.color)
+        
+        else :
+            default_color = glm.vec3(1.0, 1.0, 1.0)
+            self.program['u_color'].write(default_color)
+            
         
         self.program['camPos'].write(self.camera.position)
         self.program['m_view'].write(self.camera.m_view)

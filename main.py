@@ -17,6 +17,7 @@ from gui import GUI
 class SxvxnEngine:
     def __init__(self, win_size=(1600, 900)):
         
+        # PYGAME SETUP
         pg.init()
         pg.display.set_caption("Sxvxn Engine - Testing")
         pg.display.set_icon(pg.image.load('images/7-engine.png'))
@@ -31,6 +32,7 @@ class SxvxnEngine:
         pg.event.set_grab(True)
         pg.mouse.set_visible(False)
 
+        # MODERNGL BASIC SETUP
         self.ctx = mgl.create_context(require=330)
         self.ctx.enable(flags=mgl.DEPTH_TEST | mgl.CULL_FACE)
         self.clock = pg.time.Clock()
@@ -38,8 +40,10 @@ class SxvxnEngine:
         self.delta_time = 0
         self.ticks = 100
         
+        # PHYSICS
         self.physics = Physics()
 
+        # SCENE
         self.shadow_res = 8192
         self.light = PointLight(position=(-10, 10, 10), color=(1, 1, 1),intensity=1.0, shadow_blur=4.5)
         self.camera = Camera(self)
@@ -48,9 +52,13 @@ class SxvxnEngine:
         self.scene_renderer = SceneRenderer(self)
         self.background_color = (0.25, 0.35, 0.5)
 
+        # GUI
         self.gui = GUI(self)
         self.playing = False
-
+        
+        # RENDER TYPE
+        self.render_type = 1
+        self.render_color = 1
 
     # HANDLER INPUT USER ===================================================================================
     def check_events(self):
@@ -105,7 +113,7 @@ class SxvxnEngine:
     # RENDER SCENE -> SCENE RENDERER
     def render(self):
         self.ctx.clear(color=self.background_color)
-        self.scene_renderer.render(lighting=1, skybox=1, post=1)
+        self.scene_renderer.render(lighting=self.render_type, skybox=1, post=self.render_type)
         self.gui.render()
         pg.display.flip()
             
@@ -143,6 +151,17 @@ class SxvxnEngine:
         self.time = 0
         self.delta_time = 0
         self.clock.tick(self.ticks)
+        
+    
+    def toggle_color(self):
+        self.render_color = 1 - self.render_color
+        
+
+    def toggle_render_view(self):
+        self.render_type = 1 - self.render_type
+        self.scene_renderer = SceneRenderer(self)
+        self.scene_renderer.lighting = (self.render_type == 1)
+        self.scene_renderer.depth_fbo.clear()
 
 
 if __name__ == '__main__':

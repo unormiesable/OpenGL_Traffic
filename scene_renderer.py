@@ -38,6 +38,7 @@ class SceneRenderer:
         self.ctx.viewport = (0, 0, self.app.WIN_SIZE[0]*2, self.app.WIN_SIZE[1]*2) 
         self.post_texture.use(location=0)
         self.app.mesh.vao.vaos['fullscreen_quad'].render(mgl.TRIANGLE_STRIP)
+        
 
     def render(self, lighting=True, skybox=False, post=True):
         self.lighting = lighting
@@ -58,6 +59,7 @@ class SceneRenderer:
 
         if post:
             self.post_process()
+
 
     def destroy(self):
         self.depth_fbo.release()

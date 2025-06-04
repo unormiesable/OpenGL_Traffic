@@ -38,6 +38,17 @@ class GUI:
         if imgui.button("RESET"):
             self.app.reset()
             
+        imgui.same_line(spacing=10)
+            
+        if imgui.button("RENDER"):
+            self.app.toggle_render_view()
+
+        imgui.same_line(spacing=10)
+            
+        if imgui.button("COLOR"):
+            self.app.toggle_color()
+        
+        
         imgui.end()
 
 
