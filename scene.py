@@ -33,7 +33,7 @@ class Scene:
         for x in range(5):
             for y in range(10):
                 for z in range(5):
-                    self.Cube_001 = ColorCube(app, pos=(-5 + (x * 1.1), 2 + (y * 1.2), -2.5 + (z * 1.1)),
+                    self.Cube_001 = ColorCube(app, pos=(-2.5 + (x * 1.1), 2 + (y * 1.2), -2.5 + (z * 1.1)),
                                             rot=(random.randint(0, 360), random.randint(0, 360), random.randint(0, 360)),
                                             color=([random.random() for _ in range(3)]),
                                             uni_scale=random.uniform(0.2, 0.7), scale=(1, 1, 1),

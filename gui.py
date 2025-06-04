@@ -44,8 +44,6 @@ class UI:
         if imgui.button(button_text):
             self.app.toggle_play()
         imgui.end()
-    
-        
 
         imgui.render()
         self.renderer.render(imgui.get_draw_data())
