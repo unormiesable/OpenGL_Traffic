@@ -119,7 +119,7 @@ class SxvxnEngine:
             
             
     def get_time(self):
-        self.time = pg.time.get_ticks() * self.ticks_multiplier
+        self.time = pg.time.get_ticks() * 0.001
 
 
     def run(self):

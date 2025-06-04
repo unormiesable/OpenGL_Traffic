@@ -40,12 +40,8 @@ class GUI:
         if imgui.button("RESET"):
             self.app.reset()
             
-        imgui.same_line(spacing=10)
-        
-        if imgui.button("REVERSE"):
-            self.app.reverse()
-            
         imgui.end()
+        
         
         imgui.set_next_window_position(0, 80)
         imgui.set_next_window_size(300, 75)
@@ -60,8 +56,6 @@ class GUI:
             self.app.toggle_color()
             
         imgui.end()
-        
-
 
         imgui.render()
         self.renderer.render(imgui.get_draw_data())
