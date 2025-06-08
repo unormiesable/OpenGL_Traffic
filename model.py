@@ -52,7 +52,7 @@ class ExtendedBaseModelColor(BaseModelColor):
         self.metalness = metalness
         
         self.opacity = 1
-        self.opacity_min_dist = 0.5
+        self.opacity_min_dist = 1
         self.opacity_max_dist = 2
 
         self.keyframes = []
