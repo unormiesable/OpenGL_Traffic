@@ -35,6 +35,9 @@ class SxvxnEngine:
         # MODERNGL BASIC SETUP
         self.ctx = mgl.create_context(require=330)
         self.ctx.enable(flags=mgl.DEPTH_TEST | mgl.CULL_FACE | mgl.BLEND)
+        self.ctx.blend_func = (mgl.ONE, mgl.ONE_MINUS_SRC_ALPHA)
+        self.ctx.blend_equation = mgl.FUNC_ADD
+        
         self.clock = pg.time.Clock()
         self.time = 0
         self.delta_time = 0
