@@ -47,6 +47,15 @@ class Scene:
                     self.Cube_001.physics = self.Cube_001_phy
                     add(self.Cube_001)
         
+        self.car = Fixed_Car(app, pos=(0, 10, 0), rot=(30, 0, 30), color=(0.3, 0.3, 0.3), sec_color=(0.6, 0.6, 0.6))
+        self.car_phy = self.app.physics.add_physics_geometry(geometry=p.GEOM_BOX,
+                                                                half_extents=(3, 1.5, 0.05),
+                                                                pos=self.car.pos,
+                                                                rot=self.car.rot,
+                                                                mass=1)
+        self.car.physics = self.car_phy
+        add(self.car)
+        
                 
     # SISTEM ANIMASI (MASIH BETA)
     def update(self):
