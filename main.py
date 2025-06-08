@@ -34,7 +34,7 @@ class SxvxnEngine:
 
         # MODERNGL BASIC SETUP
         self.ctx = mgl.create_context(require=330)
-        self.ctx.enable(flags=mgl.DEPTH_TEST | mgl.CULL_FACE)
+        self.ctx.enable(flags=mgl.DEPTH_TEST | mgl.CULL_FACE | mgl.BLEND)
         self.clock = pg.time.Clock()
         self.time = 0
         self.delta_time = 0
@@ -50,7 +50,7 @@ class SxvxnEngine:
         self.mesh = Mesh(self)
         self.scene = Scene(self)
         self.scene_renderer = SceneRenderer(self)
-        self.background_color = (0.25, 0.35, 0.5)
+        self.background_color = (0.2, 0.2, 0.2)
 
         # GUI
         self.gui = GUI(self)
@@ -59,6 +59,7 @@ class SxvxnEngine:
         # RENDER TYPE
         self.render_type = 1
         self.render_color = 1
+        self.render_post = 1
 
     # HANDLER INPUT USER ===================================================================================
     def check_events(self):
@@ -112,7 +113,7 @@ class SxvxnEngine:
     # RENDER SCENE -> SCENE RENDERER
     def render(self):
         self.ctx.clear(color=self.background_color)
-        self.scene_renderer.render(lighting=self.render_type, skybox=self.render_type, post=self.render_type)
+        self.scene_renderer.render(lighting=self.render_type, skybox=self.render_type, post=self.render_post)
         self.gui.render()
         pg.display.flip()
             
@@ -157,6 +158,12 @@ class SxvxnEngine:
         self.render_type = 1 - self.render_type
         self.scene_renderer = SceneRenderer(self)
         self.scene_renderer.lighting = (self.render_type == 1)
+        self.scene_renderer.depth_fbo.clear()
+    
+    def toggle_render_post(self):
+        self.render_post = 1 - self.render_post
+        self.scene_renderer = SceneRenderer(self)
+        self.scene_renderer.post = (self.render_post == 1)
         self.scene_renderer.depth_fbo.clear()
 
 

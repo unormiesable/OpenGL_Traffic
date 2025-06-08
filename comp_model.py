@@ -310,6 +310,14 @@ class Fixed_Car:
 
         if self.is_taxi == True:
             self.mode_taxi.render_shadow()
+
+    def update_quat(self, rotation_quat):
+        self.m_model = glm.mat4_cast(rotation_quat)
+        self.m_model = glm.translate(glm.mat4(), self.pos) * self.m_model
+        self.m_model = glm.scale(self.m_model, self.scale)
+        self.rot = glm.eulerAngles(rotation_quat)
+        self.update()
+        
       
 # MODEL POHON
 class Tree:

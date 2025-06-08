@@ -52,6 +52,11 @@ class GUI:
 
         imgui.same_line(spacing=10)
             
+        if imgui.button("POST"):
+            self.app.toggle_render_post()
+
+        imgui.same_line(spacing=10)
+            
         if imgui.button("COLOR"):
             self.app.toggle_color()
             
