@@ -51,11 +51,30 @@ class ExtendedBaseModelColor(BaseModelColor):
         self.specularity = specularity
         self.metalness = metalness
         
+        self.opacity = 1
+        self.opacity_min_dist = 0.5
+        self.opacity_max_dist = 2
+
         self.keyframes = []
         
         self.on_init()
 
     def update(self):
+        
+        # OPACITY CONTROL FROM CAMERA (DARI JARAK)
+        dist = glm.distance(self.pos, self.camera.position)
+        if dist < self.opacity_min_dist:
+            self.opacity = 0.0
+        elif dist > self.opacity_max_dist:
+            self.opacity = 1.0
+        else:
+            self.opacity = (dist - self.opacity_min_dist) / \
+                           (self.opacity_max_dist - self.opacity_min_dist)
+            self.opacity = max(0.0, min(1.0, self.opacity))
+        
+        self.program['u_opacity'] = self.opacity
+        
+        
         
         if self.app.render_type == 1:
             self.program['specularity'] = self.specularity

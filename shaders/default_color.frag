@@ -42,6 +42,9 @@ uniform bool u_enableOutline = true;
 uniform float u_darkside_factor = 2;
 uniform bool u_enable_darkside = true;
 
+//OPACITY
+uniform float u_opacity;
+
 
 // SOFT SHADOW SETUP =================================================
 float lookup(float ox, float oy) {
@@ -156,5 +159,5 @@ void main() {
     vec3 finalColor = mix(renderOutline, outlineColor, darksideFactor);
 
     finalColor = pow(finalColor, 1.0 / vec3(gamma)); 
-    fragColor = vec4(finalColor, 1.0);
+    fragColor = vec4(finalColor * u_opacity, u_opacity);
 }
