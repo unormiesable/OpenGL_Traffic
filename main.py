@@ -148,6 +148,7 @@ class SxvxnEngine:
         self.physics.disconnect()
         self.physics = Physics()
         self.scene = Scene(self)
+        self.scene_renderer = SceneRenderer(self)
         self.time = 0
         self.delta_time = 0
         self.clock.tick(self.ticks)

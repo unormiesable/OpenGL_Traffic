@@ -45,7 +45,7 @@ class GUI:
         
         imgui.set_next_window_position(0, 80)
         imgui.set_next_window_size(300, 75)
-        imgui.begin("SCENE RENDERER", flags=imgui.WINDOW_NO_MOVE | imgui.WINDOW_NO_RESIZE | imgui.WINDOW_NO_COLLAPSE)
+        imgui.begin("RENDER ENGINE SETTINGS", flags=imgui.WINDOW_NO_MOVE | imgui.WINDOW_NO_RESIZE | imgui.WINDOW_NO_COLLAPSE)
         
         if imgui.button("RENDER"):
             self.app.toggle_render_view()
@@ -62,7 +62,7 @@ class GUI:
 
         imgui.same_line(spacing=10)
             
-        if imgui.button("DISTANCE CULL"):
+        if imgui.button("CULLING"):
             self.app.toggle_distance_cull()
             
         imgui.end()
