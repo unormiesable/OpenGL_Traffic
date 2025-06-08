@@ -68,8 +68,7 @@ class ExtendedBaseModelColor(BaseModelColor):
         elif dist > self.opacity_max_dist:
             self.opacity = 1.0
         else:
-            self.opacity = (dist - self.opacity_min_dist) / \
-                           (self.opacity_max_dist - self.opacity_min_dist)
+            self.opacity = (dist - self.opacity_min_dist) / (self.opacity_max_dist - self.opacity_min_dist)
             self.opacity = max(0.0, min(1.0, self.opacity))
         
         self.program['u_opacity'] = self.opacity

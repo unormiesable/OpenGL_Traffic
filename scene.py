@@ -25,14 +25,10 @@ class Scene:
         app = self.app
         add = self.add_object
         
-        r = 30
-        
-        for x in range(r):
-            for z in range(r):
-                add(ColorPlane(app, uni_scale=1, specularity=1, pos=(- r/2 + x , 0, - r/2 + z), color=(0.5, 0.5, 0.8)))
-        
+        Plane = ColorPlane(app, uni_scale=30, specularity=1, pos=(0, 0, 0), color=(0.5, 0.5, 0.8))
         add(ColorPlane(app, uni_scale=30, specularity=1, pos=(0, 0, 0), color=(0.4, 0.4, 0.4), rot=(180, 0, 0)))
-        self.app.physics.add_physics_urdf('plane.urdf', (0, 0, 0), (0, 0, 0))
+        self.app.physics.add_physics_urdf('plane.urdf', Plane.pos, (0, 0, 0))
+        add(Plane)
         
 
         for x in range(5):
