@@ -62,14 +62,17 @@ class ExtendedBaseModelColor(BaseModelColor):
     def update(self):
         
         # OPACITY CONTROL FROM CAMERA (DARI JARAK)
-        dist = glm.distance(self.pos, self.camera.position)
-        if dist < self.opacity_min_dist:
-            self.opacity = 0.0
-        elif dist > self.opacity_max_dist:
-            self.opacity = 1.0
+        if self.camera.distance_cull == True:
+            dist = glm.distance(self.pos, self.camera.position)
+            if dist < self.opacity_min_dist:
+                self.opacity = 0.0
+            elif dist > self.opacity_max_dist:
+                self.opacity = 1.0
+            else:
+                self.opacity = (dist - self.opacity_min_dist) / (self.opacity_max_dist - self.opacity_min_dist)
+                self.opacity = max(0.0, min(1.0, self.opacity))
         else:
-            self.opacity = (dist - self.opacity_min_dist) / (self.opacity_max_dist - self.opacity_min_dist)
-            self.opacity = max(0.0, min(1.0, self.opacity))
+            self.opacity = 1
         
         self.program['u_opacity'] = self.opacity
         

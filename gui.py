@@ -59,6 +59,11 @@ class GUI:
             
         if imgui.button("COLOR"):
             self.app.toggle_color()
+
+        imgui.same_line(spacing=10)
+            
+        if imgui.button("DISTANCE CULL"):
+            self.app.toggle_distance_cull()
             
         imgui.end()
 

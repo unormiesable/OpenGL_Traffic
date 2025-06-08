@@ -168,6 +168,9 @@ class SxvxnEngine:
         self.scene_renderer = SceneRenderer(self)
         self.scene_renderer.post = (self.render_post == 1)
         self.scene_renderer.depth_fbo.clear()
+    
+    def toggle_distance_cull(self):
+        self.camera.distance_cull = 1 - self.camera.distance_cull
 
 
 if __name__ == '__main__':

@@ -35,6 +35,9 @@ class Camera:
         
         # PROJECTION MATRIX
         self.m_proj = self.get_projection_matrix()
+        
+        # DISTANCE CULL
+        self.distance_cull = True
 
     # KONTROL KAMERA ========================================================
 
