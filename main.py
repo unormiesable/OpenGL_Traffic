@@ -9,6 +9,7 @@ from mesh import Mesh
 from scene import Scene
 from scene_renderer import SceneRenderer
 from physics import Physics
+from audio_mixer import Audio
 
 from gui import GUI
 
@@ -63,6 +64,9 @@ class SxvxnEngine:
         self.render_type = 1
         self.render_color = 1
         self.render_post = 1
+        
+        # AUDIO
+        self.audio = Audio(self)
 
     # HANDLER INPUT USER ===================================================================================
     def check_events(self):
@@ -76,6 +80,7 @@ class SxvxnEngine:
                 self.mesh.destroy()
                 self.scene_renderer.destroy()
                 self.physics.disconnect()
+                self.audio.destroy()
                 pg.quit()
                 sys.exit()
             
